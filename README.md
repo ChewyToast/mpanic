@@ -1,22 +1,19 @@
-# minishell_panic
+<h1 align="center">
+	MINISHELL PANIC
+</h1>
 
---------------------
-env -i ./minishell
-export
-echo $PATH
---------------------
-echo ~
-echo ~bmoll-pe
-echo ~sdfsdgfs
-(~ es igual a /Users, despues se le añade el usuario escrito si la ruta es valida, sino lo va a tomar como texto normal)
---------------------
-env | grep PWD
-cd (algo existente)
-env | grep PWD
-unset PWD
-cd ..
-env | grep PWD
-(OLDPWD se crea/actualiza al cambiar de directorio, cogiendo el valor de PWD, si PWD no existe, OLDPWD se borra tambien)
--------------------
-lo de exportar y imprimir variables con y sin comillas como echo "$ANA" y ANA=".         hola.         asiod"
--------------------
+<p align="center">
+	<b><i>An epic tester that will destroy your minishell.</i></b><br>
+</p>
+
+<p align="center">
+	<img src="https://github.com/ChewyToast/minishell_panic/blob/main/img/panic.png?raw=true" />
+</p>
+
+
+## Commands to test 🕹
+
+https://github.com/ChewyToast/minishell_panic/blob/main/to_test/aitor.txt
+https://github.com/ChewyToast/minishell_panic/blob/main/to_test/bruno.txt
+https://github.com/ChewyToast/minishell_panic/blob/main/to_test/gerard.txt
+https://github.com/ChewyToast/minishell_panic/blob/main/to_test/sebas.txt
