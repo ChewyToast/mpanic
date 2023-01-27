@@ -11,4 +11,9 @@
 </p>
 
 
-Command to test --> 
+## Commands to test 🕹
+
+https://github.com/ChewyToast/minishell_panic/blob/main/to_test/aitor.txt
+https://github.com/ChewyToast/minishell_panic/blob/main/to_test/bruno.txt
+https://github.com/ChewyToast/minishell_panic/blob/main/to_test/gerard.txt
+https://github.com/ChewyToast/minishell_panic/blob/main/to_test/sebas.txt
