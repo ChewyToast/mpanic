@@ -53,14 +53,37 @@ printf ${MAIN_COLOR}"\t\t\t    -----------------------"${DEF_COLOR};
 printf ${MAIN_COLOR}"\n\t\t\t   | 👹 MINISHELL PANIC 👹 |\n"${DEF_COLOR};
 printf ${MAIN_COLOR}"\t\t\t    -----------------------\n\n"${DEF_COLOR};
 
-# make -C ../
-# cp ../minishell .
-# chmod 755 minishell
+make 2> .errors/error.txt
+MK_1=$?
+MKFF=$(cat .errors/error.txt | cut -c 1-46)
+if [ "$MK_1" != "0" ]; then
+	if [ "$MKFF" == "make: *** No targets specified and no makefile" ]; then
+		printf ${RED}
+		echo "Makefile not found!"
+		printf ${DEF_COLOR}
+		echo "Remember to clone it and run as follows:"
+		echo "  1. cd minishell_project_folder"
+		echo "  2. git clone git@github.com:ChewyToast/minishell_panic.git"
+		echo "  3. cd minishell_panic"
+		echo "  4. bash minishell_panic.sh"
+		echo ""
+		printf ${DEF_COLOR}
+		exit
+	else
+		printf ${RED}
+		echo "Compilation error"
+		printf ${DEF_COLOR}
+		echo "-------------"
+		echo "$MKFF"
+		echo "-------------"
+		exit
+	fi
+else
+	cp ../minishell .
+	chmod 755 minishell
+fi
 
-# ECHO TESTS
 printf ${BLUE}"\n|===============================[ ECHO TESTS ]================================|\n\n"${DEF_COLOR}
-mkdir traces
-touch traces/echo_trace.txt
 echo > traces/echo_trace.txt
 echo_test ' 1.[echo ""     '
 echo_test ' 2.[echo'
@@ -79,6 +102,32 @@ echo_test '13.[echo $PATH'
 echo_test '14.[echo $NONEXIST'
 echo_test '15.["      echo"'
 echo_test '16.[\ echo "   " $'
+printf "\n\n"
+echo_test '17.[echo hi~'
+echo_test '18.[echo ~'
+echo_test '19.[echo ~false'
+echo_test '20.[echo \~'
+echo_test '21.[echo "~"ups'
+echo_test '22.[echo -n'
+echo_test '23.[echo -n hi'
+echo_test '24.[echo -nn'
+printf "\n\n"
+echo_test '25.[echo -nn hi'
+echo_test '26.[echo --n'
+echo_test '27.[echo --n hi'
+echo_test '28.[echo -n -n'
+echo_test '29.[echo -n -n hi'
+echo_test '30.[echo -nn -nn'
+echo_test '31.[echo -nn -nn hi'
+echo_test '32.[echo -n -n -n -n'
+printf "\n\n"
+echo_test '33.[echo -n -n -n -n hi'
+echo_test '34.[echo -n -n -n \-n hi'
+echo_test '35.[echo -nn hi --n'
+echo_test '36.[echo \-nn hi --n'
+echo_test '37.[echo -nn hi --n'
+echo_test '38.[echo -nn hi -n'
+echo_test '39.[echo -------------nnnnnnnnnn'
 printf ${BLUE}"\n\n|===============================================================================|\n"${DEF_COLOR}
 
 # PID=$(ps | grep minishell | grep -v "minishell_panic" | awk '{print $1}')
