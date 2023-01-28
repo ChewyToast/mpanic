@@ -22,10 +22,10 @@ function echo_test()
 	printf ${BLUE};
 	echo -n " "$PRINT
 	printf ${DEF_COLOR};
-	TEST1=$(echo $FTEST | ./minishell 2>&-)
+	TEST1=$(echo "$FTEST" | ./minishell 2>&-)
 	ES_1=$?
 	TEST1=$(echo "$TEST1" | cat -e)
-	TEST2=$(echo $FTEST | bash 2>&-)
+	TEST2=$(echo "$FTEST" | bash 2>&-)
 	ES_2=$?
 	TEST2=$(echo "$TEST2" | cat -e)
 	if [ "$TEST1" == "$TEST2" ] && [ "$ES_1" == "$ES_2" ]; then
@@ -35,10 +35,10 @@ function echo_test()
 		echo "------------------------- test [$TMP]" >> traces/echo_trace.txt
 		echo "expected: (exit code: $ES_2)" >> traces/echo_trace.txt
 		echo "->$TEST2<-" >> traces/echo_trace.txt
-		echo >> traces/echo_trace.txt
+		echo "" >> traces/echo_trace.txt
 		echo "found: (exit code: $ES_1)" >> traces/echo_trace.txt
-		echo "->$TES1<-" >> traces/echo_trace.txt
-		echo >> traces/echo_trace.txt
+		echo "->$TEST1<-" >> traces/echo_trace.txt
+		echo "" >> traces/echo_trace.txt
 		echo "-------------------------" >> traces/echo_trace.txt
 		echo >> traces/echo_trace.txt
 		printf ${RED}"KO";
@@ -53,9 +53,9 @@ printf ${MAIN_COLOR}"\t\t\t    -----------------------"${DEF_COLOR};
 printf ${MAIN_COLOR}"\n\t\t\t   | 👹 MINISHELL PANIC 👹 |\n"${DEF_COLOR};
 printf ${MAIN_COLOR}"\t\t\t    -----------------------\n\n"${DEF_COLOR};
 
-make -C ../
-cp ../minishell .
-chmod 755 minishell
+# make -C ../
+# cp ../minishell .
+# chmod 755 minishell
 
 # ECHO TESTS
 printf ${BLUE}"\n|===============================[ ECHO TESTS ]================================|\n\n"${DEF_COLOR}
