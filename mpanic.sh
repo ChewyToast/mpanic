@@ -147,7 +147,7 @@ if [ "$MK_1" != "0" ]; then
 	fi
 else
 	cp ../minishell .
-	chmod 755 minishell
+	chmod 755 minishell &> /dev/null
 	mkdir traces &> /dev/null
 fi
 
