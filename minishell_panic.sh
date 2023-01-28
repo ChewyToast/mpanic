@@ -11,6 +11,9 @@ CYAN='\033[0;96m'
 WHITE='\033[0;97m'
 MAIN_COLOR='\033[0;96m'
 
+
+# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  TESTS FUNCTIONS
+
 function echo_test()
 {
 	ARGV=$(echo "$@")
@@ -49,9 +52,15 @@ function echo_test()
 	sleep 0.05
 }
 
+# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
 printf ${MAIN_COLOR}"\t\t\t    -----------------------"${DEF_COLOR};
 printf ${MAIN_COLOR}"\n\t\t\t   | 👹 MINISHELL PANIC 👹 |\n"${DEF_COLOR};
 printf ${MAIN_COLOR}"\t\t\t    -----------------------\n\n"${DEF_COLOR};
+
+
+# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  COMPILATION
 
 MKFF=$(make -C ../ 2> .errors/error.txt)
 MK_1=$?
@@ -68,6 +77,7 @@ if [ "$MK_1" != "0" ]; then
 		echo "  4. bash minishell_panic.sh"
 		echo ""
 		printf ${DEF_COLOR}
+		rm -rf .errors/error.txt
 		exit
 	else
 		printf ${RED}
@@ -76,12 +86,19 @@ if [ "$MK_1" != "0" ]; then
 		echo "-------------"
 		echo "$MKFF"
 		echo "-------------"
+		rm -rf .errors/error.txt
 		exit
 	fi
 else
 	cp ../minishell .
 	chmod 755 minishell
 fi
+
+# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+
+# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  TEST CALLS
 
 printf ${BLUE}"\n|===============================[ ECHO TESTS ]================================|\n\n"${DEF_COLOR}
 echo > traces/echo_trace.txt
@@ -127,7 +144,7 @@ echo_test '35.[echo -nn hi --n'
 echo_test '36.[echo \-nn hi --n'
 echo_test '37.[echo -nn hi --n'
 echo_test '38.[echo -nn hi -n'
-echo_test '39.[echo -------------nnnnnnnnnn'
+echo_test '39.[echo -------------nnnnnnnnnn hi'
 printf ${BLUE}"\n\n|===============================================================================|\n"${DEF_COLOR}
 
 # PID=$(ps | grep minishell | grep -v "minishell_panic" | awk '{print $1}')
