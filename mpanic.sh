@@ -1,15 +1,21 @@
 #!/bin/bash
 
-DEF_COLOR='\033[0;39m'
-GRAY='\033[0;90m'
-RED='\033[0;91m'
-GREEN='\033[0;92m'
-YELLOW='\033[0;93m'
-BLUE='\033[0;94m'
-MAGENTA='\033[0;95m'
-CYAN='\033[0;96m'
-WHITE='\033[0;97m'
-MAIN_COLOR='\033[0;96m'
+# colors
+	DEF_COLOR='\033[0;39m'
+	GRAY='\033[0;90m'
+	RED='\033[0;91m'
+	GREEN='\033[0;92m'
+	YELLOW='\033[0;93m'
+	BLUE='\033[0;94m'
+	MAGENTA='\033[0;95m'
+	CYAN='\033[0;96m'
+	WHITE='\033[0;97m'
+	MAIN_COLOR='\033[0;96m'
+#
+
+# var
+	EOK="OK"
+#
 
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  TESTS FUNCTIONS
@@ -17,24 +23,21 @@ MAIN_COLOR='\033[0;96m'
 
 # >>>> TESTS ECHO
 
-function echo_simple_test()
+function exec_only()
 {
-	ARGV=$(echo "$@")
-	FTEST=$(echo "$ARGV" | cut -c 5-50)
-	PRINT=$(echo "$ARGV" | cut -c 1-4)
-	echo -n " "
-	printf ${BLUE};
-	echo -n " "$PRINT
-	printf ${DEF_COLOR};
-	echo "$FTEST" > .tmp/exec_read.txt
+	echo "exit" >> .tmp/exec_read.txt
 	< .tmp/exec_read.txt ./minishell &> .tmp/exec_outp.txt
 	ES_1=$?
 	< .tmp/exec_read.txt bash &> .tmp/bash_outp.txt
 	ES_2=$?
-	TEST1=$(cat -e .tmp/exec_outp.txt | sed -e "1d" | sed -e "$ d")
+	TEST1=$(cat -e .tmp/exec_outp.txt)
+	# TEST1=$(cat -e .tmp/exec_outp.txt | sed -e "1d" | sed -e "$ d")
 	TEST2=$(cat -e .tmp/bash_outp.txt)
+	echo "$TEST1" >> result.txt
+	echo "$TEST2" >> result2.txt
 	if [ "$TEST1" == "$TEST2" ] && [ "$ES_1" == "$ES_2" ]; then
-		printf ${GREEN}"OK";
+		# printf ${GREEN}"OK";
+		printf "✅";
 	else
 		TMP=$(echo "$PRINT" | cut -c 1-2)
 		echo "------------------------- test [$TMP]" >> traces/echo_trace.txt
@@ -46,25 +49,75 @@ function echo_simple_test()
 		echo "" >> traces/echo_trace.txt
 		echo "-------------------------" >> traces/echo_trace.txt
 		echo >> traces/echo_trace.txt
-		printf ${RED}"KO";
+		# printf ${RED}"KO";
+			printf "❌";
+		EOK="KO"
 	fi
 	printf ${BLUE};
 	echo -n "]"
 	printf ${DEF_COLOR};
-	rm -rf .tmp/exec_outp.txt .tmp/bash_outp.txt
+	echo "" > .tmp/exec_outp.txt
+	echo "" > .tmp/bash_outp.txt
 	sleep 0.05
 }
 
-function echo_flag_test()
+function echo_simple_test()
 {
 	ARGV=$(echo "$@")
-	FTEST=$(echo "$ARGV" | cut -c 5-50)
+	FTEST=$(echo "$ARGV" | cut -c 5-100)
 	PRINT=$(echo "$ARGV" | cut -c 1-4)
 	echo -n " "
 	printf ${BLUE};
 	echo -n " "$PRINT
 	printf ${DEF_COLOR};
 	echo "$FTEST" > .tmp/exec_read.txt
+	echo "exit" >> .tmp/exec_read.txt
+	< .tmp/exec_read.txt ./minishell &> .tmp/exec_outp.txt
+	ES_1=$?
+	< .tmp/exec_read.txt bash &> .tmp/bash_outp.txt
+	ES_2=$?
+	TEST1=$(cat -e .tmp/exec_outp.txt)
+	# TEST1=$(cat -e .tmp/exec_outp.txt | sed -e "1d" | sed -e "$ d")
+	TEST2=$(cat -e .tmp/bash_outp.txt)
+	echo "$TEST1" >> result.txt
+	echo "$TEST2" >> result2.txt
+	if [ "$TEST1" == "$TEST2" ] && [ "$ES_1" == "$ES_2" ]; then
+		# printf ${GREEN}"OK";
+		printf "✅";
+	else
+		TMP=$(echo "$PRINT" | cut -c 1-2)
+		echo "------------------------- test [$TMP]" >> traces/echo_trace.txt
+		echo "expected: (exit code: $ES_2)" >> traces/echo_trace.txt
+		echo "->$TEST2<-" >> traces/echo_trace.txt
+		echo "" >> traces/echo_trace.txt
+		echo "found: (exit code: $ES_1)" >> traces/echo_trace.txt
+		echo "->$TEST1<-" >> traces/echo_trace.txt
+		echo "" >> traces/echo_trace.txt
+		echo "-------------------------" >> traces/echo_trace.txt
+		echo >> traces/echo_trace.txt
+		# printf ${RED}"KO";
+			printf "❌";
+		EOK="KO"
+	fi
+	printf ${BLUE};
+	echo -n "]"
+	printf ${DEF_COLOR};
+	echo "" > .tmp/exec_outp.txt
+	echo "" > .tmp/bash_outp.txt
+	sleep 0.05
+}
+
+function echo_flag_test()
+{
+	ARGV=$(echo "$@")
+	FTEST=$(echo "$ARGV" | cut -c 5-100)
+	PRINT=$(echo "$ARGV" | cut -c 1-4)
+	echo -n " "
+	printf ${BLUE};
+	echo -n " "$PRINT
+	printf ${DEF_COLOR};
+	echo "$FTEST" > .tmp/exec_read.txt
+	echo "exit" >> .tmp/exec_read.txt
 	< .tmp/exec_read.txt ./minishell &> .tmp/exec_outp.txt
 	ES_1=$?
 	< .tmp/exec_read.txt bash &> .tmp/bash_outp.txt
@@ -77,12 +130,14 @@ function echo_flag_test()
 	then
 		if [ "$(cat -e .tmp/exec_outp.txt | sed -e "1d" | cut -c 1-3)" == "$(cat -e .tmp/exec_outp.txt | sed -e "$ d" | cut -c 1-3)" ];
 		then
-			printf ${GREEN}"OK";
+			# printf ${GREEN}"OK";
+			printf "✅";
 		fi
 	else
 		TEST1=$(cat -e .tmp/exec_outp.txt | sed -e "1d" | cut -c 1-$size)
 		if [ "$TEST1" == "$TEST2" ] && [ "$ES_1" == "$ES_2" ]; then
-			printf ${GREEN}"OK";
+			# printf ${GREEN}"OK";
+			printf "✅";
 		else
 			TMP=$(echo "$PRINT" | cut -c 1-2)
 			echo "------------------------- test [$TMP]" >> traces/echo_trace.txt
@@ -94,12 +149,16 @@ function echo_flag_test()
 			echo "" >> traces/echo_trace.txt
 			echo "-------------------------" >> traces/echo_trace.txt
 			echo >> traces/echo_trace.txt
-			printf ${RED}"KO";
+			# printf ${RED}"KO";
+			printf "❌";
+			printf "";
 		fi
 	fi
 	printf ${BLUE};
 	echo -n "]"
 	printf ${DEF_COLOR};
+	echo "" > .tmp/exec_outp.txt
+	echo "" > .tmp/bash_outp.txt
 	sleep 0.05
 }
 
@@ -125,7 +184,7 @@ if [ "$MK_1" != "0" ]; then
 	if [ "$MKFF" == "make: *** No targets specified and no makefile" ]; then
 		printf ${RED}
 		echo "Makefile not found!"
-		printf ${DEF_COLOR}
+		printf ${DEF_COLOR}"\n"
 		echo "Remember to clone it and run as follows:"
 		echo "  1. cd minishell_project_folder"
 		echo "  2. git clone git@github.com:ChewyToast/minishell_panic.git"
@@ -147,7 +206,7 @@ if [ "$MK_1" != "0" ]; then
 	fi
 else
 	cp ../minishell .
-	chmod 755 minishell &> /dev/null
+ 	chmod 777 minishell &> /dev/null
 	mkdir traces &> /dev/null
 fi
 
@@ -167,6 +226,7 @@ echo "* This test doesnt work if ur readline prompt have newlines  *" >> traces/
 echo "*                                                            *" >> traces/echo_trace.txt
 echo "**************************************************************" >> traces/echo_trace.txt
 echo "" >> traces/echo_trace.txt
+printf ${BLUE}"\n             ----------         [ only echo ]         ----------            \n\n  "${DEF_COLOR}
 echo_simple_test ' 1.[echo ""     '
 echo_simple_test ' 2.[echo'
 echo_simple_test ' 3.[echO ""    '
@@ -177,7 +237,7 @@ echo_simple_test ' 7.[echo hi   '
 echo_simple_test ' 8.[EcHo hi   '
 printf "\n\n  "
 echo_simple_test ' 9.[echo """ ""hi" " """'
-echo_simple_test '10.[echo "'""'"'
+echo_simple_test '10.["echo" "'""'"'
 echo_simple_test '11.[echo \"hi\"'
 echo_simple_test '12.[echo $HOME'
 echo_simple_test '13.[echo $PATH'
@@ -208,8 +268,66 @@ echo_flag_test '34.[echo -n -n -n \-n hi'
 echo_flag_test '35.[echo -nn hi --n'
 echo_flag_test '36.[echo \-nn hi --n'
 echo_flag_test '37.[echo -nn hi --n'
-echo_flag_test '38.[echo -nn hi -n'
+echo_flag_test '38.[echo "-nn" hi -n'
 echo_flag_test '39.[echo -------------nnnnnnnnnn hi'
+echo_flag_test '40.[echo "-------------nnnnnnnnnn" hi'
+# if [ "$EOK" == "KO" ];
+# then
+# 	printf "\n\n"
+# 	printf ${CYAN}"    It seems that there are some tests that have not passed...\n"
+# 	printf ${CYAN}"    To see the failure traces, check in traces/echo_traces.txt\n"
+# fi
+# EOK="OK"
+printf ${BLUE}"\n\n\n             ----------         [ mixed echo ]        ----------            \n\n  "${DEF_COLOR}
+export ECMD="echo" &> /dev/null
+echo_simple_test ' 1.[$ECMD'
+echo_simple_test ' 2.[$ECMD "hi"'
+export ECMD="EchO" &> /dev/null
+echo_simple_test ' 3.[$ECMD'
+export ECMD="EChO" &> /dev/null
+echo_simple_test ' 4.[$ECMD "hi"'
+export ECMD="         echo" &> /dev/null
+echo_simple_test ' 5.[$ECMD "hi"'
+export ECMD="         EcHO       " &> /dev/null
+echo_simple_test ' 6.[$ECMD " hi"'
+unset ECMD
+printf ${BLUE};
+echo -n "   7.["
+printf ${DEF_COLOR};
+echo 'export ECMD="echo" &> /dev/null
+    $ECMD "hi"' > .tmp/exec_read.txt
+echo "exit" >> .tmp/exec_read.txt
+exec_only ''
+printf ${BLUE};
+echo -n "   8.["
+printf ${DEF_COLOR};
+echo 'export ECMD="EchO" &> /dev/null
+     $ECMD " hi"' > .tmp/exec_read.txt
+echo "exit" >> .tmp/exec_read.txt
+exec_only ''
+printf "\n\n  "
+printf ${BLUE};
+echo -n "   9.["
+printf ${DEF_COLOR};
+echo 'export ECMD="         EcHO       " &> /dev/null
+     $ECMD "hi"' > .tmp/exec_read.txt
+echo "exit" >> .tmp/exec_read.txt
+exec_only ''
+
+printf ${BLUE};
+echo -n "  10.["
+printf ${DEF_COLOR};
+echo 'export ECMD="         EcHO      hi " &> /dev/null
+     $ECMD' > .tmp/exec_read.txt
+echo "exit" >> .tmp/exec_read.txt
+exec_only ''
+if [ "$EOK" == "KO" ];
+then
+	printf "\n\n\n\n\n"
+	printf ${CYAN}"    It seems that there are some tests that have not passed...\n"
+	printf ${CYAN}"    To see the failure traces, check in traces/echo_traces.txt\n"
+fi
+# printf ${BLUE}"\n\n             ----------------------------------------------------\n\n"
 printf ${BLUE}"\n\n|===============================================================================|\n\n"
 printf ${CYAN}"    To see the failure traces, check in traces/<test_traces>\n\n"
 printf "    Any issue send via slack bmoll-pe\n\n"${DEF_COLOR}
