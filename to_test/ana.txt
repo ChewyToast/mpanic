@@ -1,1 +1,2 @@
-
+unset $SHLVL ; echo $SHLVL
+export $SHLVL=''; echo $SLVL
