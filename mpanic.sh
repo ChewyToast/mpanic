@@ -116,7 +116,9 @@ printf ${MAIN_COLOR}"\t\t\t   -----------------------\n\n"${DEF_COLOR};
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  COMPILATION
 
-MKFF=$(make -C ../ 2> .errors/error.txt)
+mkdir .errors &> /dev/null
+mkdir .tmp &> /dev/null
+MKFF=$(make -C ../ &> .errors/error.txt)
 MK_1=$?
 MKFF=$(cat .errors/error.txt | cut -c 1-46)
 if [ "$MK_1" != "0" ]; then
@@ -147,7 +149,6 @@ else
 	cp ../minishell .
 	chmod 755 minishell
 	mkdir traces &> /dev/null
-	mkdir .tmp &> /dev/null
 fi
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
