@@ -53,7 +53,7 @@ printf ${MAIN_COLOR}"\t\t\t    -----------------------"${DEF_COLOR};
 printf ${MAIN_COLOR}"\n\t\t\t   | 👹 MINISHELL PANIC 👹 |\n"${DEF_COLOR};
 printf ${MAIN_COLOR}"\t\t\t    -----------------------\n\n"${DEF_COLOR};
 
-make -C ../ 2> .errors/error.txt
+MKFF=$(make -C ../ 2> .errors/error.txt)
 MK_1=$?
 MKFF=$(cat .errors/error.txt | cut -c 1-46)
 if [ "$MK_1" != "0" ]; then
