@@ -11,7 +11,7 @@ expected: (exit code: 0)
 ->$<-
 
 found: (exit code: 127)
-->mpanic.sh: line 75: ./minishell: No such file or directory$<-
+->mpanic.sh: line 74: ./minishell: No such file or directory$<-
 
 -------------------------
 
@@ -20,7 +20,7 @@ expected: (exit code: 0)
 ->$<-
 
 found: (exit code: 127)
-->mpanic.sh: line 75: ./minishell: No such file or directory$<-
+->mpanic.sh: line 74: ./minishell: No such file or directory$<-
 
 -------------------------
 
@@ -29,7 +29,7 @@ expected: (exit code: 0)
 ->$<-
 
 found: (exit code: 127)
-->mpanic.sh: line 75: ./minishell: No such file or directory$<-
+->mpanic.sh: line 74: ./minishell: No such file or directory$<-
 
 -------------------------
 
@@ -38,7 +38,7 @@ expected: (exit code: 0)
 ->$<-
 
 found: (exit code: 127)
-->mpanic.sh: line 75: ./minishell: No such file or directory$<-
+->mpanic.sh: line 74: ./minishell: No such file or directory$<-
 
 -------------------------
 
@@ -47,7 +47,7 @@ expected: (exit code: 0)
 -> hi$<-
 
 found: (exit code: 127)
-->mpanic.sh: line 75: ./minishell: No such file or directory$<-
+->mpanic.sh: line 74: ./minishell: No such file or directory$<-
 
 -------------------------
 
@@ -56,7 +56,7 @@ expected: (exit code: 0)
 ->$<-
 
 found: (exit code: 127)
-->mpanic.sh: line 75: ./minishell: No such file or directory$<-
+->mpanic.sh: line 74: ./minishell: No such file or directory$<-
 
 -------------------------
 
@@ -65,7 +65,7 @@ expected: (exit code: 0)
 ->hi$<-
 
 found: (exit code: 127)
-->mpanic.sh: line 75: ./minishell: No such file or directory$<-
+->mpanic.sh: line 74: ./minishell: No such file or directory$<-
 
 -------------------------
 
@@ -74,7 +74,7 @@ expected: (exit code: 0)
 ->hi$<-
 
 found: (exit code: 127)
-->mpanic.sh: line 75: ./minishell: No such file or directory$<-
+->mpanic.sh: line 74: ./minishell: No such file or directory$<-
 
 -------------------------
 
@@ -83,7 +83,7 @@ expected: (exit code: 0)
 -> hi  $<-
 
 found: (exit code: 127)
-->mpanic.sh: line 75: ./minishell: No such file or directory$<-
+->mpanic.sh: line 74: ./minishell: No such file or directory$<-
 
 -------------------------
 
@@ -92,7 +92,7 @@ expected: (exit code: 0)
 ->$<-
 
 found: (exit code: 127)
-->mpanic.sh: line 75: ./minishell: No such file or directory$<-
+->mpanic.sh: line 74: ./minishell: No such file or directory$<-
 
 -------------------------
 
@@ -101,7 +101,7 @@ expected: (exit code: 0)
 ->"hi"$<-
 
 found: (exit code: 127)
-->mpanic.sh: line 75: ./minishell: No such file or directory$<-
+->mpanic.sh: line 74: ./minishell: No such file or directory$<-
 
 -------------------------
 
@@ -110,7 +110,7 @@ expected: (exit code: 0)
 ->/Users/test$<-
 
 found: (exit code: 127)
-->mpanic.sh: line 75: ./minishell: No such file or directory$<-
+->mpanic.sh: line 74: ./minishell: No such file or directory$<-
 
 -------------------------
 
@@ -119,7 +119,7 @@ expected: (exit code: 0)
 ->/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/Users/test/Library/Python/3.9/bin:/Users/test/Library/Python/3.9/bin$<-
 
 found: (exit code: 127)
-->mpanic.sh: line 75: ./minishell: No such file or directory$<-
+->mpanic.sh: line 74: ./minishell: No such file or directory$<-
 
 -------------------------
 
@@ -128,7 +128,7 @@ expected: (exit code: 0)
 ->$<-
 
 found: (exit code: 127)
-->mpanic.sh: line 75: ./minishell: No such file or directory$<-
+->mpanic.sh: line 74: ./minishell: No such file or directory$<-
 
 -------------------------
 
@@ -137,7 +137,7 @@ expected: (exit code: 127)
 ->bash: line 1:       echo: command not found$<-
 
 found: (exit code: 127)
-->mpanic.sh: line 75: ./minishell: No such file or directory$<-
+->mpanic.sh: line 74: ./minishell: No such file or directory$<-
 
 -------------------------
 
@@ -146,7 +146,7 @@ expected: (exit code: 127)
 ->bash: line 1:  echo: command not found$<-
 
 found: (exit code: 127)
-->mpanic.sh: line 75: ./minishell: No such file or directory$<-
+->mpanic.sh: line 74: ./minishell: No such file or directory$<-
 
 -------------------------
 
@@ -155,7 +155,7 @@ expected: (exit code: 0)
 ->hi~$<-
 
 found: (exit code: 127)
-->mpanic.sh: line 75: ./minishell: No such file or directory$<-
+->mpanic.sh: line 74: ./minishell: No such file or directory$<-
 
 -------------------------
 
@@ -164,7 +164,7 @@ expected: (exit code: 0)
 ->/Users/test$<-
 
 found: (exit code: 127)
-->mpanic.sh: line 75: ./minishell: No such file or directory$<-
+->mpanic.sh: line 74: ./minishell: No such file or directory$<-
 
 -------------------------
 
@@ -173,7 +173,7 @@ expected: (exit code: 0)
 ->~false$<-
 
 found: (exit code: 127)
-->mpanic.sh: line 75: ./minishell: No such file or directory$<-
+->mpanic.sh: line 74: ./minishell: No such file or directory$<-
 
 -------------------------
 
@@ -182,7 +182,7 @@ expected: (exit code: 0)
 ->~$<-
 
 found: (exit code: 127)
-->mpanic.sh: line 75: ./minishell: No such file or directory$<-
+->mpanic.sh: line 74: ./minishell: No such file or directory$<-
 
 -------------------------
 
@@ -191,7 +191,7 @@ expected: (exit code: 0)
 ->~ups$<-
 
 found: (exit code: 127)
-->mpanic.sh: line 75: ./minishell: No such file or directory$<-
+->mpanic.sh: line 74: ./minishell: No such file or directory$<-
 
 -------------------------
 
@@ -326,7 +326,7 @@ expected: (exit code: 0)
 ->$<-
 
 found: (exit code: 127)
-->mpanic.sh: line 75: ./minishell: No such file or directory$<-
+->mpanic.sh: line 74: ./minishell: No such file or directory$<-
 
 -------------------------
 
@@ -335,7 +335,7 @@ expected: (exit code: 0)
 ->hi$<-
 
 found: (exit code: 127)
-->mpanic.sh: line 75: ./minishell: No such file or directory$<-
+->mpanic.sh: line 74: ./minishell: No such file or directory$<-
 
 -------------------------
 
@@ -344,7 +344,7 @@ expected: (exit code: 0)
 ->$<-
 
 found: (exit code: 127)
-->mpanic.sh: line 75: ./minishell: No such file or directory$<-
+->mpanic.sh: line 74: ./minishell: No such file or directory$<-
 
 -------------------------
 
@@ -353,7 +353,7 @@ expected: (exit code: 0)
 ->hi$<-
 
 found: (exit code: 127)
-->mpanic.sh: line 75: ./minishell: No such file or directory$<-
+->mpanic.sh: line 74: ./minishell: No such file or directory$<-
 
 -------------------------
 
@@ -362,7 +362,7 @@ expected: (exit code: 0)
 ->hi$<-
 
 found: (exit code: 127)
-->mpanic.sh: line 75: ./minishell: No such file or directory$<-
+->mpanic.sh: line 74: ./minishell: No such file or directory$<-
 
 -------------------------
 
@@ -371,7 +371,7 @@ expected: (exit code: 0)
 -> hi$<-
 
 found: (exit code: 127)
-->mpanic.sh: line 75: ./minishell: No such file or directory$<-
+->mpanic.sh: line 74: ./minishell: No such file or directory$<-
 
 -------------------------
 
@@ -380,7 +380,7 @@ expected: (exit code: 0)
 ->hi$<-
 
 found: (exit code: 127)
-->mpanic.sh: line 29: ./minishell: No such file or directory$<-
+-><-
 
 -------------------------
 
@@ -389,7 +389,7 @@ expected: (exit code: 0)
 -> hi$<-
 
 found: (exit code: 127)
-->mpanic.sh: line 29: ./minishell: No such file or directory$<-
+-><-
 
 -------------------------
 
@@ -398,7 +398,7 @@ expected: (exit code: 0)
 ->hi$<-
 
 found: (exit code: 127)
-->mpanic.sh: line 29: ./minishell: No such file or directory$<-
+-><-
 
 -------------------------
 
@@ -407,7 +407,7 @@ expected: (exit code: 0)
 ->hi$<-
 
 found: (exit code: 127)
-->mpanic.sh: line 29: ./minishell: No such file or directory$<-
+-><-
 
 -------------------------
 

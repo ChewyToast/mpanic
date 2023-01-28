@@ -23,18 +23,17 @@
 
 # >>>> TESTS ECHO
 
-function exec_only()
+function echo_mix_test()
 {
 	echo "exit" >> .tmp/exec_read.txt
 	< .tmp/exec_read.txt ./minishell &> .tmp/exec_outp.txt
 	ES_1=$?
 	< .tmp/exec_read.txt bash &> .tmp/bash_outp.txt
 	ES_2=$?
-	TEST1=$(cat -e .tmp/exec_outp.txt)
-	# TEST1=$(cat -e .tmp/exec_outp.txt | sed -e "1d" | sed -e "$ d")
+	TEST1=$(cat -e .tmp/exec_outp.txt | sed "1d" | sed "1d" | sed "2d")
 	TEST2=$(cat -e .tmp/bash_outp.txt)
-	echo "$TEST1" >> result.txt
-	echo "$TEST2" >> result2.txt
+	# echo "$TEST1" >> result.txt
+	# echo "$TEST2" >> result2.txt
 	if [ "$TEST1" == "$TEST2" ] && [ "$ES_1" == "$ES_2" ]; then
 		# printf ${GREEN}"OK";
 		printf "✅";
@@ -79,8 +78,8 @@ function echo_simple_test()
 	TEST1=$(cat -e .tmp/exec_outp.txt)
 	# TEST1=$(cat -e .tmp/exec_outp.txt | sed -e "1d" | sed -e "$ d")
 	TEST2=$(cat -e .tmp/bash_outp.txt)
-	echo "$TEST1" >> result.txt
-	echo "$TEST2" >> result2.txt
+	# echo "$TEST1" >> result.txt
+	# echo "$TEST2" >> result2.txt
 	if [ "$TEST1" == "$TEST2" ] && [ "$ES_1" == "$ES_2" ]; then
 		# printf ${GREEN}"OK";
 		printf "✅";
@@ -192,7 +191,8 @@ if [ "$MK_1" != "0" ]; then
 		echo "  4. bash mpanic.sh"
 		echo ""
 		printf ${DEF_COLOR}
-		rm -rf .errors/error.txt
+		rm -rf .errors
+		rm -rf .tmp
 		exit
 	else
 		printf ${RED}
@@ -201,7 +201,8 @@ if [ "$MK_1" != "0" ]; then
 		echo "-------------"
 		echo "$MKFF"
 		echo "-------------"
-		rm -rf .errors/error.txt
+		rm -rf .errors
+		rm -rf .tmp
 		exit
 	fi
 else
@@ -297,14 +298,14 @@ printf ${DEF_COLOR};
 echo 'export ECMD="echo" &> /dev/null
     $ECMD "hi"' > .tmp/exec_read.txt
 echo "exit" >> .tmp/exec_read.txt
-exec_only ''
+echo_mix_test ''
 printf ${BLUE};
 echo -n "   8.["
 printf ${DEF_COLOR};
 echo 'export ECMD="EchO" &> /dev/null
      $ECMD " hi"' > .tmp/exec_read.txt
 echo "exit" >> .tmp/exec_read.txt
-exec_only ''
+echo_mix_test ''
 printf "\n\n  "
 printf ${BLUE};
 echo -n "   9.["
@@ -312,7 +313,7 @@ printf ${DEF_COLOR};
 echo 'export ECMD="         EcHO       " &> /dev/null
      $ECMD "hi"' > .tmp/exec_read.txt
 echo "exit" >> .tmp/exec_read.txt
-exec_only ''
+echo_mix_test ''
 
 printf ${BLUE};
 echo -n "  10.["
@@ -320,7 +321,7 @@ printf ${DEF_COLOR};
 echo 'export ECMD="         EcHO      hi " &> /dev/null
      $ECMD' > .tmp/exec_read.txt
 echo "exit" >> .tmp/exec_read.txt
-exec_only ''
+echo_mix_test ''
 if [ "$EOK" == "KO" ];
 then
 	printf "\n\n\n\n\n"
@@ -331,6 +332,9 @@ fi
 printf ${BLUE}"\n\n|===============================================================================|\n\n"
 printf ${CYAN}"    To see the failure traces, check in traces/<test_traces>\n\n"
 printf "    Any issue send via slack bmoll-pe\n\n"${DEF_COLOR}
+
+rm -rf .errors
+rm -rf .tmp
 
 # PID=$(ps | grep minishell | grep -v "minishell_panic" | awk '{print $1}')
 # printf ${DARK_YELLOW}"\n\t ****      **** /** /****     ** /**   ******** /**      ** /******** /**       /**\n"${DEF_COLOR};
