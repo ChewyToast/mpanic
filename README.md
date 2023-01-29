@@ -7,7 +7,7 @@
 </p>
 
 <p align="center">
-	<img src="https://github.com/ChewyToast/minishell_panic/blob/main/img/panic.png?raw=true" />
+	<img src="https://github.com/ChewyToast/minishell_panic/blob/main/.img/panic.png?raw=true" />
 </p>
 
 
