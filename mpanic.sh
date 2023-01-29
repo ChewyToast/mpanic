@@ -337,14 +337,13 @@
 		printf ${CYAN}"    It seems that there are some tests that have not passed...\n"
 		printf ${CYAN}"    To see the failure traces, check in traces/echo_traces.txt\n"
 	fi
-	# printf ${BLUE}"\n\n             ----------------------------------------------------\n\n"
 	printf ${BLUE}"\n\n|===============================================================================|\n\n"
-	printf ${CYAN}"    To see the failure traces, check in traces/<test_traces>\n\n"
-	printf "    Any issue send via slack bmoll-pe\n\n"${DEF_COLOR}
 #
 
-# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  ENDER
+# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 
 
+# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  ENDER
+	printf "    Any issue send via slack bmoll-pe or ailopez-o\n\n"${DEF_COLOR}
 	rm -rf .errors
 	rm -rf .tmp
 
