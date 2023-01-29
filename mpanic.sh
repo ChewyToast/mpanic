@@ -266,7 +266,7 @@
 	printf "\n\n  "
 	echo_flag_test '25.[echo -nn hi'
 	echo_flag_test '26.[echo --n'
-	echo_flag_test '27.[echo --n hi'
+	echo_flag_test '27.['"'"'echo'"'"' --n hi'
 	echo_flag_test '28.[echo -n -n'
 	echo_flag_test '29.[echo -n -n hi'
 	echo_flag_test '30.[echo -nn -nn'
@@ -281,13 +281,6 @@
 	echo_flag_test '38.[echo "-nn" hi -n'
 	echo_flag_test '39.[echo -------------nnnnnnnnnn hi'
 	echo_flag_test '40.[echo "-------------nnnnnnnnnn" hi'
-	# if [ "$EOK" == "KO" ];
-	# then
-	# 	printf "\n\n"
-	# 	printf ${CYAN}"    It seems that there are some tests that have not passed...\n"
-	# 	printf ${CYAN}"    To see the failure traces, check in traces/echo_traces.txt\n"
-	# fi
-	# EOK="OK"
 	printf ${BLUE}"\n\n\n             ----------         [ mixed echo ]        ----------            \n\n  "${DEF_COLOR}
 	export ECMD="echo" &> /dev/null
 	echo_simple_test ' 1.[$ECMD'
@@ -307,14 +300,14 @@
 	echo 'export ECMD="echo"
 	$ECMD "hi"' > .tmp/exec_read.txt
 	echo "exit" >> .tmp/exec_read.txt
-	echo_mix_test ''
+	echo_mix_test;
 	printf ${BLUE};
 	echo -n "   8.["
 	printf ${DEF_COLOR};
 	echo 'export ECMD="EchO"
 	$ECMD " hi"' > .tmp/exec_read.txt
 	echo "exit" >> .tmp/exec_read.txt
-	echo_mix_test ''
+	echo_mix_test;
 	printf "\n\n  "
 	printf ${BLUE};
 	echo -n "   9.["
@@ -322,15 +315,28 @@
 	echo 'export ECMD="         EcHO       "
 	$ECMD "hi"' > .tmp/exec_read.txt
 	echo "exit" >> .tmp/exec_read.txt
-	echo_mix_test ''
-
+	echo_mix_test;
 	printf ${BLUE};
 	echo -n "  10.["
 	printf ${DEF_COLOR};
 	echo 'export ECMD="         EcHO      hi "
 	$ECMD' > .tmp/exec_read.txt
 	echo "exit" >> .tmp/exec_read.txt
-	echo_mix_test ''
+	echo_mix_test;
+	printf ${BLUE};
+	echo -n "  11.["
+	printf ${DEF_COLOR};
+	echo 'export ECMD="         '"'"'echo'"'"'      hi "
+	$ECMD' > .tmp/exec_read.txt
+	echo "exit" >> .tmp/exec_read.txt
+	echo_mix_test;
+	printf ${BLUE};
+	echo -n "  12.["
+	printf ${DEF_COLOR};
+	echo 'export ECMD="         "echo"      hi "
+	$ECMD' > .tmp/exec_read.txt
+	echo "exit" >> .tmp/exec_read.txt
+	echo_mix_test;
 	if [ "$EOK" == "KO" ];
 	then
 		printf "\n\n\n\n\n"
