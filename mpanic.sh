@@ -13,91 +13,98 @@
 	MAIN_COLOR='\033[0;96m'
 #
 
+
+# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  COMPILATION
+
+	MKFF=$(make -C ../ &> .errors/error.txt)
+	MK_1=$?
+	MKFF=$(cat .errors/error.txt | cut -c 1-46)
+	if [ "$MK_1" != "0" ]; then
+		if [ "$MKFF" == "make: *** No targets specified and no makefile" ]; then
+			printf ${RED}
+			echo "Makefile not found!"
+			printf ${DEF_COLOR}"\n"
+			echo "Remember to clone it and run as follows:"
+			echo "  1. cd minishell_project_folder"
+			echo "  2. git clone git@github.com:ChewyToast/minishell_panic.git"
+			echo "  3. cd minishell_panic"
+			echo "  4. bash mpanic.sh"
+			echo ""
+			printf ${DEF_COLOR}
+			rm -rf .errors
+			rm -rf .tmp
+			exit
+		else
+			printf ${RED}
+			echo "Compilation error"
+			printf ${DEF_COLOR}
+			echo "-------------"
+			echo "$MKFF"
+			echo "-------------"
+			rm -rf .errors
+			rm -rf .tmp
+			exit
+		fi
+	else
+		cp ../minishell .
+		chmod 777 minishell &> /dev/null
+		mkdir traces &> /dev/null
+	fi
+
+# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+# prepare
+	mkdir .errors &> /dev/null
+	mkdir .tmp &> /dev/null
+	echo "exit" > .tmp/exec_read.txt
+	< .tmp/exec_read.txt ./minishell > .tmp/start.txt
+#
+
+
 # var
 	EOK="OK"
+	prmp=$(cat .tmp/start.txt)
+	sprmp=${#prmp}
+	sprmp=$(($sprmp - 4))
+	PRMP=$(cat .tmp/start.txt | cut -c 1-$sprmp)
 #
+
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  TESTS FUNCTIONS
 
 # >>>> TESTS ECHO
-	function echo_mix_test()
-	{
-		FTEST=$(< .tmp/exec_read.txt cat | sed -e "$ d")
-		echo "exit" >> .tmp/exec_read.txt
-		< .tmp/exec_read.txt ./minishell &> .tmp/exec_outp.txt
-		ES_1=$?
-		< .tmp/exec_read.txt bash &> .tmp/bash_outp.txt
-		ES_2=$?
-		TEST1=$(cat -e .tmp/exec_outp.txt | sed "1d" | sed "1d" | sed "2d")
-		TEST2=$(cat -e .tmp/bash_outp.txt)
-		# echo "$TEST1" >> result.txt
-		# echo "$TEST2" >> result2.txt
-		if [ "$TEST1" == "$TEST2" ] && [ "$ES_1" == "$ES_2" ]; then
-			# printf ${GREEN}"OK";
-			printf "✅";
-		else
-			TMP=$(echo "$PRINT" | cut -c 1-2)
-				echo "--------------------> test [$TMP]" >> traces/echo_trace.txt
-				echo "cmd: \"$FTEST\"" >> traces/echo_trace.txt
-				echo >> traces/echo_trace.txt
-				echo "expected: (exit code: $ES_2)" >> traces/echo_trace.txt
-				echo "->$TEST2<-" >> traces/echo_trace.txt
-				echo "" >> traces/echo_trace.txt
-				echo "found: (exit code: $ES_1)" >> traces/echo_trace.txt
-				echo "->$TEST1<-" >> traces/echo_trace.txt
-				echo >> traces/echo_trace.txt
-				echo "--------------------<">> traces/echo_trace.txt
-				echo >> traces/echo_trace.txt
-			# printf ${RED}"KO";
-				printf "❌";
-			EOK="KO"
-		fi
-		printf ${BLUE};
-		echo -n "]"
-		printf ${DEF_COLOR};
-		echo "" > .tmp/exec_outp.txt
-		echo "" > .tmp/bash_outp.txt
-		sleep 0.05
-	}
 
 	function echo_simple_test()
 	{
 		ARGV=$(echo "$@")
 		FTEST=$(echo "$ARGV" | cut -c 5-100)
 		PRINT=$(echo "$ARGV" | cut -c 1-4)
-		echo -n " "
-		printf ${BLUE};
-		echo -n " "$PRINT
-		printf ${DEF_COLOR};
+		printf "$BLUE  $PRINT$DEF_COLOR"
 		echo "$FTEST" > .tmp/exec_read.txt
 		echo "exit" >> .tmp/exec_read.txt
 		< .tmp/exec_read.txt ./minishell &> .tmp/exec_outp.txt
 		ES_1=$?
 		< .tmp/exec_read.txt bash &> .tmp/bash_outp.txt
 		ES_2=$?
-		TEST1=$(cat -e .tmp/exec_outp.txt)
-		# TEST1=$(cat -e .tmp/exec_outp.txt | sed -e "1d" | sed -e "$ d")
+		TEST1=$(cat -e .tmp/exec_outp.txt | sed -e "$ d" | sed -e "$ d" | sed -e "1d")
 		TEST2=$(cat -e .tmp/bash_outp.txt)
-		# echo "$TEST1" >> result.txt
-		# echo "$TEST2" >> result2.txt
 		if [ "$TEST1" == "$TEST2" ] && [ "$ES_1" == "$ES_2" ]; then
-			# printf ${GREEN}"OK";
 			printf "✅";
 		else
 			TMP=$(echo "$PRINT" | cut -c 1-2)
-				echo "--------------------> test [$TMP]" >> traces/echo_trace.txt
-				echo "cmd: \"$FTEST\"" >> traces/echo_trace.txt
-				echo >> traces/echo_trace.txt
-				echo "expected: (exit code: $ES_2)" >> traces/echo_trace.txt
-				echo "->$TEST2<-" >> traces/echo_trace.txt
-				echo "" >> traces/echo_trace.txt
-				echo "found: (exit code: $ES_1)" >> traces/echo_trace.txt
-				echo "->$TEST1<-" >> traces/echo_trace.txt
-				echo >> traces/echo_trace.txt
-				echo "--------------------<">> traces/echo_trace.txt
-				echo >> traces/echo_trace.txt
-			# printf ${RED}"KO";
-				printf "❌";
+			echo "--------------------> test [$TMP]" >> traces/echo_trace.txt
+			echo "cmd: \"$FTEST\"" >> traces/echo_trace.txt
+			echo >> traces/echo_trace.txt
+			echo "expected: (exit code: $ES_2)" >> traces/echo_trace.txt
+			echo "->$TEST2<-" >> traces/echo_trace.txt
+			echo "" >> traces/echo_trace.txt
+			echo "found: (exit code: $ES_1)" >> traces/echo_trace.txt
+			echo "->$TEST1<-" >> traces/echo_trace.txt
+			echo >> traces/echo_trace.txt
+			echo "--------------------<">> traces/echo_trace.txt
+			echo >> traces/echo_trace.txt
+			printf "❌";
 			EOK="KO"
 		fi
 		printf ${BLUE};
@@ -164,6 +171,47 @@
 		echo "" > .tmp/bash_outp.txt
 		sleep 0.05
 	}
+
+	function echo_mix_test()
+	{
+		FTEST=$(< .tmp/exec_read.txt cat | sed -e "$ d")
+		echo "exit" >> .tmp/exec_read.txt
+		< .tmp/exec_read.txt ./minishell &> .tmp/exec_outp.txt
+		ES_1=$?
+		< .tmp/exec_read.txt bash &> .tmp/bash_outp.txt
+		ES_2=$?
+		TEST1=$(cat -e .tmp/exec_outp.txt | sed "1d" | sed "1d" | sed "2d")
+		TEST2=$(cat -e .tmp/bash_outp.txt)
+		# echo "$TEST1" >> result.txt
+		# echo "$TEST2" >> result2.txt
+		if [ "$TEST1" == "$TEST2" ] && [ "$ES_1" == "$ES_2" ]; then
+			# printf ${GREEN}"OK";
+			printf "✅";
+		else
+			TMP=$(echo "$PRINT" | cut -c 1-2)
+				echo "--------------------> test [$TMP]" >> traces/echo_trace.txt
+				echo "cmd: \"$FTEST\"" >> traces/echo_trace.txt
+				echo >> traces/echo_trace.txt
+				echo "expected: (exit code: $ES_2)" >> traces/echo_trace.txt
+				echo "->$TEST2<-" >> traces/echo_trace.txt
+				echo "" >> traces/echo_trace.txt
+				echo "found: (exit code: $ES_1)" >> traces/echo_trace.txt
+				echo "->$TEST1<-" >> traces/echo_trace.txt
+				echo >> traces/echo_trace.txt
+				echo "--------------------<">> traces/echo_trace.txt
+				echo >> traces/echo_trace.txt
+			# printf ${RED}"KO";
+				printf "❌";
+			EOK="KO"
+		fi
+		printf ${BLUE};
+		echo -n "]"
+		printf ${DEF_COLOR};
+		echo "" > .tmp/exec_outp.txt
+		echo "" > .tmp/bash_outp.txt
+		sleep 0.05
+	}
+
 # >>>>
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -178,49 +226,6 @@
 
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-
-# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  COMPILATION
-
-	mkdir .errors &> /dev/null
-	mkdir .tmp &> /dev/null
-	MKFF=$(make -C ../ &> .errors/error.txt)
-	MK_1=$?
-	MKFF=$(cat .errors/error.txt | cut -c 1-46)
-	if [ "$MK_1" != "0" ]; then
-		if [ "$MKFF" == "make: *** No targets specified and no makefile" ]; then
-			printf ${RED}
-			echo "Makefile not found!"
-			printf ${DEF_COLOR}"\n"
-			echo "Remember to clone it and run as follows:"
-			echo "  1. cd minishell_project_folder"
-			echo "  2. git clone git@github.com:ChewyToast/minishell_panic.git"
-			echo "  3. cd minishell_panic"
-			echo "  4. bash mpanic.sh"
-			echo ""
-			printf ${DEF_COLOR}
-			rm -rf .errors
-			rm -rf .tmp
-			exit
-		else
-			printf ${RED}
-			echo "Compilation error"
-			printf ${DEF_COLOR}
-			echo "-------------"
-			echo "$MKFF"
-			echo "-------------"
-			rm -rf .errors
-			rm -rf .tmp
-			exit
-		fi
-	else
-		cp ../minishell .
-		chmod 777 minishell &> /dev/null
-		mkdir traces &> /dev/null
-	fi
-
-# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
 
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  TEST CALLS
