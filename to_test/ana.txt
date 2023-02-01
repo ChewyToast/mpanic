@@ -2,3 +2,4 @@ unset $SHLVL ; echo $SHLVL
 export $SHLVL=''; echo $SLVL
 echo ~arebelo/sdfsfsfdsfs
 echo ~framos-p/sdfsfsfdsfs
+unset HOME ; echo ~
