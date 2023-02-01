@@ -3,3 +3,4 @@ export $SHLVL=''; echo $SLVL
 echo ~arebelo/sdfsfsfdsfs
 echo ~framos-p/sdfsfsfdsfs
 unset HOME ; echo ~
+echo aaa > $HOME.txt > bb (permission denied and should not create bb)
