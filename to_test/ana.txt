@@ -5,3 +5,4 @@ echo ~framos-p/sdfsfsfdsfs
 unset HOME ; echo ~
 echo aaa > $HOME.txt > bb (exit code = 1, permission denied error and should not create bb)
 echo ana < kdhfsdf > bb (exit code = 2, no file or dir error and bb is not created)
+echo $""USER
