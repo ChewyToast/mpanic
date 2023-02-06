@@ -256,6 +256,7 @@
 	echo "**************************************************************" >> traces/echo_trace.txt
 	echo "" >> traces/echo_trace.txt
 	printf ${BLUE}"\n              ---------------         [ parsing & echo ]         ---------------            \n\n\n     "${DEF_COLOR}
+	# UTIL !!!				PARA ESCAPAR UNA COMILLA SIMPLE SE PONE ASI: {'"'"'} = {'}
 	echo_simple_test '  1.[echo ""     '
 	echo_simple_test '  2.[echo'
 	echo_simple_test '  3.[echO ""    '
