@@ -15,3 +15,4 @@ export PATH=';'; ls
 export PATH='/usr/bin'; ls
 export PATH='/usr/bin'; whoami
 export A='fi le'; echo hola > $A
+export 'AH$'=nop\n
