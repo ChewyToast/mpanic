@@ -159,18 +159,14 @@
 		WCTEST1=$(cat -e .tmp/exec_outp.txt | wc -l)
 		TEST2=$(cat -e .tmp/bash_outp.txt)
 
-		if [ "$WCTEST1" == "4" ]; then
-			TEST1=$(cat -e .tmp/exec_outp.txt | sed -e "$ d" -e "1d" | sed -e "$ d" | sed -e "$ d")
+		if [ "$size_prom" != "0" ]; then
+			TEST1=$(cat -e .tmp/exec_outp.txt | sed -e "1d" | sed -e "$ d" | rev)
+			TEST1=${TEST1:$size_prom_cat_exit:${#TEST1}}
+			TEST1=$(echo -n "$TEST1" | rev)
 		else
-			if [ "$size_prom" != "0" ]; then
-				TEST1=$(cat -e .tmp/exec_outp.txt | sed -e "1d" | rev)
-				TEST1=${TEST1:$size_prom_cat_exit:${#TEST1}}
-				TEST1=$(echo -n "$TEST1" | rev)
-			else
-				TEST1=$(cat -e .tmp/exec_outp.txt)
-				# TEST1=$(cat -e .tmp/exec_outp.txt | sed -e "$ d" -e "1d")
-				# TEST1=${TEST1:0:-7}
-			fi
+			TEST1=$(cat -e .tmp/exec_outp.txt)
+			# TEST1=$(cat -e .tmp/exec_outp.txt | sed -e "$ d" -e "1d")
+			# TEST1=${TEST1:0:-7}
 		fi
 
 		# Realizamos comparativas y imprimimos resultado y/o resultado en archivo
