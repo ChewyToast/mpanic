@@ -113,7 +113,7 @@
 
 		# Damos valor a variables para comparar, leemos de los archivos de salida
 		# TEST1=$(cat -e .tmp/exec_outp.txt)
-		TEST1=$(cat -e .tmp/exec_outp.txt | sed -e "$ d" | sed -e "1d")
+		TEST1=$(cat -e .tmp/exec_outp.txt | sed -e "$ d" | sed -e "1d" | sed -e "$ d")
 		TEST2=$(cat -e .tmp/bash_outp.txt)
 
 		# Realizamos comparativas y imprimimos resultado y/o resultado en archivo
@@ -160,7 +160,7 @@
 		TEST2=$(cat -e .tmp/bash_outp.txt)
 
 		if [ "$WCTEST1" == "4" ]; then
-			TEST1=$(cat -e .tmp/exec_outp.txt | sed -e "$ d" -e "1d" | sed -e "$ d")
+			TEST1=$(cat -e .tmp/exec_outp.txt | sed -e "$ d" -e "1d" | sed -e "$ d" | sed -e "$ d")
 		else
 			if [ "$size_prom" != "0" ]; then
 				TEST1=$(cat -e .tmp/exec_outp.txt | sed -e "1d" | rev)
@@ -207,7 +207,7 @@
 		ES2=$?
 
 		# Damos valor a variables para comparar, leemos de los archivos de salida
-		TEST1=$(cat -e .tmp/exec_outp.txt | sed -e "1d" -e "$ d" | sed -e "1d")
+		TEST1=$(cat -e .tmp/exec_outp.txt | sed -e "1d" -e "$ d" | sed -e "1d" | sed -e "$ d")
 		TEST2=$(cat -e .tmp/bash_outp.txt)
 		# TEST1=$(cat -e .tmp/exec_outp.txt | sed -e "1d" -e "2d" -e "$ d" | sed -e "$ d")
 
