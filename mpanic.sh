@@ -60,9 +60,9 @@
 
 # var
 	EOK="OK"
-	prmp=$(cat .tmp/start.txt | sed -e "2d")
-	size_prom=${#prmp}
-	size_prom=$(($size_prom - 4))
+	prmp=$(cat -e .tmp/start.txt | sed -e "2d")
+	size_prom_cat_exit=${#prmp}
+	size_prom=$(($size_prom_cat_exit - 5))
 	PRMP=$(echo "$prmp" | cut -c 1-$size_prom)
 #
 
@@ -93,56 +93,12 @@
 	function echo_simple_test()
 	{
 		# Declaramos variables para funcion
-		ARGV=$(echo "$@")
-		FTEST=$(echo "$ARGV" | cut -c 6-100)
-		PRINT=$(echo "$ARGV" | cut -c 1-5)
+		FTEST=$(echo "$2")
+		PRINT=$(echo "$1")
 
 		# Preparamos archivo que va a ser el input con los argumentos
 		# Print para completar visualizer
-		printf "$BLUE  $PRINT$DEF_COLOR"
-		echo "$FTEST" > .tmp/exec_read.txt
-		echo "exit" >> .tmp/exec_read.txt
-
-		# Ejecutamos minishell y bash con mismos comandos y recojemos ES
-		< .tmp/exec_read.txt ./minishell &> .tmp/exec_outp.txt
-		ES1=$?
-		< .tmp/exec_read.txt bash &> .tmp/bash_outp.txt
-		ES2=$?
-
-		# Damos valor a variables para comparar, leemos de los archivos de salida
-		TEST1=$(cat -e .tmp/exec_outp.txt | sed -e "$ d" | sed -e "$ d" | sed -e "1d")
-		TEST2=$(cat -e .tmp/bash_outp.txt)
-
-		# Realizamos comparativas y imprimimos resultado y/o resultado en archivo
-		if [[ "$ES2" == "127" && "$ES1" == "127" && $TEST1 == *"command not found"* ]]; then
-			printf "✅";
-		else
-			if [ "$TEST1" == "$TEST2" ] && [ "$ES1" == "$ES2" ]; then
-				printf "✅";
-			else
-				TMP=$(echo "$PRINT" | cut -c 1-3)
-				tracse_printer "$PRINT" "$TMP" "$FTEST" "$ES2" "$TEST2" "$ES1" "$TEST1";
-				EOK="KO"
-			fi
-		fi
-		printf ${BLUE};
-		echo -n "]"
-		printf ${DEF_COLOR};
-		echo "" > .tmp/exec_outp.txt
-		echo "" > .tmp/bash_outp.txt
-		sleep 0.05
-	}
-
-	function echo_flag_test()
-	{
-		# Declaramos variables para funcion
-		ARGV=$(echo "$1")
-		FTEST=$(echo "$ARGV" | cut -c 6-100)
-		PRINT=$(echo "$ARGV" | cut -c 1-5)
-
-		# Preparamos archivo que va a ser el input con los argumentos
-		# Print para completar visualizer
-		printf "$BLUE  $PRINT$DEF_COLOR"
+		printf "$BLUE$PRINT$DEF_COLOR"
 		echo "$FTEST" > .tmp/exec_read.txt
 		echo "exit" >> .tmp/exec_read.txt
 
@@ -154,35 +110,48 @@
 
 		# Damos valor a variables para comparar, leemos de los archivos de salida
 		WCTEST1=$(cat -e .tmp/exec_outp.txt | wc -l)
-		# printf "WC->$WCTEST1"
-		TEST2=$(cat -e .tmp/bash_outp.txt)
-		if [ "$WCTEST1" == "4" ];then
-			TEST1=$(cat -e .tmp/exec_outp.txt | sed -e "$ d" -e "1d" | sed -e "$ d")
+		WCTEST2=$(cat -e .tmp/bash_outp.txt | wc -l)
+		if [ "$WCTEST1" == "       4" ]; then
+			TEST1=$(cat -e .tmp/exec_outp.txt | sed -e "$ d" | sed -e "$ d" | sed -e "1d")
+			TEST2=$(cat -e .tmp/bash_outp.txt)
 		else
-			TEST1=$(cat -e .tmp/exec_outp.txt | sed -e "$ d" -e "1d")
-			TEST1=${TEST1:0:-$size_prom}
-			TEST1=${TEST1:0:-7}
+			if [ "$WCTEST1" == "       3" ]; then
+				# TEST1=$(cat -e .tmp/exec_outp.txt)
+				TEST1=$(cat -e .tmp/exec_outp.txt | sed -e "$ d" | sed -e "1d" | rev )
+				TEST1=${TEST1:$size_prom_cat_exit:${#TEST1}}
+				TEST1=$(echo "$TEST1" | rev )
+				# TEST1=${TEST1:0:7}
+				TEST2=$(cat -e .tmp/bash_outp.txt)
+			else
+				TEST1=$(cat -e .tmp/exec_outp.txt)
+				TEST2=$(cat -e .tmp/bash_outp.txt)
+			fi
 		fi
 
 		# Realizamos comparativas y imprimimos resultado y/o resultado en archivo
-
-		if [[ "$ES2" == "127" && "$ES" == "127" ]] && [ "$TEST1" == *"command not found"* ]; then
+		if [[ "$ES2" == "127" && "$ES1" == "127" && $TEST1 == *"command not found"* ]]; then
 			printf "✅";
 		else
 			if [ "$TEST1" == "$TEST2" ] && [ "$ES1" == "$ES2" ]; then
 				printf "✅";
 			else
-				TMP=$(echo "$PRINT" | cut -c 1-3)
+				TMP=$(echo "$PRINT" | cut -c 3-5)
 				tracse_printer "$PRINT" "$TMP" "$FTEST" "$ES2" "$TEST2" "$ES1" "$TEST1";
 				EOK="KO"
 			fi
 		fi
 		printf ${BLUE};
-		echo -n "]"
-		printf ${DEF_COLOR};
+		echo -n "]";
+		printf " ->";
+		printf ${MAGENTA};
+		if [ "$3" ]; then
+			echo -n "$3";
+		else
+			echo -n "$2";
+		fi
+		printf "${BLUE}<-${DEF_COLOR}\n\n";
 		echo "" > .tmp/exec_outp.txt
 		echo "" > .tmp/bash_outp.txt
-		sleep 0.05
 	}
 
 	function echo_mix_test()
@@ -206,11 +175,17 @@
 			fi
 		fi
 		printf ${BLUE};
-		echo -n "]"
-		printf ${DEF_COLOR};
+		echo -n "]";
+		printf " ->";
+		printf ${MAGENTA};
+		if [ "$3" ]; then
+			echo -n "$3";
+		else
+			echo -n "$2";
+		fi
+		printf "${BLUE}<-${DEF_COLOR}\n\n";
 		echo "" > .tmp/exec_outp.txt
 		echo "" > .tmp/bash_outp.txt
-		sleep 0.05
 	}
 
 # >>>>
@@ -221,9 +196,9 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  BANNER
 
 
-	printf ${MAIN_COLOR}"\t\t\t        -----------------------"${DEF_COLOR};
-	printf ${MAIN_COLOR}"\n\t\t\t       | 👹 MINISHELL PANIC 👹 |\n"${DEF_COLOR};
-	printf ${MAIN_COLOR}"\t\t\t        -----------------------\n\n"${DEF_COLOR};
+	printf ${MAIN_COLOR}"\t\t -----------------------"${DEF_COLOR};
+	printf ${MAIN_COLOR}"\n\t\t| 👹 MINISHELL PANIC 👹 |\n"${DEF_COLOR};
+	printf ${MAIN_COLOR}"\t\t -----------------------\n\n"${DEF_COLOR};
 
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -232,7 +207,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  TEST CALLS
 
 #ECHO
-	printf ${BLUE}"\n|=======================================[ ECHO ]=======================================|\n\n\n  "${DEF_COLOR}
+	printf ${BLUE}"\n|=======================[ ECHO ]=======================|\n\n\n"${DEF_COLOR}
 	rm -rf traces/echo_trace.txt &> /dev/null
 	echo "" > traces/echo_trace.txt
 	echo "**************************************************************" >> traces/echo_trace.txt
@@ -242,148 +217,147 @@
 	echo "*                                                            *" >> traces/echo_trace.txt
 	echo "**************************************************************" >> traces/echo_trace.txt
 	echo "" >> traces/echo_trace.txt
-	printf ${BLUE}"\n              ---------------         [ echo only ]         ---------------            \n\n  "${DEF_COLOR}
-	echo_simple_test '  1.[echo ""     '
-	echo_simple_test '  2.[echo'
-	echo_simple_test '  3.[echO ""    '
-	echo_simple_test '  4.[    echo'
-	echo_simple_test '  5.[    echo       " hi"'
-	echo_simple_test '  6.["echo" ""   '
-	echo_simple_test '  7.[echo hi   '
-	echo_simple_test '  8.[EcHo hi   '
-	printf "\n\n  "
-	echo_simple_test '  9.[echo """ ""hi" " """'
-	echo_simple_test ' 10.["echo" "'""'"'
-	echo_simple_test ' 11.[echo \"hi\"'
-	echo_simple_test ' 12.[echo $HOME'
-	echo_simple_test ' 13.[echo $PATH'
-	echo_simple_test ' 14.[echo $NONEXIST'
-	echo_simple_test ' 15.["      echo"'
-	echo_simple_test ' 16.[\ echo "   " $'
-	printf "\n\n  "
-	echo_simple_test ' 17.[echo hi~'
-	echo_simple_test ' 18.[echo ~'
-	echo_simple_test ' 19.[echo ~false'
-	echo_simple_test ' 20.[echo \~'
-	echo_simple_test ' 21.[echo "~"ups'
-	echo_flag_test ' 22.[echo -n' '3'
-	echo_flag_test ' 23.[echo -n hi' '3'
-	echo_flag_test ' 24.[echo -nn' '3'
-	printf "\n\n  "
-	echo_flag_test ' 25.[echo -nn hi' '3'
-	echo_flag_test ' 26.[echo --n' '4'
-	echo_flag_test ' 27.['"'"'echo'"'"' --n hi' '4'
-	echo_flag_test ' 28.[echo -n -n' '3'
-	echo_flag_test ' 29.[echo -n -n hi' '3'
-	echo_flag_test ' 30.[echo -nn -nn' '3'
-	echo_flag_test ' 31.[echo -nn -nn hi' '3'
-	echo_flag_test ' 32.[echo -n -n -n -n' '3'
-	printf "\n\n  "
-	echo_flag_test ' 33.[echo -n -n -n -n hi' '3'
-	echo_flag_test ' 34.[echo -n -n -n \-n hi' '3'
-	echo_flag_test ' 35.[echo -nn hi --n' '3'
-	echo_flag_test ' 36.[echo \-nn hi --n' '4'
-	echo_flag_test ' 37.[echo -nn hi --n' '3'
-	echo_flag_test ' 38.[echo "-nn" hi -n' '3'
-	echo_flag_test ' 39.[echo -------------nnnnnnnnnn hi' '4'
-	echo_flag_test ' 40.[echo "-------------nnnnnnnnnn" hi' '4'
-	printf ${BLUE}"\n\n\n              ---------------         [ echo plus ]         ---------------            \n\n  "${DEF_COLOR}
+	# printf ${BLUE}"\n\n\n"${DEF_COLOR}
+	printf "${BLUE} parsing\n ------------------------------------\n\n${DEF_COLOR}"
+	echo_simple_test '  1.  [' 'echo ""     '
+	echo_simple_test '  2.  [' 'echo'
+	echo_simple_test '  3.  [' 'echO ""    '
+	echo_simple_test '  4.  [' '    echo'
+	echo_simple_test '  5.  [' '    echo       " hi"'
+	echo_simple_test '  6.  [' '"echo" ""   '
+	echo_simple_test '  7.  [' 'echo hi   '
+	echo_simple_test '  8.  [' 'EcHo hi   '
+	echo_simple_test '  9.  [' 'echo """ ""hi" " """'
+	echo_simple_test "  10. [" "\"echo\" ''"
+	echo_simple_test '  11. [' 'echo \"hi\"'
+	echo_simple_test '  12. [' 'echo $HOME'
+	echo_simple_test '  13. [' 'echo $PATH'
+	echo_simple_test '  14. [' 'echo $NONEXIST'
+	echo_simple_test '  15. [' '" echo"'
+	echo_simple_test '  16. [' '\ echo "   " $'
+	echo_simple_test '  17. [' 'echo hi~'
+	echo_simple_test '  18. [' 'echo ~'
+	echo_simple_test '  19. [' 'echo ~false'
+	echo_simple_test '  20. [' 'echo \~'
+	echo_simple_test '  21. [' 'echo "~"ups'
+	printf "${BLUE}\n flags\n ------------------------------------\n\n${DEF_COLOR}"
+	echo_simple_test '  22. [' 'echo -n'
+	echo_simple_test '  23. [' 'echo -n hi'
+	echo_simple_test '  24. [' ' echo -nn'
+	echo_simple_test '  25. [' 'echo -nn hi'
+	echo_simple_test '  26. [' ' echo --n'
+	echo_simple_test '  27. [' ''"'"'echo'"'"' --n hi'
+	echo_simple_test '  28. [' 'echo -n -n'
+	echo_simple_test '  29. [' 'echo -n -n hi'
+	echo_simple_test '  30. [' 'echo -nn -nn'
+	echo_simple_test '  31. [' 'echo -nn -nn hi'
+	echo_simple_test '  32. [' 'echo -n -n -n -n'
+	echo_simple_test '  33. [' 'echo -n -n -n -n hi'
+	echo_simple_test '  34. [' 'echo -n -n -n \-n hi'
+	echo_simple_test '  35. [' 'echo -nn hi --n'
+	echo_simple_test '  36. [' 'echo \-nn hi --n'
+	echo_simple_test '  37. [' 'echo -nn hi --n'
+	echo_simple_test '  38. [' 'echo "-nn" hi -n'
+	echo_simple_test '  39. [' 'echo -------------nnnnnnnnnn hi'
+	echo_simple_test '  40. [' 'echo "-------------nnnnnnnnnn" hi'
+	printf "${BLUE}\n combo\n ------------------------------------\n\n${DEF_COLOR}"
+	# printf ${BLUE}"\n\n\n              ---------------         [ echo plus ]         ---------------            \n\n  "${DEF_COLOR}
 	export ECMD="echo" &> /dev/null
-	echo_simple_test ' 41.[$ECMD'
-	echo_simple_test ' 42.[$ECMD "hi"'
+	echo_simple_test '  41. [' '$ECMD' ''
+	echo_simple_test '  42. [' '$ECMD "hi"'
 	export ECMD="EchO" &> /dev/null
-	echo_simple_test ' 43.[$ECMD'
+	echo_simple_test '  43. [' '$ECMD'
 	export ECMD="EChO" &> /dev/null
-	echo_simple_test ' 44.[$ECMD "hi"'
+	echo_simple_test '  44. [' '$ECMD "hi"'
 	export ECMD="         echo" &> /dev/null
-	echo_simple_test ' 45.[$ECMD "hi"'
+	echo_simple_test '  45. [' '$ECMD "hi"'
 	export ECMD="         EcHO       " &> /dev/null
-	echo_simple_test ' 46.[$ECMD " hi"'
-	unset ECMD
-	printf ${BLUE};
-	echo -n "   47.["
-	printf ${DEF_COLOR};
-	echo 'export ECMD="echo"
-	$ECMD "hi"' > .tmp/exec_read.txt
-	echo "exit" >> .tmp/exec_read.txt
-	echo_mix_test "47";
-	printf ${BLUE};
-	echo -n "   48.["
-	printf ${DEF_COLOR};
-	echo 'export ECMD="EchO"
-	$ECMD " hi"' > .tmp/exec_read.txt
-	echo "exit" >> .tmp/exec_read.txt
-	echo_mix_test "48";
-	printf "\n\n  "
-	printf ${BLUE};
-	echo -n "   49.["
-	printf ${DEF_COLOR};
-	echo 'export ECMD="         EcHO       "
-	$ECMD "hi"' > .tmp/exec_read.txt
-	echo "exit" >> .tmp/exec_read.txt
-	echo_mix_test "49";
-	printf ${BLUE};
-	echo -n "   50.["
-	printf ${DEF_COLOR};
-	echo 'export ECMD="         EcHO      hi "
-	$ECMD' > .tmp/exec_read.txt
-	echo "exit" >> .tmp/exec_read.txt
-	echo_mix_test "50";
-	printf ${BLUE};
-	echo -n "   51.["
-	printf ${DEF_COLOR};
-	echo 'export ECMD="         '"'"'echo'"'"'      hi "
-	$ECMD' > .tmp/exec_read.txt
-	echo "exit" >> .tmp/exec_read.txt
-	echo_mix_test "51";
-	printf ${BLUE};
-	echo -n "   52.["
-	printf ${DEF_COLOR};
-	echo 'export ECMD="         "echo"      hi "
-	$ECMD' > .tmp/exec_read.txt
-	echo "exit" >> .tmp/exec_read.txt
-	echo_mix_test "52";
-	printf ${BLUE};
-	echo -n "   53.["
-	printf ${DEF_COLOR};
-	echo 'export PATH="."
-	echo hola' > .tmp/exec_read.txt
-	echo "exit" >> .tmp/exec_read.txt
-	echo_mix_test "53";
-	printf ${BLUE};
-	echo -n "   53.["
-	printf ${DEF_COLOR};
-	echo 'export PATH="."
-	echo hola' > .tmp/exec_read.txt
-	echo "exit" >> .tmp/exec_read.txt
-	echo_mix_test "53";
-	printf ${BLUE};
-	echo -n "   54.["
-	printf ${DEF_COLOR};
-	echo 'unset PATH
-	echo $USER*1' > .tmp/exec_read.txt
-	echo "exit" >> .tmp/exec_read.txt
-	echo_mix_test "54";
-	printf ${BLUE};
-	echo -n "   55.["
-	printf ${DEF_COLOR};
-	echo 'unset HOME
-	echo "~"$USER' > .tmp/exec_read.txt
-	echo "exit" >> .tmp/exec_read.txt
-	echo_mix_test "55";
+	echo_simple_test '  46. [' '$ECMD " hi"'
+	printf "${RED}\tmore test comming soon...👹${DEF_COLOR}\n"
+	# unset ECMD
+	# printf ${BLUE};
+	# echo -n "  47. ["
+	# printf ${DEF_COLOR};
+	# echo 'export ECMD="echo"
+	# $ECMD "hi"' > .tmp/exec_read.txt
+	# echo "exit" >> .tmp/exec_read.txt
+	# echo_mix_test "47";
+	# printf ${BLUE};
+	# echo -n "  48. ["
+	# printf ${DEF_COLOR};
+	# echo 'export ECMD="EchO"
+	# $ECMD " hi"' > .tmp/exec_read.txt
+	# echo "exit" >> .tmp/exec_read.txt
+	# echo_mix_test "48";
+	# printf ${BLUE};
+	# echo -n "  49. ["
+	# printf ${DEF_COLOR};
+	# echo 'export ECMD="         EcHO       "
+	# $ECMD "hi"' > .tmp/exec_read.txt
+	# echo "exit" >> .tmp/exec_read.txt
+	# echo_mix_test "49";
+	# printf ${BLUE};
+	# echo -n "  50. ["
+	# printf ${DEF_COLOR};
+	# echo 'export ECMD="         EcHO      hi "
+	# $ECMD' > .tmp/exec_read.txt
+	# echo "exit" >> .tmp/exec_read.txt
+	# echo_mix_test "50";
+	# printf ${BLUE};
+	# echo -n "  51. ["
+	# printf ${DEF_COLOR};
+	# echo 'export ECMD="         '"'"'echo'"'"'      hi "
+	# $ECMD' > .tmp/exec_read.txt
+	# echo "exit" >> .tmp/exec_read.txt
+	# echo_mix_test "51";
+	# printf ${BLUE};
+	# echo -n "  52. ["
+	# printf ${DEF_COLOR};
+	# echo 'export ECMD="         "echo"      hi "
+	# $ECMD' > .tmp/exec_read.txt
+	# echo "exit" >> .tmp/exec_read.txt
+	# echo_mix_test "52";
+	# printf ${BLUE};
+	# echo -n "  53. ["
+	# printf ${DEF_COLOR};
+	# echo 'export PATH="."
+	# echo hola' > .tmp/exec_read.txt
+	# echo "exit" >> .tmp/exec_read.txt
+	# echo_mix_test "53";
+	# printf ${BLUE};
+	# echo -n "  54. ["
+	# printf ${DEF_COLOR};
+	# echo 'export PATH="."
+	# echo hola' > .tmp/exec_read.txt
+	# echo "exit" >> .tmp/exec_read.txt
+	# echo_mix_test "53";
+	# printf ${BLUE};
+	# echo -n "  55. ["
+	# printf ${DEF_COLOR};
+	# echo 'unset PATH
+	# echo $USER*1' > .tmp/exec_read.txt
+	# echo "exit" >> .tmp/exec_read.txt
+	# echo_mix_test "54";
+	# printf ${BLUE};
+	# echo -n "  56. ["
+	# printf ${DEF_COLOR};
+	# echo 'unset HOME
+	# echo "~"$USER' > .tmp/exec_read.txt
+	# echo "exit" >> .tmp/exec_read.txt
+	# echo_mix_test "55";
 	if [ "$EOK" == "KO" ];
 	then
-		printf "\n\n\n\n\n"
-		printf ${CYAN}"     It seems that there are some tests that have not passed...\n"
-		printf ${CYAN}"     To see the failure traces, check in traces/echo_traces.txt\n"
+		printf "${CYAN}\n\n  It seems that there are some tests\n"
+		printf "  that have not passed...\n\n"
+		printf "  Failure traces -> traces/echo_traces.txt\n"
 	fi
-	printf ${BLUE}"\n\n|======================================================================================|\n\n"
+	printf "${BLUE}\n|======================================================|\n\n\n${DEF_COLOR}"
 # #
 
 # # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 
 
 # # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  ENDER
-	printf "     Any issue send via slack bmoll-pe or ailopez-o\n\n"${DEF_COLOR}
+	printf "${BLUE}  Any issue send via slack bmoll-pe or ailopez-o\n\n${DEF_COLOR}"
 	rm -rf .errors
 	rm -rf .tmp
 	rm -rf minishell
