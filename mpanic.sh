@@ -274,7 +274,6 @@
 	export ECMD="         EcHO       " &> /dev/null
 	echo_simple_test '  46. [' '$ECMD " hi"'
 	printf "${RED}\tmore test comming soon...👹${DEF_COLOR}\n"
-	# unset ECMD
 	# printf ${BLUE};
 	# echo -n "  47. ["
 	# printf ${DEF_COLOR};
@@ -345,6 +344,7 @@
 	# echo "~"$USER' > .tmp/exec_read.txt
 	# echo "exit" >> .tmp/exec_read.txt
 	# echo_mix_test "55";
+	# unset ECMD
 	if [ "$EOK" == "KO" ];
 	then
 		printf "${CYAN}\n\n  It seems that there are some tests\n"
@@ -357,9 +357,15 @@
 # # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 
 
 # # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  ENDER
-	printf "${BLUE}  Any issue send via slack bmoll-pe or ailopez-o\n\n${DEF_COLOR}"
+	printf "${BLUE}  Any issue send via slack bmoll-pe, arebelo or ailopez-o\n\n${DEF_COLOR}"
 	rm -rf .errors
 	rm -rf .tmp
 	rm -rf minishell
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+	#test_file="/Users/test/Documents/03_minishell/minishell_panic/to_test/bruno.txt"
+	# while IFS= read -r linea
+	# do
+	# 	echo "$linea"
+	# done < "$test_file"
