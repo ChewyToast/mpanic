@@ -1,0 +1,22 @@
+echo ""     
+echo
+echO ""    
+    echo
+    echo       " hi"
+"echo" ""   
+echo hi   
+EcHo hi   
+echo """ ""hi" " """
+\"echo\" ''
+echo \"hi\"
+echo $HOME
+echo $PATH
+echo $NONEXIST
+" echo"
+" echo"
+\ echo "   " $
+echo hi~
+echo ~
+echo ~false
+echo \~
+echo "~"ups

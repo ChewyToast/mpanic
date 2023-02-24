@@ -1,0 +1,19 @@
+echo -n
+echo -n hi
+ echo -nn
+echo -nn hi
+ echo --n
+'"'"'echo'"'"' --n hi
+echo -n -n
+echo -n -n hi
+echo -nn -nn
+echo -nn -nn hi
+echo -n -n -n -n
+echo -n -n -n -n hi
+echo -n -n -n \-n hi
+echo -nn hi --n
+echo \-nn hi --n
+echo -nn hi --n
+echo "-nn" hi -n
+echo -------------nnnnnnnnnn hi
+echo "-------------nnnnnnnnnn" hi

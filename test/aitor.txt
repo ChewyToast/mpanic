@@ -1,0 +1,7 @@
+echo $HOME.yo
+echo $NOEXISTE.tu
+echo yo.$HOME
+echo tu.$NOEXISTE
+echo ~
+echo ~usuario
+echo usuario~
