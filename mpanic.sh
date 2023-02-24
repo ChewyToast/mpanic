@@ -13,39 +13,53 @@
 	MAIN_COLOR='\033[0;96m'
 #
 
+# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  UTILS
+
+function	clean_exit()
+{
+	rm -rf .errors
+	rm -rf .tmp
+	rm -rf minishell
+	exit
+}
+
+function	echo_color()
+{
+	printf $1
+	if [ "$3" == "-n" ]; then
+		echo -n $2
+	else
+		echo $2
+	fi
+	printf ${DEF_COLOR}	
+}
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  PREPARE & COMPILATION
 
 	mkdir .errors &> /dev/null
 	mkdir .tmp &> /dev/null
+	echo_color ${GRAY} "Compiling Makefile ... Please wait!"
 	MKFF=$(make -C ../ &> .errors/error.txt)
+	echo_color ${GRAY} "Thanks for waiting"
 	MK_1=$?
 	MKFF=$(cat .errors/error.txt | cut -c 1-46)
+
 	if [ "$MK_1" != "0" ]; then
 		if [ "$MKFF" == "make: *** No targets specified and no makefile" ]; then
-			printf ${RED}
-			echo "Makefile not found!"
-			printf ${DEF_COLOR}"\n"
+			echo_color ${RED} "Makefile not found!"
 			echo "Remember to clone it and run as follows:"
 			echo "  1. cd minishell_project_folder"
 			echo "  2. git clone git@github.com:ChewyToast/minishell_panic.git"
 			echo "  3. cd minishell_panic"
 			echo "  4. bash mpanic.sh"
 			echo ""
-			printf ${DEF_COLOR}
-			rm -rf .errors
-			rm -rf .tmp
-			exit
+			clean_exit
 		else
-			printf ${RED}
-			echo "Compilation error"
-			printf ${DEF_COLOR}
+			echo_color ${RED} "Compilation error"
 			echo "-------------"
 			echo "$MKFF"
 			echo "-------------"
-			rm -rf .errors
-			rm -rf .tmp
-			exit
+			clean_exit
 		fi
 	else
 		mkdir traces &> /dev/null
@@ -55,24 +69,28 @@
 	echo "exit" > .tmp/exec_read.txt
 	< .tmp/exec_read.txt ./minishell &> .tmp/start.txt
 
-# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+# # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-
-# var
-	EOK="OK"
+# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  PREPARE VARIABLES
+# PROMPT
 	prmp=$(cat -e .tmp/start.txt | sed -e "2d")
 	size_prom_cat_exit=${#prmp}
 	size_prom=$(($size_prom_cat_exit - 5))
 	PRMP=$(echo "$prmp" | cut -c 1-$size_prom)
-#
+# TEST COUNTER
+	i=0
+# TEST RESULT
+	ret=0
+# TEST STATUS
+	EOK="OK"
 
 
-# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  TESTS FUNCTIONS
+# # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  TESTS FUNCTIONS
 
-# >>>> TESTS ECHO
+# # >>>> TESTS ECHO
 
 
-	function tracse_printer()
+	function trace_printer()
 	{
 		TMP=$(echo "$1" | cut -c 1-2)
 		echo "--------------------> test [$2]" >> traces/echo_trace.txt
@@ -86,21 +104,38 @@
 		echo >> traces/echo_trace.txt
 		echo "--------------------<">> traces/echo_trace.txt
 		echo >> traces/echo_trace.txt
-		printf "❌";
-		EOK="KO"
 	}
 
+
+	function print_test_result()
+	{
+		echo_color ${BLUE} "  ${i}.  [" -n
+		if [ "$ret" == 1 ]; then
+			printf "✅"
+		else
+			printf "❌"
+		fi
+		echo_color ${BLUE} " ] ->" -n
+		printf ${MAGENTA};
+		if [ "$2" ]; then
+			echo -n "$2";
+		else
+			echo -n "$1";
+		fi
+		printf "${BLUE}<-${DEF_COLOR}\n\n";
+
+	}
+	
 	function echo_simple_test()
 	{
 		# Declaramos variables para funcion
-		FTEST=$(echo "$2")
-		PRINT=$(echo "$1")
+		let "i=i+1"
+		FTEST=$(echo "$1")
 
 		# Preparamos archivo que va a ser el input con los argumentos
 		# Print para completar visualizer
-		printf "$BLUE$PRINT$DEF_COLOR"
-		echo "$FTEST" > .tmp/exec_read.txt
-		echo "exit" >> .tmp/exec_read.txt
+ 		echo "$FTEST" > .tmp/exec_read.txt
+ 		echo "exit" >> .tmp/exec_read.txt
 
 		# Ejecutamos minishell y bash con mismos comandos y recojemos ES
 		< .tmp/exec_read.txt ./minishell &> .tmp/exec_outp.txt
@@ -111,6 +146,7 @@
 		# Damos valor a variables para comparar, leemos de los archivos de salida
 		WCTEST1=$(cat -e .tmp/exec_outp.txt | wc -l)
 		WCTEST2=$(cat -e .tmp/bash_outp.txt | wc -l)
+	
 		if [ "$WCTEST1" == "       4" ]; then
 			TEST1=$(cat -e .tmp/exec_outp.txt | sed -e "$ d" | sed -e "$ d" | sed -e "1d")
 			TEST2=$(cat -e .tmp/bash_outp.txt)
@@ -130,29 +166,20 @@
 
 		# Realizamos comparativas y imprimimos resultado y/o resultado en archivo
 		if [[ "$ES2" == "127" && "$ES1" == "127" && $TEST1 == *"command not found"* ]]; then
-			printf "✅";
+			ret=1;
 		else
 			if [ "$TEST1" == "$TEST2" ] && [ "$ES1" == "$ES2" ]; then
-				printf "✅";
+				ret=1
 			else
-				TMP=$(echo "$PRINT" | cut -c 3-5)
-				tracse_printer "$PRINT" "$TMP" "$FTEST" "$ES2" "$TEST2" "$ES1" "$TEST1";
-				EOK="KO"
+				ret=0
+				trace_printer "$1" "$i" "$FTEST" "$ES2" "$TEST2" "$ES1" "$TEST1";
 			fi
 		fi
-		printf ${BLUE};
-		echo -n "]";
-		printf " ->";
-		printf ${MAGENTA};
-		if [ "$3" ]; then
-			echo -n "$3";
-		else
-			echo -n "$2";
-		fi
-		printf "${BLUE}<-${DEF_COLOR}\n\n";
-		echo "" > .tmp/exec_outp.txt
-		echo "" > .tmp/bash_outp.txt
-	}
+		PRINT=$(print_test_result "${FTEST}")
+		echo $PRINT
+ 		echo "" > .tmp/exec_outp.txt
+ 		echo "" > .tmp/bash_outp.txt
+ 	}
 
 	function echo_mix_test()
 	{
@@ -190,7 +217,7 @@
 
 # >>>>
 
-# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+# # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  BANNER
@@ -207,7 +234,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  TEST CALLS
 
 #ECHO
-	printf ${BLUE}"\n|=======================[ ECHO ]=======================|\n\n\n"${DEF_COLOR}
+	printf ${BLUE}"\n|=======================[ ECHO ]=======================|"${DEF_COLOR}
 	rm -rf traces/echo_trace.txt &> /dev/null
 	echo "" > traces/echo_trace.txt
 	echo "**************************************************************" >> traces/echo_trace.txt
@@ -217,20 +244,20 @@
 	echo "*                                                            *" >> traces/echo_trace.txt
 	echo "**************************************************************" >> traces/echo_trace.txt
 	echo "" >> traces/echo_trace.txt
-	# printf ${BLUE}"\n\n\n"${DEF_COLOR}
+	printf ${BLUE}"\n\n\n"${DEF_COLOR}
 	printf "${BLUE} parsing\n ------------------------------------\n\n${DEF_COLOR}"
-	echo_simple_test '  1.  [' 'echo ""     '
-	echo_simple_test '  2.  [' 'echo'
-	echo_simple_test '  3.  [' 'echO ""    '
-	echo_simple_test '  4.  [' '    echo'
-	echo_simple_test '  5.  [' '    echo       " hi"'
-	echo_simple_test '  6.  [' '"echo" ""   '
-	echo_simple_test '  7.  [' 'echo hi   '
-	echo_simple_test '  8.  [' 'EcHo hi   '
-	echo_simple_test '  9.  [' 'echo """ ""hi" " """'
-	echo_simple_test "  10. [" "\"echo\" ''"
-	echo_simple_test '  11. [' 'echo \"hi\"'
-	echo_simple_test '  12. [' 'echo $HOME'
+	echo_simple_test 'echo ""     '
+ 	echo_simple_test 'echo'
+	echo_simple_test 'echO ""    '
+	echo_simple_test '    echo'
+	echo_simple_test '    echo       " hi"'
+	echo_simple_test '"echo" ""   '
+	echo_simple_test 'echo hi   '
+	echo_simple_test 'EcHo hi   '
+	echo_simple_test 'echo """ ""hi" " """'
+	echo_simple_test "\"echo\" ''"
+	echo_simple_test 'echo \"hi\"'
+	echo_simple_test 'echo $HOME'
 	echo_simple_test '  13. [' 'echo $PATH'
 	echo_simple_test '  14. [' 'echo $NONEXIST'
 	echo_simple_test '  15. [' '" echo"'
