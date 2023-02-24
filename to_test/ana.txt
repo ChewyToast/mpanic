@@ -1,6 +1,6 @@
-unset $SHLVL ; echo $SHLVL
-export $SHLVL=''; echo $SLVL
-echo ~arebelo/sdfsfsfdsfs
+unset $SHLVL ; bash ; echo $SHLVL
+export $SHLVL=''; bash ; echo $SLVL
+echo ~$USER/sdfsfsfdsfs
 echo ~framos-p/sdfsfsfdsfs
 unset HOME ; echo ~
 echo aaa > $HOME.txt > bb (exit code = 1, permission denied error and should not create bb)
