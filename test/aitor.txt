@@ -5,3 +5,4 @@ echo tu.$NOEXISTE
 echo ~
 echo ~usuario
 echo usuario~
+echo "'$'"

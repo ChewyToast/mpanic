@@ -20,3 +20,4 @@ echo ~
 echo ~false
 echo \~
 echo "~"ups
+echo "'$'"
