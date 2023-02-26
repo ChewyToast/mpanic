@@ -1,9 +1,11 @@
+
+$TMPENVVAR
+\echo
+$TMPENVVAR
 echo
 $TMPENVVAR
 echo
 $TMPENVVAR "hi"
-
-$TMPENVVAR
 EchO
 $TMPENVVAR hi
          echo

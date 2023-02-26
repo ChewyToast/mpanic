@@ -5,6 +5,7 @@
 	DEF_COLOR='\033[0;39m'
 	GRAY='\033[0;90m'
 	RED='\033[0;91m'
+	HARD_RED='\033[1;91m'
 	GREEN='\033[0;92m'
 	YELLOW='\033[0;93m'
 	BLUE='\033[0;94m'
@@ -47,14 +48,14 @@
 
 	mkdir .errors &> /dev/null
 	mkdir .tmp &> /dev/null
-	print_color ${GRAY} "Compiling Makefile ... Please wait!"
+	print_color ${GRAY} "Compiling Makefile ... Please wait!${DEF_COLOR}"
 	MKFF=$(make -C ../ &> .errors/error.txt)
 	MK_1=$?
 	MKFF=$(cat .errors/error.txt | cut -c 1-46)
 
 	if [ "$MK_1" != "0" ]; then
 		if [ "$MKFF" == "make: *** No targets specified and no makefile" ]; then
-			print_color ${RED} "\033[2K\rMakefile not found!\n"
+			print_color ${RED} "\033[2K\rMakefile not found!\n${DEF_COLOR}"
 			echo "Remember to clone it and run as follows:"
 			echo "  1. cd minishell_project_folder"
 			echo "  2. git clone git@github.com:ChewyToast/minishell_panic.git"
@@ -63,9 +64,9 @@
 			echo ""
 			clean_exit
 		else
-			print_color ${RED} "\033[2K\rCompilation error\n"
+			print_color ${RED} "\033[2K\rCompilation error\n${DEF_COLOR}"
 			echo "-------------"
-			echo "$MKFF"
+			echo "${DEF_COLOR}$MKFF${DEF_COLOR}"
 			echo "-------------"
 			clean_exit
 		fi
@@ -91,6 +92,8 @@
 		i=0
 	# TEST RESULT
 		ret=0
+	# TEST STATUS
+		ESF=""
 	# TEST STATUS
 		EOK="OK"
 #
@@ -135,7 +138,12 @@
 			if [ "$ret" == "0" ]; then
 				printf "${RED}KO${DEF_COLOR}"
 			else
-				printf "🚨 ${YELLOW}SF${DEF_COLOR}"
+				if [ "$ESF" == "" ]; then
+					ESF="$i"
+				else
+					ESF="$ESF, $i"
+				fi
+			printf "${HARD_RED}SF${DEF_COLOR}"
 			fi
 		fi
 		print_color ${BLUE} "] - |"
@@ -282,9 +290,11 @@
 		printf "${RED}\n\n\tmore test comming soon...👹${DEF_COLOR}\n"
 		# ECHO RESUME
 			if [ "$EOK" == "KO" ]; then
-				printf "${CYAN}\n\n  It seems that there are some tests\n"
-				printf "  that have not passed...\n\n"
-				printf "  Failure traces -> traces/echo_traces.txt\n"
+				printf "${BLUE}\n\n  It seems that there are some tests that have not passed...\n\n"
+				if [ "$ESF" != "" ]; then
+					printf "  and your minishell gives ${RED}segmentation fault!${BLUE} ($ESF)\n\n"
+				fi
+				printf "  To see full failure traces -> traces/echo_traces.txt\n"
 			fi
 		#
 		printf "${BLUE}\n|======================================================|\n\n\n${DEF_COLOR}"
