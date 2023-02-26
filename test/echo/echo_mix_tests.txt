@@ -1,0 +1,16 @@
+
+$TMPENVVAR
+\echo
+$TMPENVVAR
+echo
+$TMPENVVAR
+echo
+$TMPENVVAR "hi"
+EchO
+$TMPENVVAR hi
+         echo
+$TMPENVVAR hi
+         EcHO      hi
+$TMPENVVAR
+         EcHO     
+$TMPENVVAR

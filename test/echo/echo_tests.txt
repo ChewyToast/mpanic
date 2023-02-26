@@ -17,6 +17,7 @@ echo $NONEXIST
 \ echo "   " $
 echo hi~
 echo ~
+echo ~$USER
 echo ~false
 echo \~
 echo "~"ups
