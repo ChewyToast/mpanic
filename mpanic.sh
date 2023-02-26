@@ -119,26 +119,26 @@
 	function print_test_result()
 	{
 		if [ "${#i}" == "1" ]; then
-			print_color ${BLUE} "  ${i}.  |${DEF_COLOR}"
+			print_color ${BLUE} "  ${i}.  [${DEF_COLOR}"
 		else
 			if [ "${#i}" == "2" ]; then
-				print_color ${BLUE} "  ${i}. |${DEF_COLOR}"
+				print_color ${BLUE} "  ${i}. [${DEF_COLOR}"
 			else
 				if [ "${#i}" == "3" ]; then
-					print_color ${BLUE} "  ${i}.|${DEF_COLOR}"
+					print_color ${BLUE} "  ${i}.[${DEF_COLOR}"
 				fi
 			fi
 		fi
 		if [ "$ret" == "1" ]; then
-			printf "✅ ${GREEN}OK${DEF_COLOR}"
+			printf "${GREEN}OK${DEF_COLOR}"
 		else
 			if [ "$ret" == "0" ]; then
-				printf "❌ ${RED}KO${DEF_COLOR}"
+				printf "${RED}KO${DEF_COLOR}"
 			else
 				printf "🚨 ${YELLOW}SF${DEF_COLOR}"
 			fi
 		fi
-		print_color ${BLUE} "| - |"
+		print_color ${BLUE} "] - |"
 		printf ${MAGENTA};
 		if [ "$2" ]; then
 			printf "$2";
