@@ -3,7 +3,7 @@
 </h1>
 
 <p align="center">
-	<b><i>An epic tester that will destroy your minishell.</i></b><br>
+	<b><i>An epic tester to make you panic when testing your minishell</i></b><br>
 </p>
 
 <p align="center">
