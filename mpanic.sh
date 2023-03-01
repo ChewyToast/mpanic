@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 # colors
 	DEF_COLOR='\033[0;39m'
 	GRAY='\033[0;90m'
@@ -103,19 +102,32 @@
 
 	function trace_printer()
 	{
-		TMP=$(echo "$1" | cut -c 1-2)
-		echo "--------------------> test [$2]" >> traces/echo_trace.txt
-		echo "cmd: \"$3\"" >> traces/echo_trace.txt
-		echo >> traces/echo_trace.txt
-		echo "EXPECTED:" >> traces/echo_trace.txt
-		echo "exit status: $4" >> traces/echo_trace.txt
-		echo "->$5<-" >> traces/echo_trace.txt
-		echo "" >> traces/echo_trace.txt
-		echo "FOUND:" >> traces/echo_trace.txt
-		echo "exit status: $6" >> traces/echo_trace.txt
-		echo "->$7<-" >> traces/echo_trace.txt
-		echo >> traces/echo_trace.txt
-		echo "--------------------<">> traces/echo_trace.txt
+		echo "---------------------------------------------> test [$1]" >> traces/echo_trace.txt
+		echo "| CMD: ->$2<-" >> traces/echo_trace.txt
+		echo "|--------------------------------" >> traces/echo_trace.txt
+		# echo "|" >> traces/echo_trace.txt
+		echo "|  EXPECTED (BASH OUTP)  |  exit status: ($3)"$'\n'\| >> traces/echo_trace.txt
+		# echo "|       exit status: $4" >> traces/echo_trace.txt
+		echo "|--- STDOUT:" >> traces/echo_trace.txt
+		echo "|->$4<-" >> traces/echo_trace.txt
+		echo "|" >> traces/echo_trace.txt
+		echo "|--- STDERR:" >> traces/echo_trace.txt
+		echo "|->$5<-" >> traces/echo_trace.txt
+		echo "|--------------------------------" >> traces/echo_trace.txt
+		echo "|--->FOUND (MINISHELL OUTP)  |  exit status: ($6)"$'\n'\| >> traces/echo_trace.txt
+		if [ "$9" == "" ]; then
+			echo "|--- STDOUT:" >> traces/echo_trace.txt
+			echo "|->$7<-" >> traces/echo_trace.txt
+			echo "|" >> traces/echo_trace.txt
+			echo "|--- STDERR:" >> traces/echo_trace.txt
+			echo "|->$8<-" >> traces/echo_trace.txt
+		else
+			echo "| SEG FAULT!!" >> traces/echo_trace.txt
+			echo "| $9" >> traces/echo_trace.txt
+			# echo "| SEG FAULT!!" >> traces/echo_trace.txt
+		fi
+		echo "|">> traces/echo_trace.txt
+		echo "---------------------------------------------<">> traces/echo_trace.txt
 		echo >> traces/echo_trace.txt
 	}
 
@@ -168,64 +180,70 @@
 		echo "exit" >> .tmp/exec_read.txt
 
 		# Ejecutamos minishell y bash con mismos comandos y recojemos ES
-		{ ./minishell; } < .tmp/exec_read.txt  &> .tmp/exec_outp.txt
+		{ ./minishell; } < .tmp/exec_read.txt &> .tmp/exec_other_outp.txt
+		{ ./minishell; } < .tmp/exec_read.txt 1> .tmp/exec_outp.txt 2> .tmp/exec_error_outp.txt
 		ES1=$?
-		< .tmp/exec_read.txt bash &> .tmp/bash_outp.txt
+		< .tmp/exec_read.txt bash 1> .tmp/bash_outp.txt 2> .tmp/bash_error_outp.txt
 		ES2=$?
 
 		# Damos valor a variables para comparar, leemos de los archivos de salida
 		WCTEST1=$(cat -e .tmp/exec_outp.txt | wc -l)
 		WCTEST2=$(cat -e .tmp/bash_outp.txt | wc -l)
+		if [ $ES1 == "139" ]; then 
+			{ ./minishell; } < .tmp/exec_read.txt &> .tmp/exec_other_outp.txt
+			SF_TMP=$(cat .tmp/exec_other_outp.txt | sed -e "1d")
+		fi
 	
-		if [ "$WCTEST1" == "       4" ]; then
-			TEST1=$(cat -e .tmp/exec_outp.txt | sed -e "$ d" | sed -e "$ d" | sed -e "1d")
+		if [ "$WCTEST1" == "       3" ]; then
+			TEST1=$(cat -e .tmp/exec_outp.txt | sed -e "$ d" | sed -e "1d")
+			# TEST1=$(cat -e .tmp/exec_outp.txt | sed -e "$ d" | sed -e "$ d" | sed -e "1d")
 			TEST2=$(cat -e .tmp/bash_outp.txt)
 		else
-			if [ "$WCTEST1" == "       3" ]; then
-				TEST1=$(cat -e .tmp/exec_outp.txt | sed -e "$ d" | sed -e "1d" | rev )
+			if [[ "$WCTEST1" == "       2" && "$ES1" == "0" ]]; then
+				TEST1=$(cat -e .tmp/exec_outp.txt | sed -e "1d" | rev)
+				# TEST1=$(cat -e .tmp/exec_outp.txt | sed -e "$ d" | sed -e "1d" | rev )
 				TEST1=${TEST1:$size_prom_cat_exit:${#TEST1}}
 				TEST1=$(echo "$TEST1" | rev )
 				TEST2=$(cat -e .tmp/bash_outp.txt)
 			else
-				TEST1=$(cat -e .tmp/exec_outp.txt)
-				TEST2=$(cat -e .tmp/bash_outp.txt)
+				if [[ "$WCTEST1" == "       2" && "$ES1" != "0" ]]; then
+					TEST1=$(cat -e .tmp/exec_error_outp.txt)
+					TEST2=$(cat -e .tmp/bash_outp.txt)
+				else
+					TEST1=$(cat -e .tmp/exec_outp.txt)
+					TEST2=$(cat -e .tmp/bash_outp.txt)
+				fi
 			fi
 		fi
 
 		# Realizamos comparativas y imprimimos resultado y/o resultado en archivo
-		if [[ "$ES2" != "0" && "$ES1" != "0" ]]; then
+		if [[ "$ES1" != "0" ]]; then
 			TEST2=${TEST2:18:${#TEST2}}
-			if [[ $TEST1 == *"$TEST2"*  ]]; then
+			if [[ "$TEST1" == *"$TEST2"* && "$ES2" == "$ES1" ]]; then
 				ret=1;
 			else
-				if [[ "$TEST1" == *"Segmentation fault"* ]]; then
+				if [[ "$SF_TMP" == *"Segmentation fault"* ]]; then
 					ret=2
-					EOK="KO"
-					trace_printer "$1" "$i" "$FTEST" "$ES2" "$(cat -e .tmp/bash_outp.txt)" "$ES1" "$TEST1";
 				else
 					ret=0
-					EOK="KO"
-					trace_printer "$1" "$i" "$FTEST" "$ES2" "$(cat -e .tmp/bash_outp.txt)" "$ES1" "$TEST1";
 				fi
+				EOK="KO"
+				trace_printer "$i" "$FTEST" "$ES2" "$(cat -e .tmp/bash_outp.txt)" "$(cat -e .tmp/bash_error_outp.txt)" "$ES1" "$TEST1" "$TESTERR" "$SF_TMP";
 			fi
 		else
 			if [ "$TEST1" == "$TEST2" ] && [ "$ES1" == "$ES2" ]; then
 				ret=1
 			else
-				if [[ "$TEST1" == *"Segmentation fault"* ]]; then
-					ret=2
-					EOK="KO"
-					trace_printer "$1" "$i" "$FTEST" "$ES2" "$(cat -e .tmp/bash_outp.txt)" "$ES1" "$TEST1";
-				else
-					ret=0
-					EOK="KO"
-					trace_printer "$1" "$i" "$FTEST" "$ES2" "$(cat -e .tmp/bash_outp.txt)" "$ES1" "$TEST1";
-				fi
+				ret=0
+				EOK="KO"
+				trace_printer "$i" "$FTEST" "$ES2" "$(cat -e .tmp/bash_outp.txt)" "$(cat -e .tmp/bash_error_outp.txt)" "$ES1" "$TEST1" "$TESTERR" "$SF_TMP";
 			fi
 		fi
 		print_test_result "${FTEST}";
 		echo "" > .tmp/exec_outp.txt
+		echo "" > .tmp/exec_error_outp.txt
 		echo "" > .tmp/bash_outp.txt
+		echo "" > .tmp/bash_weeoe_outp.txt
 	}
 
 #
@@ -284,6 +302,7 @@
 				IFS= read -r test_cmd
 				one_line_test "$test_cmd"
 				done < "$test_file"
+				unset TMPENVVAR
 			fi
 		#
 
@@ -298,81 +317,8 @@
 			fi
 		#
 		printf "${BLUE}\n|======================================================|\n\n\n${DEF_COLOR}"
-
-		# printf ${BLUE};
-		# echo -n "  47. ["
-		# printf ${DEF_COLOR};
-		# echo 'export ECMD="echo"
-		# $ECMD "hi"' > .tmp/exec_read.txt
-		# echo "exit" >> .tmp/exec_read.txt
-		# echo_mix_test "47";
-		# printf ${BLUE};
-		# echo -n "  48. ["
-		# printf ${DEF_COLOR};
-		# echo 'export ECMD="EchO"
-		# $ECMD " hi"' > .tmp/exec_read.txt
-		# echo "exit" >> .tmp/exec_read.txt
-		# echo_mix_test "48";
-		# printf ${BLUE};
-		# echo -n "  49. ["
-		# printf ${DEF_COLOR};
-		# echo 'export ECMD="         EcHO       "
-		# $ECMD "hi"' > .tmp/exec_read.txt
-		# echo "exit" >> .tmp/exec_read.txt
-		# echo_mix_test "49";
-		# printf ${BLUE};
-		# echo -n "  50. ["
-		# printf ${DEF_COLOR};
-		# echo 'export ECMD="         EcHO      hi "
-		# $ECMD' > .tmp/exec_read.txt
-		# echo "exit" >> .tmp/exec_read.txt
-		# echo_mix_test "50";
-		# printf ${BLUE};
-		# echo -n "  51. ["
-		# printf ${DEF_COLOR};
-		# echo 'export ECMD="         '"'"'echo'"'"'      hi "
-		# $ECMD' > .tmp/exec_read.txt
-		# echo "exit" >> .tmp/exec_read.txt
-		# echo_mix_test "51";
-		# printf ${BLUE};
-		# echo -n "  52. ["
-		# printf ${DEF_COLOR};
-		# echo 'export ECMD="         "echo"      hi "
-		# $ECMD' > .tmp/exec_read.txt
-		# echo "exit" >> .tmp/exec_read.txt
-		# echo_mix_test "52";
-		# printf ${BLUE};
-		# echo -n "  53. ["
-		# printf ${DEF_COLOR};
-		# echo 'export PATH="."
-		# echo hola' > .tmp/exec_read.txt
-		# echo "exit" >> .tmp/exec_read.txt
-		# echo_mix_test "53";
-		# printf ${BLUE};
-		# echo -n "  54. ["
-		# printf ${DEF_COLOR};
-		# echo 'export PATH="."
-		# echo hola' > .tmp/exec_read.txt
-		# echo "exit" >> .tmp/exec_read.txt
-		# echo_mix_test "53";
-		# printf ${BLUE};
-		# echo -n "  55. ["
-		# printf ${DEF_COLOR};
-		# echo 'unset PATH
-		# echo $USER*1' > .tmp/exec_read.txt
-		# echo "exit" >> .tmp/exec_read.txt
-		# echo_mix_test "54";
-		# printf ${BLUE};
-		# echo -n "  56. ["
-		# printf ${DEF_COLOR};
-		# echo 'unset HOME
-		# echo "~"$USER' > .tmp/exec_read.txt
-		# echo "exit" >> .tmp/exec_read.txt
-		# echo_mix_test "55";
-		# unset ECMD
 	#
 #
-
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  ENDER
 	printf "${BLUE}  Any issue send via slack bmoll-pe, arebelo or ailopez-o\n\n${DEF_COLOR}"
