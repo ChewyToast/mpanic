@@ -1,16 +1,22 @@
 
-$TMPENVVAR
+$TMPENVVAR@empty var
 \echo
-$TMPENVVAR
+$TMPENVVAR@var value->\\echo<-
 echo
-$TMPENVVAR
-echo
-$TMPENVVAR "hi"
+$TMPENVVAR@var value->echo<-
+"echo"
+$TMPENVVAR@var value->\"echo\"<-
+"echo hi"
+$TMPENVVAR@var value->echo<-
+echo hi
+$TMPENVVAR@var value->echo<-
+"echo"
+$TMPENVVAR hi@var value->echo<-
 EchO
-$TMPENVVAR hi
+$TMPENVVAR hi@var value->echo<-
          echo
-$TMPENVVAR hi
+$TMPENVVAR hi@var value->echo<-
          EcHO      hi
-$TMPENVVAR
+$TMPENVVAR@var value->echo<-
          EcHO     
-$TMPENVVAR
+$TMPENVVAR@var value->echo<-

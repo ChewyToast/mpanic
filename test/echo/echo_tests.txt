@@ -1,24 +1,59 @@
-echo ""     
 echo
-echO ""    
-    echo
-    echo       " hi"
-"echo" ""   
-echo hi   
-EcHo hi   
-echo """ ""hi" " """
-\"echo\" ''
-echo \"hi\"
-echo $HOME
-echo $PATH
+echo  
+echo  ""
+echo  ""  
+echo  ""  ""
+echo  hi
+echo  " hi"
+echo  " hi"""
+echo  " hi"""""hi
+echo  hi ""hi
+echo  hi "" hi
+echo  hi "'" hi\'
+echo"" hi
+"echo"
+"echo"""
+'echo'""
+"echo""hi"
+echo ~
+echo "~"
+echo '~'
+echo "~" "hi"
+echo "~"ups
+echo  *
+echo  \*
+echo  *$?
+echo  *"$? "
+echo  '*"$? "'
+\ echo hi
+echo $'\t'@echo $\'\\t\'
+echo $'\t'tabs$'\t'@echo $\'\\t\'tabs$\'\\t\'
+echo $'\\t'no tabs$'\\t'
+echo $$
+echo $
+echo "'$'"
+"echo" $USER
+echo "$USER"
+echo "$""USER"
+echo "$"U"S"ER
+echo "$"USER""
+echo '$USER'
+echo \'$USER\'
+echo ~$USER
+echo $USER"""hi"
+echo $USER"" "hi"
+echo $USER$?
+echo $USER$
 echo $NONEXIST
 " echo"
-" echo"
-\ echo "   " $
-echo hi~
-echo ~
-echo ~$USER
-echo ~false
-echo \~
-echo "~"ups
+echo  "  " ""$
 echo "'$'"
+echo """ ""hi" " """
+echo ""' '" "''' '"hi'" ''' '" """
+'"'"'echo'"'"' hi
+Echo hi
+echO hi
+EcHo hi
+ECHO hi
+    echo
+    echo	" hi"
