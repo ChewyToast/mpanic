@@ -242,7 +242,7 @@
 			echo "**************************************************************" >> traces/echo_trace.txt
 			echo "*                          CARE!                             *" >> traces/echo_trace.txt
 			echo "*                                                            * " >> traces/echo_trace.txt
-			echo "* This test doesnt work if ur readline prompt have newlines  *" >> traces/echo_trace.txt
+			echo "* This tester doesnt work if ur readline prompt have '\n'    *" >> traces/echo_trace.txt
 			echo "*                                                            *" >> traces/echo_trace.txt
 			echo "**************************************************************" >> traces/echo_trace.txt
 			echo "" >> traces/echo_trace.txt
