@@ -128,7 +128,7 @@
 
 		# Ejecutamos minishell y bash con mismos comandos y recojemos ES
 		{ ./minishell; } < .tmp/exec_read.txt 1> .tmp/exec_outp.txt 2> .tmp/exec_error_outp.txt
-		ES1=-$?
+		ES1=$?
 		< .tmp/exec_read.txt bash 1> .tmp/bash_outp.txt 2> .tmp/bash_error_outp.txt
 		ES2=$?
 
