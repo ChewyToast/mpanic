@@ -1,0 +1,88 @@
+echo ""     
+echo
+echO ""    
+    echo
+    echo       " hi"
+"echo" ""   
+echo hi   
+EcHo hi   
+echo """ ""hi" " """
+\"echo\" ''
+echo \"hi\"
+echo $HOME
+echo $PATH
+echo $NONEXIST
+" echo"
+" echo"
+\ echo "   " $
+echo hi~
+echo ~
+echo ~$USER
+echo ~false
+echo \~
+echo "~"ups
+echo "'$'"
+echo $USE
+echo $USER_
+echo "|$USER|"
+echo "|$USE|"
+echo "|$USER_|"
+echo '|$USER|'
+echo '|$USE|'
+echo '|$USER_|'
+echo $USER$PATH$PWD
+echo "$USER$PATH$PWD"
+echo '$USER$PATH$PWD'
+echo $USER",$PATH,$PWD
+echo "$USER",$PATH,$PWD"
+echo '$USER",$PATH,$PWD'
+echo $USER"$PATH"$PWD"USER"$PATH"$PWD"
+echo $USER'$PATH'$PWD'USER'$PATH'$PWD'
+echo $A"$B"$C"A"$B"$C"
+echo $A'$B'$C'A'$B'$C'
+echo $A"$B"$C"A"$B"$C"
+echo $A'$B'$C'A'$B'$C'
+echo $A
+echo $A$B
+echo $A$B$C
+echo $A$B$C$AA
+                                                                                                                                                                                                                                                                                      [PASS]
+[SETUP touch a b c] [EXPORTS LS='ls -l'] $LS                                                                                                                                                                                                                                                                                                                          [PASS]
+echo $                                                                                                                                                                                                                                                                                                                                                                [PASS]
+echo \$                                                                                                                                                                                                                                                                                                                                                               [PASS]
+echo \$\$\$\$                                                                                                                                                                                                                                                                                                                                                         [PASS]
+echo \$$\$$                                                                                                                                                                                                                                                                                                                                                           [PASS]
+[EXPORTS A='a' B='b'] echo $\A $\B                                                                                                                                                                                                                                                                                                                                    [PASS]
+[EXPORTS A='a' B='b'] echo $\A$\B                                                                                                                                                                                                                                                                                                                                     [PASS]
+[EXPORTS A=' '] echo $A                                                                                                                                                                                                                                                                                                                                               [PASS]
+[EXPORTS A='  '] echo $A                                                                                                                                                                                                                                                                                                                                              [PASS]
+[EXPORTS A='   '] echo $A                                                                                                                                                                                                                                                                                                                                             [PASS]
+[EXPORTS A='    '] echo $A                                                                                                                                                                                                                                                                                                                                            [PASS]
+[EXPORTS A='  a '] echo $A                                                                                                                                                                                                                                                                                                                                            [PASS]
+[EXPORTS A='                                '] echo $A                                                                                                                                                                                                                                                                                                                [PASS]
+[EXPORTS A='                     a          '] echo $A                                                                                                                                                                                                                                                                                                                [PASS]
+[EXPORTS A=' '] echo @$A@                                                                                                                                                                                                                                                                                                                                             [PASS]
+[EXPORTS A=' '] echo @ $A@                                                                                                                                                                                                                                                                                                                                            [PASS]
+[EXPORTS A=' '] echo @$A @                                                                                                                                                                                                                                                                                                                                            [PASS]
+[EXPORTS A='       '] echo @$A@                                                                                                                                                                                                                                                                                                                                       [PASS]
+[EXPORTS A=' '] echo '@'$A'@'                                                                                                                                                                                                                                                                                                                                         [PASS]
+[EXPORTS A=' '] echo '@' $A'@'                                                                                                                                                                                                                                                                                                                                        [PASS]
+[EXPORTS A=' '] echo '@'$A '@'                                                                                                                                                                                                                                                                                                                                        [PASS]
+[EXPORTS A=' '] echo "@"$A"@"                                                                                                                                                                                                                                                                                                                                         [PASS]
+[EXPORTS A=' '] echo "@" $A"@"                                                                                                                                                                                                                                                                                                                                        [PASS]
+[EXPORTS A=' '] echo "@"$A "@"                                                                                                                                                                                                                                                                                                                                        [PASS]
+[EXPORTS A=' '] echo @"$A"@                                                                                                                                                                                                                                                                                                                                           [PASS]
+[EXPORTS A=' '] echo @ "$A"@                                                                                                                                                                                                                                                                                                                                          [PASS]
+[EXPORTS A=' '] echo @"$A" @                                                                                                                                                                                                                                                                                                                                          [PASS]
+[EXPORTS A='       '] echo @"$A"@                                                                                                                                                                                                                                                                                                                                     [PASS]
+[EXPORTS A=' '] echo '@'"$A"'@'                                                                                                                                                                                                                                                                                                                                       [PASS]
+[EXPORTS A=' '] echo '@' "$A"'@'                                                                                                                                                                                                                                                                                                                                      [PASS]
+[EXPORTS A=' '] echo '@'"$A" '@'                                                                                                                                                                                                                                                                                                                                      [PASS]
+[EXPORTS A=' '] echo "@""$A""@"                                                                                                                                                                                                                                                                                                                                       [PASS]
+[EXPORTS A=' '] echo "@" "$A""@"                                                                                                                                                                                                                                                                                                                                      [PASS]
+[EXPORTS A=' '] echo "@""$A" "@"                                                                                                                                                                                                                                                                                                                                      [PASS]
+[EXPORTS A='' B='' C=''] echo $A$B$C                                                                                                                                                                                                                                                                                                                                  [FAIL]
+[EXPORTS A='file'] echo bonjour > $A                                                                                                                                                                                                                                                                                                                                  [FAIL]
+[EXPORTS A='fi le'] echo bonjour > $A                                                                                                                                                                                                                                                                                                                                 [FAIL]
+[EXPORTS A='fi le'] echo bonjour > "$A"                                                                                                                                                                                                                                                                                                                               [FAIL]
+[EXPORTS A='fi le'] echo bonjour > '$A'
