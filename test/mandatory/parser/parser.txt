@@ -1,0 +1,52 @@
+echo ">>>>>>>>>>> TESTING SPACES <<<<<<<<<<<<<<<<<<<<<"
+
+echo foo
+echo                    foo
+             echo foo
+echo foo
+         echo           foo
+echo\t\t\t\t\t\t\t\t\t\tfoo
+\t\t\t\t\t\techo\tfoo
+echo\tfoo\t\t\t\t\t\t
+\t\t\t\techo\t\t\t\tfoo\t\t\t\t
+\fecho\ffoo
+\necho\nfoo
+\recho\rfoo
+\vecho\vfoo
+\t\r\v\fecho\v\t\r\vfoo
+\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t
+            \t\t\t           \t\t\t
+
+echo ">>>>>>>>>>> TESTING PARSER <<<<<<<<<<<<<<<<<<<<<"
+
+echo hi~
+echo ~
+echo ~$USER
+echo ~false
+echo \~
+echo "~"ups
+echo "'$'"
+echo $USE
+echo $USER_
+echo "|$USER|"
+echo "|$USE|"
+echo "|$USER_|"
+echo '|$USER|'
+echo '|$USE|'
+echo '|$USER_|'
+echo $USER$PATH$PWD
+echo "$USER$PATH$PWD"
+echo '$USER$PATH$PWD'
+echo $USER",$PATH,$PWD
+echo "$USER",$PATH,$PWD"
+echo '$USER",$PATH,$PWD'
+echo $USER"$PATH"$PWD"USER"$PATH"$PWD"
+echo $USER'$PATH'$PWD'USER'$PATH'$PWD'
+echo $A"$B"$C"A"$B"$C"
+echo $A'$B'$C'A'$B'$C'
+echo $A"$B"$C"A"$B"$C"
+echo $A'$B'$C'A'$B'$C'
+echo $A
+echo $A$B
+echo $A$B$C
+echo $A$B$C$AA

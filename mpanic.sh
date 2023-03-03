@@ -21,11 +21,13 @@
 		echo -e "\n${BLUE} Usage:${DEF_COLOR} bash mpanic.sh [options] [arguments]\n"
 		echo -e "${BLUE} Options:${DEF_COLOR}"
 		echo -e "\t-h --help\tShow this help message"
+		echo -e "\t-b --bonus\tWill execute the tester with bonus tests"
 		echo -e "\n${BLUE} Arguments:${DEF_COLOR}"
 		echo -e "\techo\t\tExecute the echo test"
 		echo -e "\texport\t\tExecute the export test"
 		echo -e "\n${YELLOW} Examples:${DEF_COLOR}"
 		echo -e "\t bash mpanic.sh --help"
+		echo -e "\t bash mpanic.sh -b echo"
 		echo -e "\t bash mpanic.sh echo"
 		echo -e "\n If no arguments are provided, all tests will be executed.\n"
 		exit 0
@@ -241,7 +243,7 @@
 
 			# SIMPLE TEST ECHO WHILE
 				printf "${BLUE} simple\n ------------------------------------\n\n${DEF_COLOR}"
-				test_file="./test/echo/echo_tests.txt"
+				test_file="./test/${TESTER_MODE}/echo/echo.txt"
 				if [ ! -f "$test_file" ]; then
 					printf "${RED} File needed to test $test_file not found\n\n${DEF_COLOR}"
 				else
@@ -254,7 +256,7 @@
 
 			# FLAGS TEST ECHO WHILE
 				printf "${BLUE}\n with flag\n ------------------------------------\n\n${DEF_COLOR}"
-				test_file="./test/echo/echo_flag_tests.txt"
+				test_file="./test/${TESTER_MODE}/echo/flags.txt"
 				if [ ! -f "$test_file" ]; then
 					printf "${RED} File needed to test $test_file not found\n\n${DEF_COLOR}"
 				else
@@ -266,7 +268,7 @@
 
 			# MIXED TEST ECHO WHILE
 				printf "${BLUE}\n with env variables\n ------------------------------------\n\n${DEF_COLOR}"
-				test_file="./test/echo/echo_mix_tests.txt"
+				test_file="./test/${TESTER_MODE}/echo/env.txt"
 				if [ ! -f "$test_file" ]; then
 					printf "${RED} File needed to test $test_file not found\n\n${DEF_COLOR}"
 				else
@@ -316,13 +318,12 @@
 			#
 
 			# SIMPLE TEST ECHO WHILE
-				test_file="./test/export/export_tests.txt"
+				test_file="./test/${TESTER_MODE}/export/export_tests.txt"
 				if [ ! -f "$test_file" ]; then
 					printf "${RED} File needed to test $test_file not found\n\n${DEF_COLOR}"
 				else
 					while read -r test_cmd; do
 					trim_one_line_function "traces/export_trace.txt" "$(echo "$test_cmd" | cut -d'@' -f1)" "$(echo "$test_cmd" | cut -d'@' -f2-)"
-					# trim_one_line_function "$test_cmd"
 					done < "$test_file"
 				fi
 			#
@@ -354,8 +355,19 @@
 		printf ${BLUE}" It looks like its ur first time using this tester,\n";
 		printf ${BLUE}" so let me explain u how it works:\n${DEF_COLOR}";
 		print_helper;
-		exit;
 	fi
+
+	# Test mode
+		TESTER_MODE="mandatory"
+	for arg in "$@"
+	do
+		case "$arg" in
+			"-h"|"--help") print_helper ;;
+			"echo"|"export") ;;
+			"-b"|"--bonus") TESTER_MODE="bonus" ;;
+			*) printf "\n Invalid argument:"${DEF_COLOR}" $arg\n Type "${BLUE}"--help"${DEF_COLOR}" to see the valid options\n\n"${DEF_COLOR} && exit 1 ;;
+		esac
+	done
 
 	if [ "$#" == "1" ] && [[ "$1" == "-h" || "$1" == "--help" ]]; then
 		print_helper;
@@ -365,13 +377,6 @@
 	printf ${MAIN_COLOR}"\n\t\t   | 👹 MINISHELL PANIC 👹 |\n"${DEF_COLOR};
 	printf ${MAIN_COLOR}"\t\t    -----------------------\n\n"${DEF_COLOR};
 
-	for arg in "$@"
-	do
-		case "$arg" in
-			"echo"|"export"|"-h") ;;
-			*) printf "\n Invalid argument:"${DEF_COLOR}" $arg\n Type "${BLUE}"--help"${DEF_COLOR}" to see the valid options\n\n"${DEF_COLOR} && exit 1 ;;
-		esac
-	done
 #
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  PREPARE & COMPILATION
@@ -435,7 +440,10 @@
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  EXECUTOR
 
-	if [[ "$#" != "0" ]]; then
+	if [[ "$#" == "1" && ( "$1" == "-b" || "$1" == "--bonus" ) ]]; then
+		echo_test_call;
+		export_test_call;
+	elif [[ "$#" != "0" ]]; then
 		for arg in "$@"
 		do
 			case "$arg" in

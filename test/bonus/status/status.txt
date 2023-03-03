@@ -1,0 +1,9 @@
+echo $?
+cat < noexiste
+echo $?
+echoddd
+echo $?
+chmod 000 noperm
+echo bonjour > noperm
+echo $?
+
