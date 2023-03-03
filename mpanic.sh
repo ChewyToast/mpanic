@@ -23,14 +23,46 @@
 		echo -e "\t-h --help\tShow this help message"
 		echo -e "\t-b --bonus\tWill execute the tester with bonus tests"
 		echo -e "\n${BLUE} Arguments:${DEF_COLOR}"
-		echo -e "\techo\t\tExecute the echo test"
-		echo -e "\texport\t\tExecute the export test"
+		echo -e "\techo\t\tExecute the echo tests"
+		echo -e "\texport\t\tExecute the export tests"
+		echo -e "\texit\t\tExecute the exit tests"
+		echo -e "\tparser\t\tExecute the parser tests"
+		echo -e "\tpipe\t\tExecute the pipe tests"
+		echo -e "\tredirection\tExecute the redirection tests"
+		echo -e "\tstatus\t\tExecute the exit status tests"
 		echo -e "\n${YELLOW} Examples:${DEF_COLOR}"
-		echo -e "\t bash mpanic.sh --help"
-		echo -e "\t bash mpanic.sh -b echo"
-		echo -e "\t bash mpanic.sh echo"
+		echo -e "\tmpanic.sh --help\tShow this help message"
+		echo -e "\tmpanic.sh -b echo\tExecute only the echo tests"
+		echo -e "\tmpanic.sh parser pipe\tExecute the parser and pipe status tests"
 		echo -e "\n If no arguments are provided, all tests will be executed.\n"
 		exit 0
+	}
+
+	function	print_in_traces()
+	{
+		echo "" > ${1}
+		echo "**************************************************************" >> ${1}
+		echo "*                          CARE!                             *" >> ${1}
+		echo "*                                                            * " >> ${1}
+		echo "* This tester doesnt work if ur readline prompt have '\n'    *" >> ${1}
+		echo "*                                                            *" >> ${1}
+		echo "**************************************************************" >> ${1}
+		echo "" >> ${1}
+		printf ${BLUE}"\n\n\n"${DEF_COLOR}
+	}
+
+	function	print_end_tests()
+	{
+		if [ "${1}" == "KO" ]; then
+			printf "${BLUE}\n\n  It seems that there are some tests that have not passed...\n\n"
+			if [ "$ESF" != "" ]; then
+				printf "  and your minishell gives ${RED}segmentation fault${BLUE} at tests:\n  [${2}]\n\n"
+			fi
+			printf "  To see full failure traces -> ${3}\n"
+		else
+			rm -rf ${3} &> /dev/null
+			printf "${BLUE}\n\n  All test passed successfully!! 🎉\n\n"
+		fi
 	}
 
 	function	clean_exit()
@@ -154,7 +186,7 @@
 			else
 				ret=0
 				EOK="KO"
-			trace_printer "${1}" "${i}" "${FTEST}" "${ES2}" "${BASH_STDOUTP}" "${BASH_ERROUTP}" "${ES1}" "${MINI_STDOUTP}" "${MINI_ERROUTP}" "${SF_TMP}";
+				trace_printer "${1}" "${i}" "${FTEST}" "${ES2}" "${BASH_STDOUTP}" "${BASH_ERROUTP}" "${ES1}" "${MINI_STDOUTP}" "${MINI_ERROUTP}" "${SF_TMP}";
 			fi
 		fi
 
@@ -220,128 +252,135 @@
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  TEST CALLS
 
-	#ECHO
-		function echo_test_call()
-		{
-			if [ "$TTECHO" != "" ]; then
-				return ;
+	function main_test_call()
+	{
+		test_file="./test/${TESTER_MODE}${1}"
+		if [ ! -f "${test_file}" ]; then
+			printf "\n${RED} File needed to test ${test_file} not found\n\n${DEF_COLOR}"
+		else
+			while read -r test_cmd; do
+			if [ "${#test_cmd}" != "0" ]; then
+				if [[ "$(echo "${test_cmd}" | cut -c1)" == "#" ]]; then
+					eval ${test_cmd:1}
+				else
+					${2} "${3}" "$(echo "${test_cmd}" | cut -d'@' -f1)" "$(echo "${test_cmd}" | cut -d'@' -f2-)"
+				fi
 			fi
-			printf ${BLUE}"\n|==========================[ ECHO ]==========================|"${DEF_COLOR}
-			rm -rf traces/echo_trace.txt &> /dev/null
+			done < "${test_file}"
+		fi
+	}
 
-			# PRINT IN TRACES
-				echo "" > traces/echo_trace.txt
-				echo "**************************************************************" >> traces/echo_trace.txt
-				echo "*                          CARE!                             *" >> traces/echo_trace.txt
-				echo "*                                                            * " >> traces/echo_trace.txt
-				echo "* This tester doesnt work if ur readline prompt have '\n'    *" >> traces/echo_trace.txt
-				echo "*                                                            *" >> traces/echo_trace.txt
-				echo "**************************************************************" >> traces/echo_trace.txt
-				echo "" >> traces/echo_trace.txt
-				printf ${BLUE}"\n\n\n"${DEF_COLOR}
-			#
+	function echo_test_call()
+	{
+		if [ "$TTECHO" != "" ]; then
+			return ;
+		fi
+		printf ${BLUE}"\n|==========================[ ECHO ]==========================|"${DEF_COLOR}
+		rm -rf traces/echo_trace.txt &> /dev/null
+		print_in_traces "traces/echo_trace.txt"
+		main_test_call "/echo/echo.txt" "trim_one_line_function" "traces/echo_trace.txt"
+		main_test_call "/echo/flags.txt" "no_newline_tester_function" "traces/echo_trace.txt"
+		print_end_tests "${EOK}" "${ESF}" "traces/echo_trace.txt"
+		TTECHO="1";
+		printf "${BLUE}\n|============================================================|\n\n\n${DEF_COLOR}"
+	}
 
-			# SIMPLE TEST ECHO WHILE
-				printf "${BLUE} simple\n ------------------------------------\n\n${DEF_COLOR}"
-				test_file="./test/${TESTER_MODE}/echo/echo.txt"
-				if [ ! -f "$test_file" ]; then
-					printf "${RED} File needed to test $test_file not found\n\n${DEF_COLOR}"
-				else
-					while read -r test_cmd; do
-					trim_one_line_function "traces/echo_trace.txt" "$(echo "$test_cmd" | cut -d'@' -f1)" "$(echo "$test_cmd" | cut -d'@' -f2-)"
-					# trim_one_line_function "$test_cmd"
-					done < "$test_file"
-				fi
-			#
+	function export_test_call()
+	{
+		if [ "$TTEXPORT" != "" ]; then
+			return ;
+		fi
+		EOK="OK"
+		ESF=""
+		printf ${BLUE}"\n|=========================[ EXPORT ]=========================|"${DEF_COLOR}
+		rm -rf traces/export_trace.txt &> /dev/null
+		print_in_traces "traces/export_trace.txt"
+		main_test_call "/export/export.txt" "trim_one_line_function" "traces/export_trace.txt"
+		print_end_tests "${EOK}" "${ESF}" "traces/export_trace.txt"
+		TTEXPORT="1";
+		printf "${BLUE}\n|============================================================|\n\n\n${DEF_COLOR}"
+	}
 
-			# FLAGS TEST ECHO WHILE
-				printf "${BLUE}\n with flag\n ------------------------------------\n\n${DEF_COLOR}"
-				test_file="./test/${TESTER_MODE}/echo/flags.txt"
-				if [ ! -f "$test_file" ]; then
-					printf "${RED} File needed to test $test_file not found\n\n${DEF_COLOR}"
-				else
-					while read -r test_cmd; do
-					no_newline_tester_function "traces/echo_trace.txt" "$(echo "$test_cmd" | cut -d'@' -f1)" "$(echo "$test_cmd" | cut -d'@' -f2-)"
-					done < "$test_file"
-				fi
-			#
+	function exit_test_call()
+	{
+		if [ "$TTEXIT" != "" ]; then
+			return ;
+		fi
+		EOK="OK"
+		ESF=""
+		printf ${BLUE}"\n|==========================[ EXIT ]==========================|"${DEF_COLOR}
+		rm -rf traces/exit_trace.txt &> /dev/null
+		print_in_traces "traces/exit_trace.txt"
+		main_test_call "/exit/exit.txt" "trim_one_line_function" "traces/exit_trace.txt"
+		print_end_tests "${EOK}" "${ESF}" "traces/exit_trace.txt"
+		TTEXIT="1";
+		printf "${BLUE}\n|============================================================|\n\n\n${DEF_COLOR}"
+	}
 
-			# MIXED TEST ECHO WHILE
-				printf "${BLUE}\n with env variables\n ------------------------------------\n\n${DEF_COLOR}"
-				test_file="./test/${TESTER_MODE}/echo/env.txt"
-				if [ ! -f "$test_file" ]; then
-					printf "${RED} File needed to test $test_file not found\n\n${DEF_COLOR}"
-				else
-					while read -r test_cmd; do
-					export TMPENVVAR="$test_cmd"
-					IFS= read -r test_cmd
-					trim_one_line_function "traces/echo_trace.txt" "$(echo "$test_cmd" | cut -d'@' -f1)" "$(echo "$test_cmd" | cut -d'@' -f2-)"
-					done < "$test_file"
-					unset TMPENVVAR
-				fi
-			#
+	function parser_test_call()
+	{
+		if [ "$TTPARSER" != "" ]; then
+			return ;
+		fi
+		EOK="OK"
+		ESF=""
+		printf ${BLUE}"\n|=========================[ PARSER ]=========================|"${DEF_COLOR}
+		rm -rf traces/parser_trace.txt &> /dev/null
+		print_in_traces "traces/parse_trace.txt"
+		main_test_call "/parser/parser.txt" "trim_one_line_function" "traces/parser_trace.txt"
+		main_test_call "/parser/syntax_error.txt" "trim_one_line_function" "traces/parser_trace.txt"
+		print_end_tests "${EOK}" "${ESF}" "traces/parser_trace.txt"
+		TTPARSER="1";
+		printf "${BLUE}\n|============================================================|\n\n\n${DEF_COLOR}"
+	}
 
-			# ECHO RESUME
-				if [ "$EOK" == "KO" ]; then
-					printf "${BLUE}\n\n  It seems that there are some tests that have not passed...\n\n"
-					if [ "$ESF" != "" ]; then
-						printf "  and your minishell gives ${RED}segmentation fault!${BLUE} ($ESF)\n\n"
-					fi
-					printf "  To see full failure traces -> traces/echo_traces.txt\n"
-				fi
-			#
-			TTECHO="1";
-			printf "${BLUE}\n|============================================================|\n\n\n${DEF_COLOR}"
-		}
-	#
+	function pipe_test_call()
+	{
+		if [ "$TTPIPE" != "" ]; then
+			return ;
+		fi
+		EOK="OK"
+		ESF=""
+		printf ${BLUE}"\n|==========================[ EXIT ]==========================|"${DEF_COLOR}
+		rm -rf traces/pipes_trace.txt &> /dev/null
+		print_in_traces "traces/pipes_trace.txt"
+		main_test_call "/pipe/pipe.txt" "trim_one_line_function" "traces/pipes_trace.txt"
+		print_end_tests "${EOK}" "${ESF}" "traces/pipes_trace.txt"
+		TTPIPE="1";
+		printf "${BLUE}\n|============================================================|\n\n\n${DEF_COLOR}"
+	}
 
-	#EXPORT
-		function export_test_call()
-		{
-			if [ "$TTEXPORT" != "" ]; then
-				return ;
-			fi
-			EOK="OK"
-			ESF=""
-			printf ${BLUE}"\n|=========================[ EXPORT ]=========================|\n\n"${DEF_COLOR}
-			rm -rf traces/export_trace.txt &> /dev/null
+	function redirection_test_call()
+	{
+		if [ "$TTREDIRECT" != "" ]; then
+			return ;
+		fi
+		EOK="OK"
+		ESF=""
+		printf ${BLUE}"\n|======================[ REDIRECTIONS ]======================|"${DEF_COLOR}
+		rm -rf traces/redi_trace.txt &> /dev/null
+		print_in_traces "traces/pipes_trace.txt"
+		main_test_call "/redirection/redirection.txt" "trim_one_line_function" "traces/redi_trace.txt"
+		print_end_tests "${EOK}" "${ESF}" "traces/redi_trace.txt"
+		TTREDIRECT="1";
+		printf "${BLUE}\n|============================================================|\n\n\n${DEF_COLOR}"
+	}
 
-			# PRINT IN TRACES
-				echo "" > traces/export_trace.txt
-				echo "**************************************************************" >> traces/echo_trace.txt
-				echo "*                          CARE!                             *" >> traces/echo_trace.txt
-				echo "*                                                            * " >> traces/echo_trace.txt
-				echo "* This tester doesnt work if ur readline prompt have '\n'    *" >> traces/echo_trace.txt
-				echo "*                                                            *" >> traces/echo_trace.txt
-				echo "**************************************************************" >> traces/echo_trace.txt
-				echo "" >> traces/export_trace.txt
-			#
-
-			# SIMPLE TEST ECHO WHILE
-				test_file="./test/${TESTER_MODE}/export/export_tests.txt"
-				if [ ! -f "$test_file" ]; then
-					printf "${RED} File needed to test $test_file not found\n\n${DEF_COLOR}"
-				else
-					while read -r test_cmd; do
-					trim_one_line_function "traces/export_trace.txt" "$(echo "$test_cmd" | cut -d'@' -f1)" "$(echo "$test_cmd" | cut -d'@' -f2-)"
-					done < "$test_file"
-				fi
-			#
-
-			# EXPORT RESUME
-				if [ "$EOK" == "KO" ]; then
-					printf "${BLUE}\n\n  It seems that there are some tests that have not passed...\n\n"
-					if [ "$ESF" != "" ]; then
-						printf "  and your minishell gives ${RED}segmentation fault!${BLUE} ($ESF)\n\n"
-					fi
-					printf "  To see full failure traces -> traces/export_traces.txt\n"
-				fi
-			#
-
-			TTEXPORT="1";
-			printf "${BLUE}\n|===============================================================|\n\n${DEF_COLOR}"
-		}
-	#
+	function status_test_call()
+	{
+		if [ "$TTSTATUS" != "" ]; then
+			return ;
+		fi
+		EOK="OK"
+		ESF=""
+		printf ${BLUE}"\n|======================[ REDIRECTIONS ]======================|"${DEF_COLOR}
+		rm -rf traces/status_trace.txt &> /dev/null
+		print_in_traces "traces/pipes_trace.txt"
+		main_test_call "/status/status.txt" "trim_one_line_function" "traces/status_trace.txt"
+		print_end_tests "${EOK}" "${ESF}" "traces/status_trace.txt"
+		TTSTATUS="1";
+		printf "${BLUE}\n|============================================================|\n\n\n${DEF_COLOR}"
+	}
 
 #
 
@@ -363,7 +402,7 @@
 	do
 		case "$arg" in
 			"-h"|"--help") print_helper ;;
-			"echo"|"export") ;;
+			"echo"|"export"|"exit"|"parser"|"pipe"|"redirection"|"status") ;;
 			"-b"|"--bonus") TESTER_MODE="bonus" ;;
 			*) printf "\n Invalid argument:"${DEF_COLOR}" $arg\n Type "${BLUE}"--help"${DEF_COLOR}" to see the valid options\n\n"${DEF_COLOR} && exit 1 ;;
 		esac
@@ -435,7 +474,16 @@
 		TTECHO=""
 	# Export done
 		TTEXPORT=""
-	
+	# Echo done
+		TTEXIT=""
+	# Export done
+		TTPARSER=""
+	# Echo done
+		TTPIPE=""
+	# Export done
+		TTREDIRECT=""
+	# Echo done
+		TTSTATUS=""
 #
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  EXECUTOR
@@ -443,17 +491,32 @@
 	if [[ "$#" == "1" && ( "$1" == "-b" || "$1" == "--bonus" ) ]]; then
 		echo_test_call;
 		export_test_call;
+		exit_test_call;
+		parser_test_call;
+		pipe_test_call;
+		redirection_test_call;
+		status_test_call;
 	elif [[ "$#" != "0" ]]; then
 		for arg in "$@"
 		do
 			case "$arg" in
 				"echo") echo_test_call ;;
 				"export") export_test_call ;;
+				"exit") exit_test_call;;
+				"parser") parser_test_call;;
+				"pipe") pipe_test_call;;
+				"redirection") redirection_test_call;;
+				"status") status_test_call;;
 			esac
 		done
 	else
 		echo_test_call;
 		export_test_call;
+		exit_test_call;
+		parser_test_call;
+		pipe_test_call;
+		redirection_test_call;
+		status_test_call;
 	fi
 
 #

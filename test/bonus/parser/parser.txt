@@ -1,5 +1,8 @@
-echo ">>>>>>>>>>> TESTING AND <<<<<<<<<<<<<<<<<<<<<"
-
+#echo "\n\n"
+#echo "*******************************************"
+#echo "*                  AND                    *"
+#echo "*******************************************"
+#echo "\n\n"
 echo bonjour&& echo je
 echo bonjour &&echo je
 echo bonjour && echo je
@@ -15,9 +18,11 @@ echo a && echo b&& echo c &&echo d     &&   echo e   &&echo f&&        echo g  &
 ls doesnotexists && echo bonjour
 ls doesnotexists&& echo bonjour
 echo bonjour&& ls doesnotexists
-
-echo ">>>>>>>>>>> TESTING OR <<<<<<<<<<<<<<<<<<<<<"
-
+#echo "\n\n"
+#echo "*******************************************"
+#echo "*                  OR                    *"
+#echo "*******************************************"
+#echo "\n\n"
 echo bonjour|| echo je
 echo bonjour ||echo je
 echo bonjour || echo je
@@ -33,9 +38,11 @@ echo a || echo b|| echo c ||echo d     ||   echo e   ||echo f||        echo g  |
 ls doesnotexists || echo bonjour
 ls doesnotexists|| echo bonjour
 echo bonjour|| ls doesnotexists
-
-echo ">>>>>>>>>>> TESTING PARENTHESIS <<<<<<<<<<<<<<<<<<<<<"
-
+#echo "\n\n"
+#echo "*******************************************"
+#echo "*              PARENTHESIS                *"
+#echo "*******************************************"
+#echo "\n\n"
 (echo bonjour)
 (echo bonjour )
 ( echo bonjour )
@@ -70,3 +77,22 @@ echo a | (cat -e | cat -e | cat -e) | cat -e
 (cat /etc/shells) | (cat -e) | (cat -e) | (cat -e) | (cat -e) | (cat -e) | (cat -e) | (cat -e) | (cat -e)
 (cat /etc/shells | (cat -e) | (cat -e) | (cat -e)
 (cat /etc/shells) | (cat -e) | (cat -e | (cat -e)
+#echo "\n\n"
+#echo "*******************************************"
+#echo "*                 QUOTES                  *"
+#echo "*******************************************"
+#echo "\n\n"
+echo 'AH\'
+echo "AH\"
+echo "AH\""
+echo '\''
+echo "\""
+echo "\\""
+echo "\""
+echo "\$"
+echo "\\"
+echo "\a"
+echo "\A"
+echo "&&"
+echo "||"
+echo "()|&&))("

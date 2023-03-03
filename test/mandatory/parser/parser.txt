@@ -1,5 +1,8 @@
-echo ">>>>>>>>>>> TESTING SPACES <<<<<<<<<<<<<<<<<<<<<"
-
+#echo "\n\n"
+#echo "*******************************************"
+#echo "*               SPACES                    *"
+#echo "*******************************************"
+#echo "\n\n"
 echo foo
 echo                    foo
              echo foo
@@ -16,9 +19,11 @@ echo\tfoo\t\t\t\t\t\t
 \t\r\v\fecho\v\t\r\vfoo
 \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t
             \t\t\t           \t\t\t
-
-echo ">>>>>>>>>>> TESTING PARSER <<<<<<<<<<<<<<<<<<<<<"
-
+#echo "\n\n"
+#echo "*******************************************"
+#echo "*               PARSER                    *"
+#echo "*******************************************"
+#echo "\n\n"
 echo hi~
 echo ~
 echo ~$USER
@@ -42,6 +47,7 @@ echo "$USER",$PATH,$PWD"
 echo '$USER",$PATH,$PWD'
 echo $USER"$PATH"$PWD"USER"$PATH"$PWD"
 echo $USER'$PATH'$PWD'USER'$PATH'$PWD'
+#export A='foo   ' B='bar   ' C='baz   '
 echo $A"$B"$C"A"$B"$C"
 echo $A'$B'$C'A'$B'$C'
 echo $A"$B"$C"A"$B"$C"
@@ -50,3 +56,61 @@ echo $A
 echo $A$B
 echo $A$B$C
 echo $A$B$C$AA
+#unset A B C
+#echo "\n\n"
+#echo "*******************************************"
+#echo "*               QUOTES                    *"
+#echo "*******************************************"
+#echo "\n\n"
+'echo' 'bonjour'
+'echo' 'je' 'suis' 'charles'
+"echo" "bonjour"
+"echo" "je" "suis" "charles"
+echo je'suis'"charles"
+echo "je"suis'charles'
+echo 'je'"suis"charles
+ls ""
+ls ''
+ls "" "" "" '' """"
+ls '' '' '''' ''
+'     echo' bonjour
+'echo     ' bonjour
+"     echo" bonjour
+"echo     " bonjour
+''echo bonjour
+""echo bonjour
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''echo bonjour 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""echo bonjour 
+echo'' bonjour
+echo"" bonjour
+echo'''''''''''''''''''''''''''''''''''''''''''''''''''''''''' bonjour 
+echo"""""""""""""""""""""""""""""""""""""""""""""""""""""""""" bonjour 
+ec''ho bonjour
+ec""ho bonjour
+ec''''''''''''''''''''''''''''''''''''''''''''''''''''''''''ho bonjour 
+ec""""""""""""""""""""""""""""""""""""""""""""""""""""""""""ho bonjour 
+'''''''e''''''''''c''''''''''''h''''''''o''''''''''''''''''''' bonjour 
+"""""""e""""""""""c""""""""""""h""""""""o""""""""""""""""""""" bonjour 
+echo '"'
+echo '""""""""""""""""""""""""""'
+echo "'"
+echo "''''''''''''''''''''''''''"
+echo '
+echo "
+echo '''
+echo """
+echo '''''''''''''''''''''''''''''''''''''''''''
+echo """""""""""""""""""""""""""""""""""""""""""
+echo bonjour > "fi le"
+echo bonjour > 'fi le'
+echo 'AH\'
+echo "AH\"
+echo "AH\""
+echo '\''
+echo "\""
+echo "\\""
+echo "\""
+echo "\$"
+echo "\\"
+echo "\a"
+echo "\A"
