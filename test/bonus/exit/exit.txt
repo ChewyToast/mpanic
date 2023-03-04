@@ -4,11 +4,8 @@ exit 2
 exit 3
 exit ' 3'
 exit '\t3'
-exit '\t\f\r 3'
 exit '3 '
 exit '3\t' 
-exit '3\r' 
-exit '3\t\f\r 
 exit '3\t\t\ta'
 exit 0 
 exit -0

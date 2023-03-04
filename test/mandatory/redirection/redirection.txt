@@ -1,77 +1,80 @@
-echo bonjour > test
-echo > test bonjour
-> test echo bonjour
-echo bonjour >> test
-echo >> test bonjour
->> test echo bonjour
-echo bonjour > test
-cat < test
-echo > test'sticked' bonjour
-> test'sticked' echo bonjour
-echo bonjour >> test'sticked'
-echo >> test'sticked' bonjour
->> test'sticked' echo bonjour
-echo bonjour > test'sticked'
+
+# mkdir folder &> /dev/null
+echo hola > folder
+# rm -rf folder &> /dev/null
+
+echo > file hola
+> file echo hola
+echo adios >> file
+echo >> file probando
+>> file echo unalinea
+cat < file
+echo seguimos > file
+echo > test'sticked' hola
+> test'sticked' echo adios
+echo extra >> test'sticked'
+echo >> test'sticked' alpha
+>> test'sticked' echo beta
+cat < test'sticked'
+echo nuevo > test'sticked'
 cat < test'sticked'
 < test'sticked' cat
-> test"sticked" echo bonjour 
-echo bonjour >> test"sticked"
-echo >> test"sticked" bonjour
->> test"sticked" echo bonjour
-echo bonjour > test"sticked"
+# rm teststicked &> /dev/null
+# rm "test'sticked'" &> /dev/null
+
+> test"sticked" echo primera
+echo segunda >> test"sticked"
 cat < test"sticked"
-< test"sticked" cat
-echo > test'yo'"sticked" bonjour
-> test'yo'"sticked" echo bonjour
-echo bonjour >> test'yo'"sticked"
-echo >> test'yo'"sticked" bonjour
->> test'yo'"sticked" echo bonjour
-echo bonjour > test'yo'"sticked"
+# rm teststicked &> /dev/null
+# rm 'test"sticked"' &> /dev/null
+
+echo > test'yo'"sticked" primera
+> test'yo'"sticked" echo primera
+echo segunda >> test'yo'"sticked"
+echo >> test'yo'"sticked" insert
 cat < test'yo'"sticked"
 < test'yo'"sticked" cat
-echo bonjour > test > je > suis
-echo > test > je bonjour > suis
-> test echo bonjour > je > suis
-echo bonjour >> test > je >> suis
-echo >> test bonjour > je > suis
->> test echo > je bonjour > suis
-echo bonjour > test
-echo salut > je
-cat < test < je
-echo bonjour>test>je>suis
->test echo bonjour>je>suis
-echo bonjour>>test>je>>suis
-echo bonjour > test
-echo salut > je
-cat<test<je
-echo bonjour > a'b'c'd'e'f'g'h'i'j'k'l'm'n'o'p'q'r's't'u'v'w'x'y'z'
-echo bonjour > a"b"c"d"e"f"g"h"i"j"k"l"m"n"o"p"q"r"s"t"u"v"w"x"y"z"
-echo bonjour > a'b'c"d"e'f'g"h"i'j'k"l"m'n'o"p'q'r"s't'u"v"w"x"y'z'
-> file
-echo bonjour > file
-< file
->
->>
-<
-echo >
-echo >>
-echo <
-> test
->> test
-[SETUP touch test] < test
-echo foo >>> bar
-echo foo >>>> bar
-echo foo >>>>> bar
-echo bonjour > bar
-cat << < bar
-cat << << bar
-cat <<<<< bar
+# rm testyosticked &> /dev/null
+# rm "test'yo'\"sticked\"" &> /dev/null
+
+echo hola > file > file1 > file2
+echo > file > file1 hola > file2
+> file echo hola > file1 > file2
+cat file
+cat file1
+cat file2
+echo hola >> file > file1 >> file2
+echo >> file hola > file1 > file2
+>> file echo > file1 hola > file2
+echo hola > file
+cat < file < file1
+echo hola>file>file1>file2
+>file echo hola>file1>file2
+echo adios>>file>file1>>file2
+echo uno > file1
+echo dos > file2
+cat<file1<file2
+# rm file &> /dev/null
+# rm file1 &> /dev/null
+# rm file2 &> /dev/null
+
+echo hola > a'b'c'd'e'f'g'h'i'j'k'l'm'n'o'p'q'r's't'u'v'w'x'y'z'
+# rm abcdefghijklmnopqrstuvwxyz\ &> /d\ev/nul\l
+# rm "a'b'c'd'e'f'g'h'i'j'k'l'm'n'o'p'q'r's't'u'v'w'x'y'z'" &> /dev/null
+echo hola > a"b"c"d"e"f"g"h"i"j"k"l"m"n"o"p"q"r"s"t"u"v"w"x"y"z"
+# rm abcdefghijklmnopqrstuvwxyz &> /dev/null
+# rm  'a"b"c"d"e"f"g"h"i"j"k"l"m"n"o"p"q"r"s"t"u"v"w"x"y"z"' &> /dev/null
+echo hola > a'b'c"d"e'f'g"h"i'j'k"l"m'n'o"p'q'r"s't'u"v"w"x"y'z'
+# rm "abcdefghijklmnop'q'rstuvwxyz" &> /dev/null
+# rm "a'b'c\"d\"e'f'g\"h\"i'j'k\"l\"m'n'o\"p'q'r\"s't'u\"v\"w\"x\"y'z'"
+
 cat < doesnotexist
 echo a > a
-echo bonjour >> a
+echo hola >> a
 echo a > a
-echo bonjour >> a >> a
+echo hola >> a >> a
 echo a > a
-echo bonjour > a
+echo hola > a
 echo a > a
-echo bonjour > a >> a
+echo hola > a >> a
+#rm -f a &> /dev/null

@@ -1,3 +1,9 @@
+#echo ""
+#echo -e "${HEADER}============================${NC}"
+#echo -e "${HEADER}-------[ SYNTAX ERROR ]-----${NC}"
+#echo -e "${HEADER}============================${NC}"
+#echo ""
+
 < | a
 > | a
 >> | a
@@ -43,3 +49,10 @@
 () a
 ( a
 ) a
+
+echo bonjour&&
+echo&&
+echo &&
+echo bonjour||
+echo||
+echo ||

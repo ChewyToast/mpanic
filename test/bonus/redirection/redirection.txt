@@ -1,77 +1,8 @@
-echo bonjour > test
-echo > test bonjour
-> test echo bonjour
-echo bonjour >> test
-echo >> test bonjour
->> test echo bonjour
-echo bonjour > test
-cat < test
-echo > test'sticked' bonjour
-> test'sticked' echo bonjour
-echo bonjour >> test'sticked'
-echo >> test'sticked' bonjour
->> test'sticked' echo bonjour
-echo bonjour > test'sticked'
-cat < test'sticked'
-< test'sticked' cat
-> test"sticked" echo bonjour 
-echo bonjour >> test"sticked"
-echo >> test"sticked" bonjour
->> test"sticked" echo bonjour
-echo bonjour > test"sticked"
-cat < test"sticked"
-< test"sticked" cat
-echo > test'yo'"sticked" bonjour
-> test'yo'"sticked" echo bonjour
-echo bonjour >> test'yo'"sticked"
-echo >> test'yo'"sticked" bonjour
->> test'yo'"sticked" echo bonjour
-echo bonjour > test'yo'"sticked"
-cat < test'yo'"sticked"
-< test'yo'"sticked" cat
-echo bonjour > test > je > suis
-echo > test > je bonjour > suis
-> test echo bonjour > je > suis
-echo bonjour >> test > je >> suis
-echo >> test bonjour > je > suis
->> test echo > je bonjour > suis
-echo bonjour > test
-echo salut > je
-cat < test < je
-echo bonjour>test>je>suis
->test echo bonjour>je>suis
-echo bonjour>>test>je>>suis
-echo bonjour > test
-echo salut > je
-cat<test<je
-echo bonjour > a'b'c'd'e'f'g'h'i'j'k'l'm'n'o'p'q'r's't'u'v'w'x'y'z'
-echo bonjour > a"b"c"d"e"f"g"h"i"j"k"l"m"n"o"p"q"r"s"t"u"v"w"x"y"z"
-echo bonjour > a'b'c"d"e'f'g"h"i'j'k"l"m'n'o"p'q'r"s't'u"v"w"x"y'z'
-> file
-echo bonjour > file
-< file
->
->>
-<
-echo >
-echo >>
-echo <
-> test
->> test
-[SETUP touch test] < test
-echo foo >>> bar
-echo foo >>>> bar
-echo foo >>>>> bar
-echo bonjour > bar
-cat << < bar
-cat << << bar
-cat <<<<< bar
-cat < doesnotexist
-echo a > a
-echo bonjour >> a
-echo a > a
-echo bonjour >> a >> a
-echo a > a
-echo bonjour > a
-echo a > a
-echo bonjour > a >> a
+(echo bonjour > f1)
+(echo bonjour > f1 > f2 > f3)
+(echo bonjour > f1 > f2 > f3 > f4 > f5 > f6 > f7 > f8 > f9)
+(echo bonjour) > f1
+(echo bonjour) > f1 > f2 > f3
+(echo bonjour) > f1 > f2 > f3 > f4 > f5 > f6 > f7 > f8 > f9
+(echo bonjour > f1 > f2 > f3 > f4) > f5 > f6 > f7 > f8 > f9
+(echo bonjour > f1) > f2

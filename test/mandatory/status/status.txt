@@ -1,9 +1,17 @@
-echo $?
-cat < noexiste
-echo $?
-echoddd
-echo $?
-chmod 000 noperm
-echo bonjour > noperm
-echo $?
+# cat &> /dev/null < noexiste
+echo $? @status code after || cat < noexiste || 
 
+# echoddd &> /dev/null
+echo $? @status code after || invalid command || 
+
+# touch noperm
+# chmod 000 noperm
+# echo hola 2> /dev/null > noperm 
+echo $? @status code after || echo hola > noperm || 
+# rm noperm &> /dev/null
+
+# sleep 1 | ls | cat -n &> /dev/null
+echo $? @status code after || sleep 1 | ls | cat -n || 
+
+# sleep 1 | dddd &> /dev/null
+echo $? @status code after || sleep 1 | dddd || 

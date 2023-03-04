@@ -5,20 +5,15 @@ cat -e /etc/shells | cat -e | cat -e | head -c 10
 cat -e /dev/random | head -c 10
 cat -e /dev/random | cat -e | head -c 10
 cat -e /dev/random | cat -e | cat -e | head -c 10
-echo bonjour | cat
-echo bonjour | cat -e
-echo bonjour | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e
+echo hola | cat
+echo hola | cat -e
+echo hola | cat -e | cat -n
+echo hola | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e
 ls | cat -e
 ls -l | cat -e
 ls -l | cat -e | cat | cat | cat
 ls -l | cat -e | cat -e | cat -e | cat -e
-echo|
-echo |
-echo |
-|cat
-| cat
- | cat
-echo bonjour | | cat -e
-echo bonjour | asdf
-asdf | echo bonjour
-echo a ||| echo b
+echo hola | asdf
+asdf | echo hola
+cat | cat | cat | ls
+sleep 1 | ls | cat -n

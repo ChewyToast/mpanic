@@ -1,6 +1,11 @@
-#echo "*******************************************"
-#echo "*               SIMPLE                    *"
-#echo "*******************************************"
+#HEADER='\033[49m'
+#NC='\033[0m' # No Color
+
+#echo ""
+#echo -e "${HEADER}============================${NC}"
+#echo -e "${HEADER}----------[ SIMPLE ]--------${NC}"
+#echo -e "${HEADER}============================${NC}"
+#echo ""
 echo ""
 echo
 echO ""
@@ -18,11 +23,11 @@ echo $NONEXIST
 " echo"
 " echo"
 \ echo "   " $
-#echo "\n\n"
-#echo "*******************************************"
-#echo "*                 FLAGS                   *"
-#echo "*******************************************"
-#echo "\n\n"
+#echo ""
+#echo -e "${HEADER}============================${NC}"
+#echo -e "${HEADER}----------[ FLAGS ]---------${NC}"
+#echo -e "${HEADER}============================${NC}"
+#echo ""
 echo -n
 echo -n hi
  echo -nn
@@ -42,11 +47,11 @@ echo -nn hi --n
 echo "-nn" hi -n
 echo -------------nnnnnnnnnn hi
 echo "-------------nnnnnnnnnn" hi
-#echo "\n\n"
-#echo "*******************************************"
-#echo "*              ENVIROMENT                 *"
-#echo "*******************************************"
-#echo "\n\n"
+#echo ""
+#echo -e "${HEADER}============================${NC}"
+#echo -e "${HEADER}--------[ ENVIROMENT ]------${NC}"
+#echo -e "${HEADER}============================${NC}"
+#echo ""
 #export TMPENVVAR
 $TMPENVVAR
 #export TMPENVVAR=\echo
@@ -87,12 +92,6 @@ echo [$TMPENVVAR]
 echo [$TMPENVVAR]
 #export TMPENVVAR=' \  '
 echo [$TMPENVVAR]
-#export TMPENVVAR='bonjour'
-echo \ \ \ \ \ \ \ $TMPENVVAR\ \ \ \ \ \ 
-#export TMPENVVAR='bonjour je suis'
-echo \ \ \ \ \ \ \ $TMPENVVAR\ \ \ \ \ \ 
-#export TMPENVVAR='  bonjour je suis  '
-echo \ \ \ \ \ \ \ $TMPENVVAR\ \ \ \ \ \ 
 #export TMPENVVAR='bonjour je suis splited'
 echo $TMPENVVAR 
 #export TMPENVVAR='bonjour     je     suis    splited'
@@ -126,3 +125,4 @@ $TMPENVVAR $TMPENVVAR
 $A$B$C
 $A$B $C
 #unset A B C
+#unset HEADER NC

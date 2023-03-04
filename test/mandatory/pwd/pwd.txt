@@ -1,0 +1,21 @@
+pwd
+cd ..
+pwd 
+cd ../..
+pwd
+cd ../../..
+pwd
+cd /
+pwd
+cd $HOME
+pwd
+pwd | cat -e
+unset PWD
+pwd
+echo $PWD
+Pwd
+pwD
+# export PATH='/bin:/usr/bin'
+Pwd
+# export PATH='/bin:/usr/bin'
+pwD

@@ -1,48 +1,44 @@
-#echo "\n\n"
-#echo "*******************************************"
-#echo "*                  AND                    *"
-#echo "*******************************************"
-#echo "\n\n"
+#echo ""
+#echo -e "${HEADER}============================${NC}"
+#echo -e "${HEADER}-----------[ AND ]----------${NC}"
+#echo -e "${HEADER}============================${NC}"
+#echo ""
+
 echo bonjour&& echo je
 echo bonjour &&echo je
 echo bonjour && echo je
-echo bonjour&&
-echo&&
-echo &&
-echo &&
 &&echo
 && echo
  && echo
-echo a&& echo b&& echo c&& echo d&& echo e&& echo f&& echo g&& echo h&& echo i&&echo j&& echo k&& echo l&& echo m&& echo c&& echo c&& echo c&& echo c&& echo c&&echo c&& echo c&& echo c&& echo v&& echo w&& echo x&& echo y&& echo z
-echo a && echo b&& echo c &&echo d     &&   echo e   &&echo f&&        echo g  &&echo h&& echo i&&echo j  && echo k&& echo l&& echo m&& echo c    && echo c&& echo c    && echo c&& echo c&&echo c&& echo c   && echo c&& echo v   && echo w&&    echo x&& echo y    && echo z
-ls doesnotexists && echo bonjour
+echo a&& b&&echo c&& echo k&& echo z
+echo a && echo b&& echo c &&echo d     &&   echo e   &&echo f&&        echo g
 ls doesnotexists&& echo bonjour
 echo bonjour&& ls doesnotexists
-#echo "\n\n"
-#echo "*******************************************"
-#echo "*                  OR                    *"
-#echo "*******************************************"
-#echo "\n\n"
+
+#echo ""
+#echo -e "${HEADER}============================${NC}"
+#echo -e "${HEADER}------------[ OR ]----------${NC}"
+#echo -e "${HEADER}============================${NC}"
+#echo ""
+
 echo bonjour|| echo je
 echo bonjour ||echo je
 echo bonjour || echo je
-echo bonjour||
-echo||
-echo ||
-echo ||
 ||echo
 || echo
  || echo
-echo a|| echo b|| echo c|| echo d|| echo e|| echo f|| echo g|| echo h|| echo i||echo j|| echo k|| echo l|| echo m|| echo c|| echo c|| echo c|| echo c|| echo c||echo c|| echo c|| echo c|| echo v|| echo w|| echo x|| echo y|| echo z
-echo a || echo b|| echo c ||echo d     ||   echo e   ||echo f||        echo g  ||echo h|| echo i||echo j  || echo k|| echo l|| echo m|| echo c    || echo c|| echo c    || echo c|| echo c||echo c|| echo c   || echo c|| echo v   || echo w||    echo x|| echo y    || echo z
+echo a|| b||echo c|| echo k|| echo z
 ls doesnotexists || echo bonjour
 ls doesnotexists|| echo bonjour
 echo bonjour|| ls doesnotexists
-#echo "\n\n"
-#echo "*******************************************"
-#echo "*              PARENTHESIS                *"
-#echo "*******************************************"
-#echo "\n\n"
+echo a || echo b|| echo c ||echo d     ||   echo e   ||echo f&&        echo g
+
+#echo ""
+#echo -e "${HEADER}============================${NC}"
+#echo -e "${HEADER}-------[ PARENTHESIS ]------${NC}"
+#echo -e "${HEADER}============================${NC}"
+#echo ""
+
 (echo bonjour)
 (echo bonjour )
 ( echo bonjour )
@@ -52,14 +48,6 @@ echo bonjour|| ls doesnotexists
 (echo a || ls doesnotexist) || echo c
 echo aa && (echo b && echo c)
 ls doesnotexist || (echo b && echo c)
-(echo bonjour > f1)
-(echo bonjour > f1 > f2 > f3)
-(echo bonjour > f1 > f2 > f3 > f4 > f5 > f6 > f7 > f8 > f9)
-(echo bonjour) > f1
-(echo bonjour) > f1 > f2 > f3
-(echo bonjour) > f1 > f2 > f3 > f4 > f5 > f6 > f7 > f8 > f9
-(echo bonjour > f1 > f2 > f3 > f4) > f5 > f6 > f7 > f8 > f9
-(echo bonjour > f1) > f2
 (ls && ls)
 (ls doesntexist || ls)
 (ls doesntexist && ls)
@@ -74,14 +62,15 @@ echo a | (cat -e | cat -e | cat -e) | cat -e
 (echo a) | (cat -e | cat -e | cat -e) | cat -e
 (echo a) | (cat -e | cat -e | cat -e) | (cat -e)
 (cat /etc/shells) | (cat -e) | (cat -e) | (cat -e)
-(cat /etc/shells) | (cat -e) | (cat -e) | (cat -e) | (cat -e) | (cat -e) | (cat -e) | (cat -e) | (cat -e)
-(cat /etc/shells | (cat -e) | (cat -e) | (cat -e)
 (cat /etc/shells) | (cat -e) | (cat -e | (cat -e)
-#echo "\n\n"
-#echo "*******************************************"
-#echo "*                 QUOTES                  *"
-#echo "*******************************************"
-#echo "\n\n"
+(cat /etc/shells | (cat -e) | (cat -e) | (cat -e)
+
+#echo ""
+#echo -e "${HEADER}============================${NC}"
+#echo -e "${HEADER}----------[ QUOTES ]--------${NC}"
+#echo -e "${HEADER}============================${NC}"
+#echo ""
+
 echo 'AH\'
 echo "AH\"
 echo "AH\""
@@ -96,3 +85,37 @@ echo "\A"
 echo "&&"
 echo "||"
 echo "()|&&))("
+
+
+#echo ""
+#echo -e "${HEADER}============================${NC}"
+#echo -e "${HEADER}---------[ WILDCARD ]-------${NC}"
+#echo -e "${HEADER}============================${NC}"
+#echo ""
+
+@ NOTA >> los que funcionan dan fallo y viceversa
+echo *
+#touch file1.txt file2.txt
+echo *.txt
+echo fil*
+echo *le*
+rm *.txt
+echo *.*
+#echo hola > "fil*e"
+cat "fil*e"
+
+
+#echo ""
+#echo -e "${HEADER}============================${NC}"
+#echo -e "${HEADER}----------[ COMPLEX ]-------${NC}"
+#echo -e "${HEADER}============================${NC}"
+#echo ""
+
+echo hola && echo adios || echo noejecuta && echo si ejecuta
+echo hola && echon adios || echo siejecuta && echo fin
+ls | ( cat -e && cat -n ) | cat -n
+(ls | ( cata -e && cat -n ) | cat -e) && echo success
+export A=mivalor && echo $A
+(export A=mivalor) && echo $A
+export A=mivalor && (unset A) && echo$A
+echo hola | (cat -n | (cat -e && echo inception) && echo adios | (cat -n | (cat -e))) @ NOTA >> da syntax error y no deberia

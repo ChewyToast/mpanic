@@ -1,6 +1,38 @@
+#echo ""
+#echo -e "${HEADER}============================${NC}"
+#echo -e "${HEADER}-------[ SYNTAX ERROR ]-----${NC}"
+#echo -e "${HEADER}============================${NC}"
+#echo ""
+
 < | a
 > | a
 >> | a
 | < a
 | > a
 | >> a
+echo|
+echo |
+echo |
+|cat
+| cat
+ | cat
+ echo bonjour | | cat -e
+ echo a ||| echo b
+> file
+echo bonjour > file
+< file
+>
+>>
+<
+echo >
+echo >>
+echo <
+> test
+>> test
+echo foo >>> test
+echo foo >>>> test
+echo foo >>>>> test
+echo bonjour > test
+cat << < test
+cat << << test
+cat <<<<< test
