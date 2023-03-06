@@ -2,9 +2,9 @@
 #NC='\033[0m' # No Color
 
 #echo ""
-#echo -e "${HEADER}============================${NC}"
-#echo -e "${HEADER}----------[ SIMPLE ]--------${NC}"
-#echo -e "${HEADER}============================${NC}"
+#echo -e "============================"
+#echo -e "----------[ SIMPLE ]--------"
+#echo -e "============================"
 #echo ""
 echo ""
 echo
@@ -24,9 +24,9 @@ echo $NONEXIST
 " echo"
 \ echo "   " $
 #echo ""
-#echo -e "${HEADER}============================${NC}"
-#echo -e "${HEADER}----------[ FLAGS ]---------${NC}"
-#echo -e "${HEADER}============================${NC}"
+#echo -e "============================"
+#echo -e "----------[ FLAGS ]---------"
+#echo -e "============================"
 #echo ""
 echo -n
 echo -n hi
@@ -48,9 +48,9 @@ echo "-nn" hi -n
 echo -------------nnnnnnnnnn hi
 echo "-------------nnnnnnnnnn" hi
 #echo ""
-#echo -e "${HEADER}============================${NC}"
-#echo -e "${HEADER}--------[ ENVIROMENT ]------${NC}"
-#echo -e "${HEADER}============================${NC}"
+#echo -e "============================"
+#echo -e "--------[ ENVIROMENT ]------"
+#echo -e "============================"
 #echo ""
 #export TMPENVVAR
 $TMPENVVAR

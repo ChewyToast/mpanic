@@ -1,14 +1,3 @@
-export
-exportt
-export A; export | grep A
-export A+=; export | grep A
-export PATH+=:new/dir; export | grep PATH
-export A_A="Im possible!"; export | grep A_A
-export A_.F="Im not possible" A_A="Im possible!"; export | grep A_A
-export A AA= AAA="" AAAA="hi";export
-
-######################################################################################################
-
 echo $PATH
 echo $
 echo $.

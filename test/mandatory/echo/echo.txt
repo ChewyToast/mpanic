@@ -1,20 +1,13 @@
-echo hola;echo adios@echo hola && echo adios
-echo hola1;echo adios1@echo hola && echo adios1
-echo hola2;echo adio2s@echo hola && echo adios2
-
-
-
-
 #HEADER='\033[49m'
 #NC='\033[0m' # No Color
 
 #echo ""
-#echo -e "${HEADER}============================${NC}"
-#echo -e "${HEADER}----------[ SIMPLE ]--------${NC}"
-#echo -e "${HEADER}============================${NC}"
+#echo -e "============================"
+#echo -e "----------[ SIMPLE ]--------"
+#echo -e "============================"
 #echo ""
 
-echo ""
+echo ";hola;adios"
 echo
 echO ""
     echo
@@ -33,9 +26,9 @@ echo $NONEXIST
 \ echo "   " $
 
 #echo ""
-#echo -e "${HEADER}============================${NC}"
-#echo -e "${HEADER}----------[ FLAGS ]---------${NC}"
-#echo -e "${HEADER}============================${NC}"
+#echo -e "============================"
+#echo -e "----------[ FLAGS ]---------"
+#echo -e "============================"
 #echo ""
 
 echo -n
@@ -59,9 +52,9 @@ echo -------------nnnnnnnnnn hi
 echo "-------------nnnnnnnnnn" hi
 
 #echo ""
-#echo -e "${HEADER}============================${NC}"
-#echo -e "${HEADER}--------[ ENVIROMENT ]------${NC}"
-#echo -e "${HEADER}============================${NC}"
+#echo -e "============================"
+#echo -e "--------[ ENVIROMENT ]------"
+#echo -e "============================"
 #echo ""
 
 #export TMPENVVAR

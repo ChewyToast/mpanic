@@ -1,7 +1,7 @@
 #echo ""
-#echo -e "${HEADER}============================${NC}"
-#echo -e "${HEADER}-----------[ AND ]----------${NC}"
-#echo -e "${HEADER}============================${NC}"
+#echo -e "============================"
+#echo -e "-----------[ AND ]----------"
+#echo -e "============================"
 #echo ""
 
 echo bonjour&& echo je
@@ -16,9 +16,9 @@ ls doesnotexists&& echo bonjour
 echo bonjour&& ls doesnotexists
 
 #echo ""
-#echo -e "${HEADER}============================${NC}"
-#echo -e "${HEADER}------------[ OR ]----------${NC}"
-#echo -e "${HEADER}============================${NC}"
+#echo -e "============================"
+#echo -e "------------[ OR ]----------"
+#echo -e "============================"
 #echo ""
 
 echo bonjour|| echo je
@@ -34,9 +34,9 @@ echo bonjour|| ls doesnotexists
 echo a || echo b|| echo c ||echo d     ||   echo e   ||echo f&&        echo g
 
 #echo ""
-#echo -e "${HEADER}============================${NC}"
-#echo -e "${HEADER}-------[ PARENTHESIS ]------${NC}"
-#echo -e "${HEADER}============================${NC}"
+#echo -e "============================"
+#echo -e "-------[ PARENTHESIS ]------"
+#echo -e "============================"
 #echo ""
 
 (echo bonjour)
@@ -66,9 +66,9 @@ echo a | (cat -e | cat -e | cat -e) | cat -e
 (cat /etc/shells | (cat -e) | (cat -e) | (cat -e)
 
 #echo ""
-#echo -e "${HEADER}============================${NC}"
-#echo -e "${HEADER}----------[ QUOTES ]--------${NC}"
-#echo -e "${HEADER}============================${NC}"
+#echo -e "============================"
+#echo -e "----------[ QUOTES ]--------"
+#echo -e "============================"
 #echo ""
 
 echo 'AH\'
@@ -88,9 +88,9 @@ echo "()|&&))("
 
 
 #echo ""
-#echo -e "${HEADER}============================${NC}"
-#echo -e "${HEADER}---------[ WILDCARD ]-------${NC}"
-#echo -e "${HEADER}============================${NC}"
+#echo -e "============================"
+#echo -e "---------[ WILDCARD ]-------"
+#echo -e "============================"
 #echo ""
 
 @ NOTA >> los que funcionan dan fallo y viceversa
@@ -106,9 +106,9 @@ cat "fil*e"
 
 
 #echo ""
-#echo -e "${HEADER}============================${NC}"
-#echo -e "${HEADER}----------[ COMPLEX ]-------${NC}"
-#echo -e "${HEADER}============================${NC}"
+#echo -e "============================"
+#echo -e "----------[ COMPLEX ]-------"
+#echo -e "============================"
 #echo ""
 
 echo hola && echo adios || echo noejecuta && echo si ejecuta

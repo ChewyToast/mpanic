@@ -1,15 +1,7 @@
-#echo "echo not this bin..." > echo
-#chmod 777 echo
-echo this one!
-#echo "echo this one!" > echo
-#chmod 777 echo
-./echo not this bin...
-#rm -rf echo &> /dev/null
-
 #echo ""
-#echo -e "${HEADER}============================${NC}"
-#echo -e "${HEADER}-----------[ TILDE ]--------${NC}"
-#echo -e "${HEADER}============================${NC}"
+#echo -e "============================"
+#echo -e "-----------[ TILDE ]--------"
+#echo -e "============================"
 #echo ""
 
 echo hi~
@@ -19,9 +11,9 @@ echo ~false
 echo \~
 
 #echo ""
-#echo -e "${HEADER}============================${NC}"
-#echo -e "${HEADER}----------[ DOLLAR ]--------${NC}"
-#echo -e "${HEADER}============================${NC}"
+#echo -e "============================"
+#echo -e "----------[ DOLLAR ]--------"
+#echo -e "============================"
 #echo ""
 
 echo $USE
@@ -46,9 +38,9 @@ echo $A$B$C$AA
 #unset A B C
 
 #echo ""
-#echo -e "${HEADER}============================${NC}"
-#echo -e "${HEADER}----------[ SPACES ]--------${NC}"
-#echo -e "${HEADER}============================${NC}"
+#echo -e "============================"
+#echo -e "----------[ SPACES ]--------"
+#echo -e "============================"
 #echo ""
 
 echo foo
@@ -68,9 +60,9 @@ echo\tfoo\t\t\t\t\t\t
             \t\t\t           \t\t\t
 
 #echo ""
-#echo -e "${HEADER}============================${NC}"
-#echo -e "${HEADER}----------[ QUOTES ]--------${NC}"
-#echo -e "${HEADER}============================${NC}"
+#echo -e "============================"
+#echo -e "----------[ QUOTES ]--------"
+#echo -e "============================"
 #echo ""
 
 echo "~"ups
@@ -120,6 +112,12 @@ echo '''
 echo """
 echo '''''''''''''''''''''''''''''''''''''''''''
 echo """""""""""""""""""""""""""""""""""""""""""
+echo    \t  hola   \t    
+echo "   \t  hola   \t    "
+echo '   \t  hola   \t    '
+echo $"   \t  hola   \t    "
+echo $'   \t  hola   \t    '
+echo $'   \r  hola   \t    '
 
 echo bonjour > "fi le"
 # rm '"fi le"' &> /dev/null

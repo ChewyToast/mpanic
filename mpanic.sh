@@ -149,8 +149,8 @@
 #
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  TESTS FUNCTIONS
-	
-	function trim_one_line_function()
+
+	function pruebas_function()
 	{
 		# Declaramos variables para funcion
 		SF_TMP=""
@@ -162,135 +162,76 @@
 
 		{ ./minishell; } < .tmp/exec_read.txt 1> .tmp/exec_outp.txt 2> .tmp/exec_error_outp.txt
 		ES1=$?
-		MINI_STDOUTP_ALL=$(cat -e .tmp/exec_outp.txt)
-		MINI_STDOUTP=$(cat -e .tmp/exec_outp.txt |  sed -e "$ d" | sed -e "1d")
-		MINI_ERROUTP_ALL=$(cat -e .tmp/exec_error_outp.txt)
-		MINI_ERROUTP=$(cat -e .tmp/exec_error_outp.txt |  sed -e "$ d")
-
 		{ bash; } < .tmp/exec_read.txt 1> .tmp/bash_outp.txt 2> .tmp/bash_error_outp.txt
 		ES2=$?
-		BASH_STDOUTP=$(cat -e .tmp/bash_outp.txt)
-		BASH_ERROUTP=$(cat -e .tmp/bash_error_outp.txt)
-		BASH_ERROUTP_CUT=${BASH_ERROUTP:18:${#BASH_ERROUTP}}
-
-		if [ "${ES1}" == "139" ]; then 
-			{ ./minishell; } < .tmp/exec_read.txt &> .tmp/exec_other_outp.txt
-			ret=2
-			EOK="KO"
-			SF_TMP=$(cat .tmp/exec_other_outp.txt | sed -e "1d")
-			trace_printer "${1}" "${i}" "${2}" "${ES2}" "${BASH_STDOUTP}" "${BASH_ERROUTP}" "${ES1}" "${MINI_STDOUTP}" "${MINI_ERROUTP}" "${SF_TMP}";
-		else
-			if [ "${MINI_STDOUTP}" == "${BASH_STDOUTP}" ] && [[ "${MINI_ERROUTP}" == *"${BASH_ERROUTP_CUT}"* ]] && [ "${ES1}" == "${ES2}" ]; then
-				ret=1
-			else
-				ret=0
-				EOK="KO"
-				trace_printer "${1}" "${i}" "${2}" "${ES2}" "${BASH_STDOUTP}" "${BASH_ERROUTP}" "${ES1}" "${MINI_STDOUTP}" "${MINI_ERROUTP}" "${SF_TMP}";
-			fi
+		echo $'\n'"---------------------------------------------< [${i}]"
+		echo "| CMD: ->$FTEST<-"
+		echo "|--------------------------------"
+		echo "|  EXPECTED (BASH OUTP)  |  exit status: ($ES2)"$'\n'\|
+		echo "|--- STDOUT:"
+		echo "->$(cat -e .tmp/bash_outp.txt)<-"
+		echo "|"
+		echo "|--- STDERR:"
+		echo "|->$(cat -e .tmp/bash_error_outp.txt)<-"
+		echo "|--------------------------------"
+		echo "|--->FOUND (MINISHELL OUTP)  |  exit status: ($ES1)"$'\n'\|
+		echo "|--- STDOUT:"
+		echo "|->$(cat .tmp/exec_outp.txt)<-"
+		echo "|"
+		echo "|--- STDERR:"
+		echo "|->$(cat -e .tmp/exec_error_outp.txt)<-"
+		echo "|"
+		echo "---------------------------------------------<"
+		if [ "$i" == "3" ]; then
+			exit;
 		fi
-
-		print_test_result "${2}" "$3";
-		echo "" > .tmp/exec_outp.txt
-		echo "" > .tmp/exec_error_outp.txt
-		echo "" > .tmp/bash_outp.txt
-		echo "" > .tmp/bash_weeoe_outp.txt
 	}
 
-	function no_newline_tester_function()
+	function exec_function()
 	{
 		# Declaramos variables para funcion
 		SF_TMP=""
 		let "i=i+1"
 
 		# Preparamos archivo que va a ser el input con los argumentos
-		echo "${2}" > .tmp/exec_read.txt
-		echo "exit" >> .tmp/exec_read.txt
-
-		{ ./minishell; } < .tmp/exec_read.txt 1> .tmp/exec_outp.txt 2> .tmp/exec_error_outp.txt
+		echo "exit" >> ${2}
+		# cat ${2}
+		{ ./minishell; } < ${2} 1> .tmp/exec_outp.txt 2> .tmp/exec_error_outp.txt
 		ES1=$?
-
-		MINI_STDOUTP_ALL=$(cat -e .tmp/exec_outp.txt)
-		MINI_STDOUTP=$(cat -e .tmp/exec_outp.txt | sed -e "1d" | rev )
-		MINI_STDOUTP=${MINI_STDOUTP:$size_prom_cat_exit:${#MINI_STDOUTP}}
-		MINI_STDOUTP=$(echo "${MINI_STDOUTP}" | rev )
+		./cleaner ".tmp/exec_outp.txt"
+		MINI_STDOUTP=$(cat -e .tmp/exec_outp_clean.txt)
+		# MINI_STDOUTP=$(cat -e .tmp/exec_outp.txt |  sed -e "$ d" | sed -e "1d")
 		MINI_ERROUTP_ALL=$(cat -e .tmp/exec_error_outp.txt)
 		MINI_ERROUTP=$(cat -e .tmp/exec_error_outp.txt |  sed -e "$ d")
 
-		{ bash; } < .tmp/exec_read.txt 1> .tmp/bash_outp.txt 2> .tmp/bash_error_outp.txt
-		ES2=$?
-		BASH_STDOUTP=$(cat -e .tmp/bash_outp.txt)
-		BASH_ERROUTP=$(cat -e .tmp/bash_error_outp.txt)
-		BASH_ERROUTP_CUT=${BASH_ERROUTP:18:${#BASH_ERROUTP}}
-	
-		if [ "${ES1}" == "139" ]; then 
-			{ ./minishell; } < .tmp/exec_read.txt &> .tmp/exec_other_outp.txt
-			ret=2
-			EOK="KO"
-			SF_TMP=$(cat .tmp/exec_other_outp.txt | sed -e "1d")
-			trace_printer "${1}" "${i}" "${2}" "${ES2}" "${BASH_STDOUTP}" "${BASH_ERROUTP}" "${ES1}" "${MINI_STDOUTP}" "${MINI_ERROUTP}" "${SF_TMP}";
-		else
-			if [ "${MINI_STDOUTP}" == "${BASH_STDOUTP}" ] && [[ "${MINI_ERROUTP}" == *"${BASH_ERROUTP_CUT}"* ]] && [ "${ES1}" == "${ES2}" ]; then
-				ret=1
-			else
-				ret=0
-				EOK="KO"
-			trace_printer "${1}" "${i}" "${2}" "${ES2}" "${BASH_STDOUTP}" "${BASH_ERROUTP}" "${ES1}" "${MINI_STDOUTP}" "${MINI_ERROUTP}" "${SF_TMP}";
-			fi
-		fi
-
-		print_test_result "${2}" "${3}";
-		echo "" > .tmp/exec_outp.txt
-		echo "" > .tmp/exec_error_outp.txt
-		echo "" > .tmp/bash_outp.txt
-		echo "" > .tmp/bash_error_outp.txt
-	}
-
-	function exec_two_lines_tester_function()
-	{
-		# Declaramos variables para funcion
-		SF_TMP=""
-		let "i=i+1"
-
-		# Preparamos archivo que va a ser el input con los argumentos
-		echo "${2}" > .tmp/exec_read.txt
-		echo "${3}" >> .tmp/exec_read.txt
-		echo "exit" >> .tmp/exec_read.txt
-
-		{ ./minishell; } < .tmp/exec_read.txt 1> .tmp/exec_outp.txt 2> .tmp/exec_error_outp.txt
-		ES1=$?
-
-		MINI_STDOUTP_ALL=$(cat -e .tmp/exec_outp.txt)
-		MINI_STDOUTP=$(cat -e .tmp/exec_outp.txt | sed '1d;3d;5d')
-		MINI_ERROUTP_ALL=$(cat -e .tmp/exec_error_outp.txt)
-		MINI_ERROUTP=$(cat -e .tmp/exec_error_outp.txt |  sed -e "$ d")
-
-		{ bash; } < .tmp/exec_read.txt 1> .tmp/bash_outp.txt 2> .tmp/bash_error_outp.txt
+		{ bash; } < ${2} 1> .tmp/bash_outp.txt 2> .tmp/bash_error_outp.txt
 		ES2=$?
 		BASH_STDOUTP=$(cat -e .tmp/bash_outp.txt)
 		BASH_ERROUTP=$(cat -e .tmp/bash_error_outp.txt)
 		BASH_ERROUTP_CUT=${BASH_ERROUTP:18:${#BASH_ERROUTP}}
 
 		if [ "${ES1}" == "139" ]; then 
-			{ ./minishell; } < .tmp/exec_read.txt &> .tmp/exec_other_outp.txt
+			{ ./minishell; } < ${2} &> .tmp/exec_other_outp.txt
 			ret=2
 			EOK="KO"
 			SF_TMP=$(cat .tmp/exec_other_outp.txt | sed -e "1d")
-			trace_printer "${1}" "${i}" "${2}" "${ES2}" "${BASH_STDOUTP}" "${BASH_ERROUTP}" "${ES1}" "${MINI_STDOUTP}" "${MINI_ERROUTP}" "${SF_TMP}";
+			trace_printer "${1}" "${i}" "${4}" "${ES2}" "${BASH_STDOUTP}" "${BASH_ERROUTP}" "${ES1}" "${MINI_STDOUTP}" "${MINI_ERROUTP}" "${SF_TMP}";
 		else
 			if [ "${MINI_STDOUTP}" == "${BASH_STDOUTP}" ] && [[ "${MINI_ERROUTP}" == *"${BASH_ERROUTP_CUT}"* ]] && [ "${ES1}" == "${ES2}" ]; then
 				ret=1
 			else
 				ret=0
 				EOK="KO"
-			trace_printer "${1}" "${i}" "${2}" "${ES2}" "${BASH_STDOUTP}" "${BASH_ERROUTP}" "${ES1}" "${MINI_STDOUTP}" "${MINI_ERROUTP}" "${SF_TMP}";
+				trace_printer "${1}" "${i}" "${4}" "${ES2}" "${BASH_STDOUTP}" "${BASH_ERROUTP}" "${ES1}" "${MINI_STDOUTP}" "${MINI_ERROUTP}" "${SF_TMP}";
 			fi
 		fi
 
-		print_test_result "${2} ; ${3}" "${4}";
-		echo "" > .tmp/exec_outp.txt
-		echo "" > .tmp/exec_error_outp.txt
-		echo "" > .tmp/bash_outp.txt
-		echo "" > .tmp/bash_error_outp.txt
+		print_test_result "${4}" "${3}";
+		echo -n "" > .tmp/exec_read.txt
+		echo -n "" > .tmp/exec_outp_clean.txt
+		echo -n "" > .tmp/exec_outp.txt
+		echo -n "" > .tmp/exec_error_outp.txt
+		echo -n "" > .tmp/bash_outp.txt
 	}
 
 #
@@ -299,23 +240,33 @@
 
 	function main_test_call()
 	{
+		# Nombre del archivo a leer
 		test_file="./test/${TESTER_MODE}${1}"
 		if [ ! -f "${test_file}" ]; then
 			printf "\n${RED} File needed to test ${test_file} not found\n\n${DEF_COLOR}"
 		else
-			while read -r test_cmd; do
-			if [ "${#test_cmd}" != "0" ]; then
-				if [[ "$(echo "${test_cmd}")" == *";"* ]]; then
-					exec_two_lines_tester_function "${3}" "$(echo "${test_cmd}" | cut -d';' -f1)" "$(echo "${test_cmd}" | cut -d';' -f2- | cut -d'@' -f1)" "$(echo "${test_cmd}" | cut -d'@' -f2-)"
-				else
-					if [[ "$(echo "${test_cmd}" | cut -c1)" == "#" ]]; then
-						eval ${test_cmd:1} &> /dev/null
+			while read test_cmd; do
+				if [ "${#test_cmd}" != "0" ]; then
+					if [[ "$(echo "${test_cmd}" | cut -c1)" != "#" ]]; then
+						echo -n "" > .tmp/exec_read.txt
+						IFS=';' read -ra fragments <<< "${test_cmd}"
+						rest_of_line=""
+						for fragment in "${fragments[@]}"; do
+							if [[ "$fragment" == *"@"* ]]; then
+								rest_of_line=$(echo "$fragment" | cut -d'@' -f2-)
+								echo $(echo "$fragment" | cut -d'@' -f1) >> .tmp/exec_read.txt
+								break
+							else
+								rest_of_line=$fragment
+								echo $(echo "$fragment" | cut -d'@' -f1) >> .tmp/exec_read.txt
+							fi
+						done
+						exec_function "${3}" ".tmp/exec_read.txt" "${rest_of_line}" "${rest_of_line}"
 					else
-						${2} "${3}" "$(echo "${test_cmd}" | cut -d'@' -f1)" "$(echo "${test_cmd}" | cut -d'@' -f2-)"
+						eval ${test_cmd:1} 2> /dev/null
 					fi
 				fi
-			fi
-			done < "${test_file}"
+			done < "$test_file"
 		fi
 	}
 
@@ -327,8 +278,7 @@
 		printf ${BLUE}"\n|==========================[ ECHO ]==========================|"${DEF_COLOR}
 		rm -rf traces/echo_trace.txt &> /dev/null
 		print_in_traces "traces/echo_trace.txt"
-		main_test_call "/echo/echo.txt" "trim_one_line_function" "traces/echo_trace.txt"
-		main_test_call "/echo/flags.txt" "no_newline_tester_function" "traces/echo_trace.txt"
+		main_test_call "/echo/echo.txt" "exec_function" "traces/echo_trace.txt"
 		print_end_tests "${EOK}" "${ESF}" "traces/echo_trace.txt"
 		TTECHO="1";
 		printf "${BLUE}\n|============================================================|\n\n\n${DEF_COLOR}"
@@ -344,7 +294,7 @@
 		printf ${BLUE}"\n|=========================[ EXPORT ]=========================|"${DEF_COLOR}
 		rm -rf traces/export_trace.txt &> /dev/null
 		print_in_traces "traces/export_trace.txt"
-		main_test_call "/export/export.txt" "trim_one_line_function" "traces/export_trace.txt"
+		main_test_call "/export/export.txt" "exec_function" "traces/export_trace.txt"
 		print_end_tests "${EOK}" "${ESF}" "traces/export_trace.txt"
 		TTEXPORT="1";
 		printf "${BLUE}\n|============================================================|\n\n\n${DEF_COLOR}"
@@ -360,7 +310,7 @@
 		printf ${BLUE}"\n|==========================[ EXIT ]==========================|"${DEF_COLOR}
 		rm -rf traces/exit_trace.txt &> /dev/null
 		print_in_traces "traces/exit_trace.txt"
-		main_test_call "/exit/exit.txt" "trim_one_line_function" "traces/exit_trace.txt"
+		main_test_call "/exit/exit.txt" "exec_function" "traces/exit_trace.txt"
 		print_end_tests "${EOK}" "${ESF}" "traces/exit_trace.txt"
 		TTEXIT="1";
 		printf "${BLUE}\n|============================================================|\n\n\n${DEF_COLOR}"
@@ -376,8 +326,8 @@
 		printf ${BLUE}"\n|=========================[ PARSER ]=========================|"${DEF_COLOR}
 		rm -rf traces/parser_trace.txt &> /dev/null
 		print_in_traces "traces/parser_trace.txt"
-		main_test_call "/parser/parser.txt" "trim_one_line_function" "traces/parser_trace.txt"
-		main_test_call "/parser/syntax_error.txt" "trim_one_line_function" "traces/parser_trace.txt"
+		main_test_call "/parser/parser.txt" "exec_function" "traces/parser_trace.txt"
+		main_test_call "/parser/syntax_error.txt" "exec_function" "traces/parser_trace.txt"
 		print_end_tests "${EOK}" "${ESF}" "traces/parser_trace.txt"
 		TTPARSER="1";
 		printf "${BLUE}\n|============================================================|\n\n\n${DEF_COLOR}"
@@ -393,7 +343,7 @@
 		printf ${BLUE}"\n|==========================[ EXIT ]==========================|"${DEF_COLOR}
 		rm -rf traces/pipes_trace.txt &> /dev/null
 		print_in_traces "traces/pipes_trace.txt"
-		main_test_call "/pipe/pipe.txt" "trim_one_line_function" "traces/pipes_trace.txt"
+		main_test_call "/pipe/pipe.txt" "exec_function" "traces/pipes_trace.txt"
 		print_end_tests "${EOK}" "${ESF}" "traces/pipes_trace.txt"
 		TTPIPE="1";
 		printf "${BLUE}\n|============================================================|\n\n\n${DEF_COLOR}"
@@ -409,7 +359,7 @@
 		printf ${BLUE}"\n|======================[ REDIRECTIONS ]======================|"${DEF_COLOR}
 		rm -rf traces/redi_trace.txt &> /dev/null
 		print_in_traces "traces/pipes_trace.txt"
-		main_test_call "/redirection/redirection.txt" "trim_one_line_function" "traces/redi_trace.txt"
+		main_test_call "/redirection/redirection.txt" "exec_function" "traces/redi_trace.txt"
 		print_end_tests "${EOK}" "${ESF}" "traces/redi_trace.txt"
 		TTREDIRECT="1";
 		printf "${BLUE}\n|============================================================|\n\n\n${DEF_COLOR}"
@@ -425,7 +375,7 @@
 		printf ${BLUE}"\n|======================[ REDIRECTIONS ]======================|"${DEF_COLOR}
 		rm -rf traces/status_trace.txt &> /dev/null
 		print_in_traces "traces/pipes_trace.txt"
-		main_test_call "/status/status.txt" "trim_one_line_function" "traces/status_trace.txt"
+		main_test_call "/status/status.txt" "exec_function" "traces/status_trace.txt"
 		print_end_tests "${EOK}" "${ESF}" "traces/status_trace.txt"
 		TTSTATUS="1";
 		printf "${BLUE}\n|============================================================|\n\n\n${DEF_COLOR}"
@@ -468,6 +418,20 @@
 #
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  PREPARE & COMPILATION
+
+	INPUT_FILE=cleaner.c
+	if [ -r "$INPUT_FILE" ]; then
+		error_message=$(gcc -Wall -Wextra -Werror -Wpedantic -Werror=pedantic -pedantic-errors -Wcast-align -Wcast-qual -Wdisabled-optimization -Wformat=2 -Wuninitialized -Winit-self -Wmissing-include-dirs -Wredundant-decls -Wshadow -Wstrict-overflow=5 -Wundef -fdiagnostics-show-option -fstack-protector-all $INPUT_FILE -o cleaner 2>&1)
+		if [ -n "$error_message" ]; then
+			echo "Error: $error_message"
+			exit 1
+		else
+			echo "Compilación exitosa"
+		fi
+	else
+		echo "Error: el archivo $INPUT_FILE no existe o no tiene permisos de lectura"
+		exit 1
+	fi
 
 	mkdir .errors &> /dev/null
 	mkdir .tmp &> /dev/null
@@ -574,6 +538,7 @@
 	printf "${RED}\n\tmore test comming soon...👹${DEF_COLOR}\n\n"
 	printf "${BLUE}  Any issue send via slack bmoll-pe, arebelo or ailopez-o\n\n${DEF_COLOR}"
 	rm -rf .errors
+	rm -rf cleaner
 	rm -rf .tmp
 	rm -rf minishell
 	printf ${DEF_COLOR};
@@ -602,4 +567,10 @@
 	# if [ "$i" == "3" ]; then
 	# 	exit;
 	# fi
+#
+
+#
+##
+###find . -type f -not \( -name 'mpanic' -or -name 'mpanic.sh' \) -delete
+##
 #
