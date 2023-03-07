@@ -25,11 +25,9 @@ int main (int argc, char **argv)
 	if (argc != 2)
 		return (EXIT_FAILURE);
 
-
 	file_out =	fopen(".tmp/exec_outp_clean.txt", "w" );
 	file_in	=	open(".tmp/start.txt", O_RDONLY );
 	fd_in	=	open (argv[1], O_RDONLY);
-
 
 	line = strdup("");
 	num_byte = read(file_in, &buffer, 1);

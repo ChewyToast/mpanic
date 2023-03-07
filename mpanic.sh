@@ -571,6 +571,6 @@
 
 #
 ##
-###find . -type f -not \( -name 'mpanic' -or -name 'mpanic.sh' \) -delete
+###find . -type f -not \( -name 'mpanic' -or -name 'mpanic.sh' -or -name 'README.md' -or -name 'cleaner.c' -or -name 'test' -or -name '.timmer' -or -name '.img' -or -name '.git' -or -name '.gitignore' -or -name 'cleaner' -or -name 'traces' \) -delete
 ##
 #

@@ -1,68 +1,87 @@
-# mkdir folder &> /dev/null
-echo hola > folder
-# rm -rf folder &> /dev/null
 
-echo > file hi;cat file
-echo >> file hi;cat file2
+echo hi > file;cat file;rm -rf file@echo hi > file
+echo hi >> file;echo hi >> file;cat file;rm -rf file@echo hi >> file
 
-> file echo hi;cat file
->> file3 echo hi;cat file3
+echo > file hi;cat file;rm -rf file@echo >> file hi
+echo >> file hi;echo >> file hi;cat file;rm -rf file@echo >> file2 hi
+
+> file echo hi;cat file;rm -rf file@> file echo hi
+>> file echo hi;>> file echo hi;cat file;rm -rf file@>> file echo hi
+
+> file echo hi >> echo;cat file;rm -rf file@> file echo hi
+>> file echo hi;cat file;rm -rf file@>> file echo hi
+
+echo hi > file2 > file hi;cat file;cat file2;rm -rf file file2@echo hi > file2 > file hi
+echo hi >> file2 > file hi;echo hi >> file2 > file hi;cat file;cat file2;rm -rf file file2@echo hi >> file2 > file hi
+echo hi > file2 >> file hi;echo hi > file2 >> file hi;cat file;cat file2;rm -rf file file2@echo hi > file2 >> file hi
+echo hi > file2 > file hi;echo hi > file2 > file hi;cat file;cat file2;rm -rf file file2@echo hi > file2 > file hi
+echo hi >> file2 >> file hi;echo hi >> file2 >> file hi;cat file;cat file2;rm -rf file file2@echo hi >> file2 >> file hi
+
+echo hi > file3 > file2 > file hi;echo hi > file3 > file2 > file hi;cat file;cat file2;cat file3;rm -rf file file2 file3@echo hi > file3 > file2 > file hi
+echo hi > file3 >> file2 > file hi;echo hi > file3 >> file2 > file hi;cat file;cat file2;cat file3;rm -rf file file2 file3 @echo hi > file3 >> file2 > file hi
+echo hi > file3 > file2 >> file hi;cat file;cat file2;cat file3;rm -rf file file2 file3 @echo hi > file3 > file2 >> file hi
+echo hi >> file3 > file2 > file hi;cat file;cat file2;cat file3;rm -rf file file2 file3 @echo hi >> file3 > file2 > file hi
+echo hi >> file3 > file2 >> file hi;cat file;cat file2;cat file3;rm -rf file file2 file3 @echo hi >> file3 > file2 >> file hi
+echo hi >> file3 >> file2 > file hi;cat file;cat file2;cat file3;rm -rf file file2 file3 @echo hi >> file3 >> file2 > file hi
+
+> file3 echo hi > file2 > file hi;> file3 echo hi > file2 > file hi;cat file;cat file2;cat file3;rm -rf file file2 file3@> file3 echo hi > file2 > file hi
+> file3 echo hi > file2 >> file hi;> file3 echo hi > file2 >> file hi;cat file;cat file2;cat file3;rm -rf file file2 file3@> file3 echo hi > file2 >> file hi
+>> file3 echo hi > file2 > file hi;>> file3 echo hi > file2 > file hi;cat file;cat file2;cat file3;rm -rf file file2 file3@>> file3 echo hi > file2 > file hi
+> file3 echo hi >> file2 > file hi;> file3 echo hi >> file2 > file hi;cat file;cat file2;cat file3;rm -rf file file2 file3@> file3 echo hi >> file2 > file hi
+
+echo hi >filea>fileb>filec hi;echo hi >filea>fileb>filec hi;cat filea;cat fileb;cat filec;rm -rf filea fileb filec@echo hi >filea>fileb>filec hi
+echo hi >filea>>fileb>filec hi;echo hi >filea>>fileb>filec hi;cat filea;cat fileb;cat filec;rm -rf filea fileb filec@echo hi >filea>>fileb>filec hi
+echo hi >filea>fileb>>filec hi;echo hi >filea>fileb>>filec hi;cat filea;cat fileb;cat filec;rm -rf filea fileb filec@echo hi >filea>fileb>>filec hi
+
+echo hi > "doble"quote;cat doblequote;rm -rf doblequote@echo hi > "doble"quote
+echo hi >"doble"quote;cat doblequote;rm -rf doblequote@echo hi >"doble"quote
+echo -n hi >>"doble"quote;echo -n hi >>"doble"quote;cat doblequote;rm -rf doblequote@echo -n hi >>"doble"quote
+
+echo hi > 'simple'quote;cat simplequote;rm -rf @echo hi > 'simple'quote
+echo hi >'simple'quote;cat simplequote;rm -rf @echo hi >'simple'quote
+echo -n hi >>'simple'quote;echo -n hi >>'simple'quote;cat simplequote;rm -rf simplequote@echo -n hi >>'simple'quote
+
+echo hi > 'with spaces';cat 'with spaces';rm -rf 'with spaces'@echo hi > 'with spaces'
+echo hi >>'with spaces';echo hi >>'with spaces';cat 'with spaces';rm -rf 'with spaces'@echo hi >>'with spaces'
+
+echo hi > "mixed"'file 'name;cat "mixedfile name";rm -rf "mixedfile name"@echo hi > "mixed"'file 'name
+echo hi >> "mixed"'file 'name;echo hi >> "mixed"'file 'name;cat "mixedfile name";rm -rf "mixedfile name"@echo hi >> "mixed"'file 'name
+
+# mkdir testfolder &> /dev/null
+echo hi > testfolder
+echo hi >> testfolder
+echo hi 2> testfolder
+echo hi 2>> testfolder
+
+# chmod 000 testfolder &> /dev/null
+echo hi > testfolder
+echo hi >> testfolder
+echo hi 2> testfolder
+echo hi 2>> testfolder
+
+# rm -rf testfolder &> /dev/null
+
+# touch file &> /dev/null && touch file2 &> /dev/null && touch file3 &> /dev/null
+# chmod 000 file &> /dev/null && chmod 000 file2 &> /dev/null && chmod 000 file3 &> /dev/null
+echo > file hi;cat file;rm -rf @echo > file hi (no permision)
+echo >> file2 hi;cat file2;rm -rf @echo >> file2 hi (no permision)
+
+> file echo hi;cat file;rm -rf @> file echo hi (no permision)
+>> file3 echo hi;cat file3;rm -rf @>> file3 echo hi (no permision)
 
 # rm -rf file file2 file3 &> /dev/null
 
-echo hi > file2 > file hi;cat file;cat file2@echo hi > file2 > file hi
-echo hi >> file2 > file hi;cat file;cat file2@echo hi >> file2 > file hi
-echo hi > file2 >> file hi;cat file;cat file2@echo hi > file2 >> file hi
-echo hi > file2 > file hi;cat file;cat file2@echo hi > file2 > file hi
-echo hi >> file2 >> file hi;cat file;cat file2@echo hi >> file2 >> file hi
+echo hi > file2 > file hi;cat file;cat file2;rm -rf @echo hi > file2 > file hi
+echo hi >> file2 > file hi;cat file;cat file2;rm -rf @echo hi >> file2 > file hi
+echo hi > file2 >> file hi;cat file;cat file2;rm -rf @echo hi > file2 >> file hi
+echo hi > file2 > file hi;cat file;cat file2;rm -rf @echo hi > file2 > file hi
+echo hi >> file2 >> file hi;cat file;cat file2;rm -rf @echo hi >> file2 >> file hi
 
 # rm -rf file file2 file3 &> /dev/null
 
-echo hi > file3 > file2 > file hi;cat file;cat file2;cat file3@echo hi > file3 > file2 > file hi
-echo hi > file3 >> file2 > file hi;cat file;cat file2;cat file3@echo hi > file3 >> file2 > file hi
-echo hi > file3 > file2 >> file hi;cat file;cat file2;cat file3@echo hi > file3 > file2 >> file hi
-echo hi >> file3 > file2 > file hi;cat file;cat file2;cat file3@echo hi >> file3 > file2 > file hi
-echo hi >> file3 > file2 >> file hi;cat file;cat file2;cat file3@echo hi >> file3 > file2 >> file hi
-echo hi >> file3 >> file2 > file hi;cat file;cat file2;cat file3@echo hi >> file3 >> file2 > file hi
 
-# rm -rf file file2 file3 &> /dev/null
 
-> file3 echo hi > file2 > file hi;cat file;cat file2;cat file3@> file3 echo hi > file2 > file hi
-> file3 echo hi > file2 >> file hi;cat file;cat file2;cat file3@> file3 echo hi > file2 >> file hi
->> file3 echo hi > file2 > file hi;cat file;cat file2;cat file3@>> file3 echo hi > file2 > file hi
-> file3 echo hi >> file2 > file hi;cat file;cat file2;cat file3@> file3 echo hi >> file2 > file hi
 
-# rm -rf file file2 file3 &> /dev/null
-
-echo hi >file3>file2>file hi;cat file;cat file2;cat file3@echo hi >file3>file2>file hi
-echo hi >file3>>file2>file hi;cat file;cat file2;cat file3@echo hi >file3>>file2>file hi
-echo hi >file3>file2>>file hi;cat file;cat file2;cat file3@echo hi >file3>file2>>file hi
-
-# rm -rf file file2 file3 &> /dev/null
-
-echo hi > "doble"quote;cat doblequote@echo hi > "doble"quote
-echo hi >"doble"quote;cat doblequote@echo hi >"doble"quote
-
-echo hi > 'simple'quote;cat simplequote@echo hi > 'simple'quote
-echo hi >'simple'quote;cat simplequote@echo hi >'simple'quote
-
-echo hi > 'with spaces';cat 'with spaces'@echo hi > 'with spaces'
-echo hi >'with spaces';cat 'with spaces'@echo hi >'with spaces'
-
-# rm -rf doblequote simplequote 'with spaces' &> /dev/null
-
-> test'sticked' echo adios;cat teststicked
-echo extra >> test'sticked';cat teststicked
-echo >> test'sticked' alpha;cat teststicked
->> test'sticked' echo beta;cat teststicked
-echo nuevo > test'sticked';cat teststicked
-> test"sticked" echo primera
-echo segunda >> test"sticked"
-echo > test'yo'"sticked" primera
-> test'yo'"sticked" echo primera
-echo segunda >> test'yo'"sticked"
-echo >> test'yo'"sticked" insert
-echo hola>file>file1>file2
 >file echo hola>file1>file2
 echo adios>>file>file1>>file2
 echo uno > file1
