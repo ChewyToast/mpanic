@@ -195,15 +195,16 @@
 
 		# Preparamos archivo que va a ser el input con los argumentos
 		echo "exit" >> ${2}
-		# cat ${2}
 		{ ./minishell; } < ${2} 1> .tmp/exec_outp.txt 2> .tmp/exec_error_outp.txt
 		ES1=$?
 		./cleaner ".tmp/exec_outp.txt"
 		MINI_STDOUTP=$(cat -e .tmp/exec_outp_clean.txt)
-		# MINI_STDOUTP=$(cat -e .tmp/exec_outp.txt |  sed -e "$ d" | sed -e "1d")
 		MINI_ERROUTP_ALL=$(cat -e .tmp/exec_error_outp.txt)
-		MINI_ERROUTP=$(cat -e .tmp/exec_error_outp.txt |  sed -e "$ d")
-
+		if [[ ${MINI_ERROUTP_ALL} == *"exit$" ]]; then
+			MINI_ERROUTP=$(cat -e .tmp/exec_error_outp.txt |  sed -e "$ d")
+		else
+			MINI_ERROUTP=$(cat -e .tmp/exec_error_outp.txt)
+		fi
 		{ bash; } < ${2} 1> .tmp/bash_outp.txt 2> .tmp/bash_error_outp.txt
 		ES2=$?
 		BASH_STDOUTP=$(cat -e .tmp/bash_outp.txt)
