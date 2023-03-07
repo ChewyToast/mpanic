@@ -40,17 +40,17 @@ echo hi >file3>file2>>file hi;cat file;cat file2;cat file3@echo hi >file3>file2>
 
 # rm -rf file file2 file3 &> /dev/null
 
+echo hi > "doble"quote;cat doblequote@echo hi > "doble"quote
+echo hi >"doble"quote;cat doblequote@echo hi >"doble"quote
 
+echo hi > 'simple'quote;cat simplequote@echo hi > 'simple'quote
+echo hi >'simple'quote;cat simplequote@echo hi >'simple'quote
 
+echo hi > 'with spaces';cat 'with spaces'@echo hi > 'with spaces'
+echo hi >'with spaces';cat 'with spaces'@echo hi >'with spaces'
 
+# rm -rf doblequote simplequote 'with spaces' &> /dev/null
 
-
-
-echo adios >> file;cat file
-echo >> file probando;cat file probando
->> file echo unalinea;cat file
-echo seguimos > file;cat file
-echo > test'sticked' hola;cat teststicked
 > test'sticked' echo adios;cat teststicked
 echo extra >> test'sticked';cat teststicked
 echo >> test'sticked' alpha;cat teststicked
