@@ -420,16 +420,15 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  PREPARE & COMPILATION
 
 	INPUT_FILE=cleaner.c
+
 	if [ -r "$INPUT_FILE" ]; then
 		error_message=$(gcc -Wall -Wextra -Werror -Wpedantic -Werror=pedantic -pedantic-errors -Wcast-align -Wcast-qual -Wdisabled-optimization -Wformat=2 -Wuninitialized -Winit-self -Wmissing-include-dirs -Wredundant-decls -Wshadow -Wstrict-overflow=5 -Wundef -fdiagnostics-show-option -fstack-protector-all $INPUT_FILE -o cleaner 2>&1)
-		if [ -n "$error_message" ]; then
-			echo "Error: $error_message"
+		if echo "$error_message" | grep -q "error:"; then
+			echo "Compilation error in file: cleaner.c:"$'\n'"$error_message"$'\n'
 			exit 1
-		else
-			echo "Compilación exitosa"
 		fi
 	else
-		echo "Error: el archivo $INPUT_FILE no existe o no tiene permisos de lectura"
+		echo "Error: File $INPUT_FILE does not exist or does not have read permissions"
 		exit 1
 	fi
 
