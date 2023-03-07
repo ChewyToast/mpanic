@@ -2,6 +2,10 @@
 echo hi > file;cat file;rm -rf file@echo hi > file
 echo hi >> file;echo hi >> file;cat file;rm -rf file@echo hi >> file
 
+echo hi > $USER;cat $USER;rm -rf $USER@echo hi > $USER
+echo hi > *.txt;cat '*.txt';rm -rf '*.txt'@echo hi > *.txt
+echo hi >> ~;echo hi >> file;cat ~;@echo hi >> ~
+
 echo > file hi;cat file;rm -rf file@echo >> file hi
 echo >> file hi;echo >> file hi;cat file;rm -rf file@echo >> file2 hi
 
@@ -32,6 +36,7 @@ echo hi >> file3 >> file2 > file hi;cat file;cat file2;cat file3;rm -rf file fil
 echo hi >filea>fileb>filec hi;echo hi >filea>fileb>filec hi;cat filea;cat fileb;cat filec;rm -rf filea fileb filec@echo hi >filea>fileb>filec hi
 echo hi >filea>>fileb>filec hi;echo hi >filea>>fileb>filec hi;cat filea;cat fileb;cat filec;rm -rf filea fileb filec@echo hi >filea>>fileb>filec hi
 echo hi >filea>fileb>>filec hi;echo hi >filea>fileb>>filec hi;cat filea;cat fileb;cat filec;rm -rf filea fileb filec@echo hi >filea>fileb>>filec hi
+echo hi >file1>file2>file3 hi;cat file1;cat file2;cat file3;rm -rf file1 file2 file3@echo hi >file1>file2>file3 hi
 
 echo hi > "doble"quote;cat doblequote;rm -rf doblequote@echo hi > "doble"quote
 echo hi >"doble"quote;cat doblequote;rm -rf doblequote@echo hi >"doble"quote
@@ -63,79 +68,33 @@ echo hi 2>> testfolder
 
 # touch file &> /dev/null && touch file2 &> /dev/null && touch file3 &> /dev/null
 # chmod 000 file &> /dev/null && chmod 000 file2 &> /dev/null && chmod 000 file3 &> /dev/null
-echo > file hi;cat file;rm -rf @echo > file hi (no permision)
-echo >> file2 hi;cat file2;rm -rf @echo >> file2 hi (no permision)
+echo > file hi;cat file;@echo > file hi (no permision)
+echo >> file2 hi;cat file2;@echo >> file2 hi (no permision)
 
-> file echo hi;cat file;rm -rf @> file echo hi (no permision)
->> file3 echo hi;cat file3;rm -rf @>> file3 echo hi (no permision)
-
-# rm -rf file file2 file3 &> /dev/null
-
-echo hi > file2 > file hi;cat file;cat file2;rm -rf @echo hi > file2 > file hi
-echo hi >> file2 > file hi;cat file;cat file2;rm -rf @echo hi >> file2 > file hi
-echo hi > file2 >> file hi;cat file;cat file2;rm -rf @echo hi > file2 >> file hi
-echo hi > file2 > file hi;cat file;cat file2;rm -rf @echo hi > file2 > file hi
-echo hi >> file2 >> file hi;cat file;cat file2;rm -rf @echo hi >> file2 >> file hi
+> file echo hi;cat file;@> file echo hi (no permision)
+>> file3 echo hi;cat file3;@>> file3 echo hi (no permision)
 
 # rm -rf file file2 file3 &> /dev/null
 
+echo hi > file2 > file hi;cat file;cat file2;rm -rf file file2@echo hi > file2 > file hi
+echo hi >> file2 > file hi;cat file;cat file2;rm -rf file file2@echo hi >> file2 > file hi
+echo hi > file2 >> file hi;cat file;cat file2;rm -rf file file2@echo hi > file2 >> file hi
+echo hi > file2 > file hi;cat file;cat file2;rm -rf file file2@echo hi > file2 > file hi
+echo hi >> file2 >> file hi;cat file;cat file2;rm -rf file file2@echo hi >> file2 >> file hi
 
+# echo hi, I am the file > file &> /dev/null
+# echo hi, I am the file2 > file2 &> /dev/null
+# echo hi, I am the file3 > file3 &> /dev/null
+# chmod 000 file3 &> /dev/null
 
+cat < file@cat < file
+< file cat < file2@cat < file
+cat < nonexist@cat < nonexist
+cat < $USER@cat < $USER
+cat < file3@cat < file3 (no permision)
 
->file echo hola>file1>file2
-echo adios>>file>file1>>file2
-echo uno > file1
-echo dos > file2
-echo hola > file > file1 > file2
-echo > file > file1 hola > file2
-> file echo hola > file1 > file2
-echo a > a
-echo hola >> a
-echo a > a
-echo hola >> a >> a
-echo a > a
-echo hola > a
-echo a > a
-echo hola > a >> a
-echo hola >> file > file1 >> file2
-echo >> file hola > file1 > file2
->> file echo > file1 hola > file2
-echo hola > file
+# rm -rf file file2 file3 &> /dev/null
 
+# echo hi, I am the file > file &> /dev/null
 
-
-
-
-
-cat < file
-cat < test'sticked'
-cat < test'sticked'
-< test'sticked' cat
-# rm teststicked &> /dev/null
-# rm "test'sticked'" &> /dev/null
-cat < test"sticked"
-# rm teststicked &> /dev/null
-# rm 'test"sticked"' &> /dev/null
-cat < test'yo'"sticked"
-< test'yo'"sticked" cat
-# rm testyosticked &> /dev/null
-# rm "test'yo'\"sticked\"" &> /dev/null
-cat file
-cat file1
-cat file2
-cat < file < file1
-cat<file1<file2
-# rm file &> /dev/null
-# rm file1 &> /dev/null
-# rm file2 &> /dev/null
-echo hola > a'b'c'd'e'f'g'h'i'j'k'l'm'n'o'p'q'r's't'u'v'w'x'y'z'; ls
-# rm abcdefghijklmnopqrstuvwxyz\ &> /d\ev/nul\l
-# rm "a'b'c'd'e'f'g'h'i'j'k'l'm'n'o'p'q'r's't'u'v'w'x'y'z'" &> /dev/null
-echo hola > a"b"c"d"e"f"g"h"i"j"k"l"m"n"o"p"q"r"s"t"u"v"w"x"y"z"; ls
-# rm abcdefghijklmnopqrstuvwxyz &> /dev/null
-# rm  'a"b"c"d"e"f"g"h"i"j"k"l"m"n"o"p"q"r"s"t"u"v"w"x"y"z"' &> /dev/null
-echo hola > a'b'c"d"e'f'g"h"i'j'k"l"m'n'o"p'q'r"s't'u"v"w"x"y'z'; ls
-# rm "abcdefghijklmnop'q'rstuvwxyz" &> /dev/null
-# rm "a'b'c\"d\"e'f'g\"h\"i'j'k\"l\"m'n'o\"p'q'r\"s't'u\"v\"w\"x\"y'z'"
-cat < doesnotexist
-#rm -f a &> /dev/null
+< file cat > file2 2> error_outp < non_exist;cat file;cat error_outp;rm -rf file file2 error_outp@< file cat > file2 2> error_outp < non_exist
