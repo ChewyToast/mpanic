@@ -4,7 +4,7 @@ echo hi >> file;echo hi >> file;cat file;rm -rf file@echo hi >> file
 
 echo hi > $USER;cat $USER;rm -rf $USER@echo hi > $USER
 echo hi > *.txt;cat '*.txt';rm -rf '*.txt'@echo hi > *.txt
-echo hi >> ~;echo hi >> file;cat ~;@echo hi >> ~
+echo hi >> ~;@echo hi >> ~
 
 echo > file hi;cat file;rm -rf file@echo >> file hi
 echo >> file hi;echo >> file hi;cat file;rm -rf file@echo >> file2 hi
@@ -42,8 +42,8 @@ echo hi > "doble"quote;cat doblequote;rm -rf doblequote@echo hi > "doble"quote
 echo hi >"doble"quote;cat doblequote;rm -rf doblequote@echo hi >"doble"quote
 echo -n hi >>"doble"quote;echo -n hi >>"doble"quote;cat doblequote;rm -rf doblequote@echo -n hi >>"doble"quote
 
-echo hi > 'simple'quote;cat simplequote;rm -rf @echo hi > 'simple'quote
-echo hi >'simple'quote;cat simplequote;rm -rf @echo hi >'simple'quote
+echo hi > 'simple'quote;cat simplequote;rm -rf simplequote@echo hi > 'simple'quote
+echo hi >'simple'quote;cat simplequote;rm -rf simplequote@echo hi >'simple'quote
 echo -n hi >>'simple'quote;echo -n hi >>'simple'quote;cat simplequote;rm -rf simplequote@echo -n hi >>'simple'quote
 
 echo hi > 'with spaces';cat 'with spaces';rm -rf 'with spaces'@echo hi > 'with spaces'

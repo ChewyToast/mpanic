@@ -198,6 +198,7 @@
 		{ ./minishell; } < ${2} 1> .tmp/exec_outp.txt 2> .tmp/exec_error_outp.txt
 		ES1=$?
 		./cleaner ".tmp/exec_outp.txt"
+		# MINI_STDOUTP=$(cat -e .tmp/exec_outp.txt)
 		MINI_STDOUTP=$(cat -e .tmp/exec_outp_clean.txt)
 		MINI_ERROUTP_ALL=$(cat -e .tmp/exec_error_outp.txt)
 		if [[ ${MINI_ERROUTP_ALL} == *"exit$" ]]; then
