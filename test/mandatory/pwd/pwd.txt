@@ -1,21 +1,15 @@
 pwd
-cd ..
-pwd 
-cd ../..
-pwd
-cd ../../..
-pwd
-cd /
-pwd
-cd $HOME
-pwd
-pwd | cat -e
-unset PWD
-pwd
-echo $PWD
-Pwd
-pwD
-# export PATH='/bin:/usr/bin'
-Pwd
-# export PATH='/bin:/usr/bin'
-pwD
+cd;pwd@cd
+cd ..;pwd@cd ..
+cd -;pwd@cd -
+cd ..;cd ~;pwd@cd ~
+cd .
+#mkdir testdir &> /dev/null;chmod 000 testdir &> /dev/null
+cd testdir;@cd testdir(no permision)
+#rm -rf testdir &> /dev/null
+#mkdir testdir &> /dev/null
+cd testdir;bash;cd .. && rm -rf testdir && exit;pwd;cd .;pwd@rm -rf actual dir and cd .
+#mkdir testdir &> /dev/null
+cd testdir;bash;cd .. && rm testdir && exit;pwd;cd .;pwd@rm actual dir and cd .
+cd 255chars255chars255chars255char255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars@cd maxpathlen
+cd 256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars@cd maxpathlen + 1
