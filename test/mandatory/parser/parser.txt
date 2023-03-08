@@ -16,8 +16,10 @@ echo \~
 #echo -e "============================"
 #echo ""
 
-echo $USE
-echo $USER_
+echo $
+echo hola;echo $?@echo $?
+echo $USER
+echo $NONEXIST
 echo $USER$PATH$PWD
 echo "$USER$PATH$PWD"
 echo '$USER$PATH$PWD'

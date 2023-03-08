@@ -1,0 +1,129 @@
+#echo ""
+#echo -e "============================"
+#echo -e "----------[ SIMPLE ]--------"
+#echo -e "============================"
+#echo ""
+
+echo
+echO ""
+    echo
+    echo       " hi"
+"echo" ""   
+echo hi   
+EcHo hi   
+echo """ ""hi" " """
+\"echo\" ''
+echo \"hi\"
+echo $HOME
+echo $PATH
+echo $NONEXIST
+" echo"
+" echo"
+\ echo "   " $
+
+#echo ""
+#echo -e "============================"
+#echo -e "----------[ FLAGS ]---------"
+#echo -e "============================"
+#echo ""
+
+echo -n
+echo -n hi
+ echo -nn
+echo -nn hi
+ echo --n
+'"'"'echo'"'"' --n hi
+echo -n -n
+echo -n -n hi
+echo -nn -nn
+echo -nn -nn hi
+echo -n -n -n -n
+echo -n -n -n -n hi
+echo -n -n -n \-n hi
+echo -nn hi --n
+echo \-nn hi --n
+echo -nn hi --n
+echo "-nn" hi -n
+echo -------------nnnnnnnnnn hi
+echo "-------------nnnnnnnnnn" hi
+
+#echo ""
+#echo -e "============================"
+#echo -e "--------[ ENVIROMENT ]------"
+#echo -e "============================"
+#echo ""
+
+#export TMPENVVAR
+$TMPENVVAR
+#export TMPENVVAR=\echo
+$TMPENVVAR
+#export TMPENVVAR=echo
+$TMPENVVAR
+#export TMPENVVAR="  echo     "
+$TMPENVVAR
+#export TMPENVVAR=echo
+$TMPENVVAR "hi"
+#export TMPENVVAR=EchO
+$TMPENVVAR hi
+#export TMPENVVAR="         echo"
+$TMPENVVAR hi
+#export TMPENVVAR="         EcHO      hi"
+$TMPENVVAR
+#export TMPENVVAR="         EcHO     "
+$TMPENVVAR
+#export TMPENVVAR='bonjour\je'
+echo [$TMPENVVAR] 
+#export TMPENVVAR='\b\\o\\\nj\\\\\\\our\\je\\\\'
+echo [$TMPENVVAR]
+#export TMPENVVAR='   \b\\o\\\nj\\\\\\\our\\je\\\\'
+echo [$TMPENVVAR]
+#export TMPENVVAR='\b\\o\\\nj\\\\\\\our\\je\\\\   '
+echo [$TMPENVVAR]
+#export TMPENVVAR='  \b\\o\\\nj\\\\\\\our\\je\\\\ '
+echo [$TMPENVVAR]
+#export TMPENVVAR='a  \b\\o\\\nj\\\\\\\our\\je\\\\ b'
+echo [$TMPENVVAR]
+#export TMPENVVAR=' a  \b\\o\\\nj\\\\\\\our\\je\\\\ b '
+echo [$TMPENVVAR]
+#export TMPENVVAR=' '
+echo [$TMPENVVAR]
+#export TMPENVVAR='    '
+echo [$TMPENVVAR]
+#export TMPENVVAR='\ '
+echo [$TMPENVVAR]
+#export TMPENVVAR=' \  '
+echo [$TMPENVVAR]
+#export TMPENVVAR='bonjour je suis splited'
+echo $TMPENVVAR 
+#export TMPENVVAR='bonjour     je     suis    splited'
+echo $TMPENVVAR
+#export TMPENVVAR='   bonjour     je     suis    splited   '
+echo $TMPENVVAR
+#export TMPENVVAR='bonjour je suis splited'
+echo [$TMPENVVAR]
+#export TMPENVVAR='bonjour     je     suis    splited'
+echo [$TMPENVVAR]
+#export TMPENVVAR='   bonjour     je     suis    splited   '
+echo [$TMPENVVAR]
+#export TMPENVVAR='bonjour je suis splited'
+echo "[$TMPENVVAR]"
+#export TMPENVVAR='bonjour     je     suis    splited'
+echo "[$TMPENVVAR]"
+#export TMPENVVAR='   bonjour     je     suis    splited   '
+echo "[$TMPENVVAR]"
+#export TMPENVVAR='bonjour je suis splited'
+echo \ $TMPENVVAR
+#export TMPENVVAR='bonjour     je     suis    splited'
+echo \ $TMPENVVAR
+#export TMPENVVAR='   bonjour     je     suis    splited   '
+echo \ $TMPENVVAR
+#export TMPENVVAR='   bonjour     je     suis    splited   '
+echo $TMPENVVAR$TMPENVVAR$TMPENVVAR
+#export TMPENVVAR='echo'
+$TMPENVVAR $TMPENVVAR
+#unset TMPENVVAR
+#export A="ec" B="ho" C="hola"
+$A$B$C
+$A$B $C
+#unset A B C
+#unset HEADER NC
