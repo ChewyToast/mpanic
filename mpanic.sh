@@ -83,7 +83,7 @@
 	function	trace_printer()
 	{
 		echo "---------------------------------------------> test [${2}]" >> ${1}
-		echo "| CMD: ->${3}<-" >> ${1}
+		echo " CMD: ->${3}<-" | sed 's/^/| /' >> ${1}
 		echo "|--------------------------------" >> ${1}
 		echo "|  EXPECTED (BASH OUTP)  |  exit status: (${4})"$'\n'\| >> ${1}
 		echo "|--- STDOUT:" >> ${1}
@@ -194,18 +194,18 @@
 		let "i=i+1"
 
 		# Preparamos archivo que va a ser el input con los argumentos
-		echo "exit" >> ${2}
+		echo $'\n' >> ${2}
 		{ ./minishell; } < ${2} 1> .tmp/exec_outp.txt 2> .tmp/exec_error_outp.txt
 		ES1=$?
 		./cleaner ".tmp/exec_outp.txt"
 		# MINI_STDOUTP=$(cat -e .tmp/exec_outp.txt)
 		MINI_STDOUTP=$(cat -e .tmp/exec_outp_clean.txt)
 		MINI_ERROUTP_ALL=$(cat -e .tmp/exec_error_outp.txt)
-		if [[ ${MINI_ERROUTP_ALL} == *"exit$" ]]; then
-			MINI_ERROUTP=$(cat -e .tmp/exec_error_outp.txt |  sed -e "$ d")
-		else
+		# if [[ ${MINI_ERROUTP_ALL} == *"exit$" ]]; then
+			# MINI_ERROUTP=$(cat -e .tmp/exec_error_outp.txt |  sed -e "$ d")
+		# else
 			MINI_ERROUTP=$(cat -e .tmp/exec_error_outp.txt)
-		fi
+		# fi
 		{ bash; } < ${2} 1> .tmp/bash_outp.txt 2> .tmp/bash_error_outp.txt
 		ES2=$?
 		BASH_STDOUTP=$(cat -e .tmp/bash_outp.txt)
@@ -217,14 +217,15 @@
 			ret=2
 			EOK="KO"
 			SF_TMP=$(cat .tmp/exec_other_outp.txt | sed -e "1d")
-			trace_printer "${1}" "${i}" "${4}" "${ES2}" "${BASH_STDOUTP}" "${BASH_ERROUTP}" "${ES1}" "${MINI_STDOUTP}" "${MINI_ERROUTP}" "${SF_TMP}";
+			trace_printer "${1}" "${i}" "$(cat ${2})" "${ES2}" "${BASH_STDOUTP}" "${BASH_ERROUTP}" "${ES1}" "${MINI_STDOUTP}" "${MINI_ERROUTP}" "${SF_TMP}";
 		else
-			if [ "${MINI_STDOUTP}" == "${BASH_STDOUTP}" ] && [[ "${MINI_ERROUTP}" == *"${BASH_ERROUTP_CUT}"* ]] && [ "${ES1}" == "${ES2}" ]; then
+			if [ "${MINI_STDOUTP}" == "${BASH_STDOUTP}" ] && [[ "${BASH_ERROUTP_CUT}" == "" && "${MINI_ERROUTP}" == "${BASH_ERROUTP_CUT}" ]] || [[ "${BASH_ERROUTP_CUT}" != "" && "${MINI_ERROUTP}" == *"${BASH_ERROUTP_CUT}"* ]] && [ "${ES1}" == "${ES2}" ]; then
 				ret=1
+				trace_printer "traces/correct_log.txt" "${i}" "$(cat ${2})" "${ES2}" "${BASH_STDOUTP}" "${BASH_ERROUTP}" "${ES1}" "${MINI_STDOUTP}" "${MINI_ERROUTP}" "${SF_TMP}";
 			else
 				ret=0
 				EOK="KO"
-				trace_printer "${1}" "${i}" "${4}" "${ES2}" "${BASH_STDOUTP}" "${BASH_ERROUTP}" "${ES1}" "${MINI_STDOUTP}" "${MINI_ERROUTP}" "${SF_TMP}";
+				trace_printer "${1}" "${i}" "$(cat ${2})" "${ES2}" "${BASH_STDOUTP}" "${BASH_ERROUTP}" "${ES1}" "${MINI_STDOUTP}" "${MINI_ERROUTP}" "${SF_TMP}";
 			fi
 		fi
 

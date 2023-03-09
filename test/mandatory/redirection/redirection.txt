@@ -64,6 +64,7 @@ echo hi >> testfolder
 echo hi 2> testfolder
 echo hi 2>> testfolder
 
+# chmod 666 testfolder &> /dev/null
 # rm -rf testfolder &> /dev/null
 
 # touch file &> /dev/null && touch file2 &> /dev/null && touch file3 &> /dev/null
@@ -74,6 +75,7 @@ echo >> file2 hi;cat file2;@echo >> file2 hi (no permision)
 > file echo hi;cat file;@> file echo hi (no permision)
 >> file3 echo hi;cat file3;@>> file3 echo hi (no permision)
 
+# chmod 666 file &> /dev/null && chmod 666 file2 &> /dev/null && chmod 666 file3 &> /dev/null
 # rm -rf file file2 file3 &> /dev/null
 
 echo hi > file2 > file hi;cat file;cat file2;rm -rf file file2@echo hi > file2 > file hi
