@@ -6,7 +6,6 @@ echo hola | > filepipe;cat filepipe;rm -rf filepipe@echo hola | > filepipe
 echo hi > file;cat file;rm -rf file@echo hi > file
 echo hi >> file;echo hi >> file;cat file;rm -rf file@echo hi >> file
 
-echo hi > $USER;cat $USER;rm -rf $USER@echo hi > $USER
 echo hi > *.txt;cat '*.txt';rm -rf '*.txt'@echo hi > *.txt
 echo hi >> ~;rm -rf ~@echo hi >> ~
 

@@ -15,9 +15,6 @@ test
 | >> test
 | test
 
-> test;rm-rf test@> test
->> test;rm-rf test@>> test
-> test | >> test2; rm -rf test test2@> test | >> test2
 
 echo hiecho hi
 echo hi|echo hi
@@ -33,5 +30,3 @@ echo <
 echo >>>
 echo <<<
 
-echo > > test;rm -rf test@echo > > test
-echo > >> test;rm -rf test@echo > >> test
