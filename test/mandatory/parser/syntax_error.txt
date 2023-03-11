@@ -30,3 +30,7 @@ echo <
 echo >>>
 echo <<<
 
+echo "AH\""
+echo '\''
+echo "\""
+

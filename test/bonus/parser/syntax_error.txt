@@ -49,6 +49,9 @@
 () a
 ( a
 ) a
+&&echo
+&& echo
+ && echo
 
 echo bonjour&&
 echo&&
@@ -56,3 +59,8 @@ echo &&
 echo bonjour||
 echo||
 echo ||
+||echo
+|| echo
+ || echo
+(cat /etc/shells) | (cat -e) | (cat -e | (cat -e)
+(cat /etc/shells | (cat -e) | (cat -e) | (cat -e)

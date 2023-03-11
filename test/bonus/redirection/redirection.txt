@@ -1,8 +1,10 @@
-(echo bonjour > f1)
-(echo bonjour > f1 > f2 > f3)
-(echo bonjour > f1 > f2 > f3 > f4 > f5 > f6 > f7 > f8 > f9)
-(echo bonjour) > f1
-(echo bonjour) > f1 > f2 > f3
-(echo bonjour) > f1 > f2 > f3 > f4 > f5 > f6 > f7 > f8 > f9
-(echo bonjour > f1 > f2 > f3 > f4) > f5 > f6 > f7 > f8 > f9
-(echo bonjour > f1) > f2
+(echo hola > f1)
+(echo hola > f1 > f2 > f3)
+(echo hola | cat -e) > f1
+(echo hola && echo adios) > f1
+echo hola && (echo adios) >> f1
+(echo hola) > f1
+(echo hola) > f1 >> f2 > f3
+(echo hola > f1 && echo adios | cat -e) > f1 
+(echo hola > f1) > f2
+#rm f1 f2 f3

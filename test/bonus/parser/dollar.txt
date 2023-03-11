@@ -4,16 +4,14 @@
 #echo -e "============================"
 #echo ""
 
-echo bonjour&& echo je
-echo bonjour &&echo je
-echo bonjour && echo je
-&&echo
-&& echo
- && echo
+echo hola&& echo adios
+echo hola &&echo adios
+echo hola && echo adios
+
 echo a&& b&&echo c&& echo k&& echo z
 echo a && echo b&& echo c &&echo d     &&   echo e   &&echo f&&        echo g
-ls doesnotexists&& echo bonjour
-echo bonjour&& ls doesnotexists
+ls doesnotexists&& echo adios
+echo hola&& ls doesnotexists
 
 #echo ""
 #echo -e "============================"
@@ -21,16 +19,14 @@ echo bonjour&& ls doesnotexists
 #echo -e "============================"
 #echo ""
 
-echo bonjour|| echo je
-echo bonjour ||echo je
-echo bonjour || echo je
-||echo
-|| echo
- || echo
+echo hola|| echo adios
+echo hola ||echo adios
+echo hola || echo adios
+
 echo a|| b||echo c|| echo k|| echo z
 ls doesnotexists || echo bonjour
 ls doesnotexists|| echo bonjour
-echo bonjour|| ls doesnotexists
+echo hola|| ls doesnotexists
 echo a || echo b|| echo c ||echo d     ||   echo e   ||echo f&&        echo g
 
 #echo ""
@@ -39,9 +35,9 @@ echo a || echo b|| echo c ||echo d     ||   echo e   ||echo f&&        echo g
 #echo -e "============================"
 #echo ""
 
-(echo bonjour)
-(echo bonjour )
-( echo bonjour )
+(echo hola)
+(echo hola )
+( echo hola )
 (echo a && echo b) && echo c
 (echo a || echo b) || echo c
 (ls doesnotexist || echo b) || echo c
@@ -52,9 +48,6 @@ ls doesnotexist || (echo b && echo c)
 (ls doesntexist || ls)
 (ls doesntexist && ls)
 (ls && ls) && echo $?
-(echo a; echo b) | cat -e
-echo bonjour | (cat -e; echo a)
-echo bonjour | (echo a; cat -e)
 (echo a) | (cat -e)
 (echo a) | (cat -e | cat -e)
 echo a | (cat -e | cat -e | cat -e)
@@ -62,8 +55,7 @@ echo a | (cat -e | cat -e | cat -e) | cat -e
 (echo a) | (cat -e | cat -e | cat -e) | cat -e
 (echo a) | (cat -e | cat -e | cat -e) | (cat -e)
 (cat /etc/shells) | (cat -e) | (cat -e) | (cat -e)
-(cat /etc/shells) | (cat -e) | (cat -e | (cat -e)
-(cat /etc/shells | (cat -e) | (cat -e) | (cat -e)
+
 
 #echo ""
 #echo -e "============================"
@@ -73,9 +65,6 @@ echo a | (cat -e | cat -e | cat -e) | cat -e
 
 echo 'AH\'
 echo "AH\"
-echo "AH\""
-echo '\''
-echo "\""
 echo "\\""
 echo "\""
 echo "\$"
