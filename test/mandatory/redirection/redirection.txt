@@ -7,7 +7,6 @@ echo hi > file;cat file;rm -rf file@echo hi > file
 echo hi >> file;echo hi >> file;cat file;rm -rf file@echo hi >> file
 
 echo hi > *.txt;cat '*.txt';rm -rf '*.txt'@echo hi > *.txt
-echo hi >> ~;rm -rf ~@echo hi >> ~
 
 echo > file hi;cat file;rm -rf file@echo >> file hi
 echo >> file hi;echo >> file hi;cat file;rm -rf file@echo >> file2 hi
