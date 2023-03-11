@@ -376,15 +376,15 @@
 		print_in_traces "traces/parse/spaces_trace.txt" &> /dev/null
 		print_in_traces "traces/parse/tilde_trace.txt" &> /dev/null
 		print_in_traces "traces/parse/syntax_error_trace.txt" &> /dev/null
-		printf ${BLUE}"\n\n|------------------------{ dollars }\n"${DEF_COLOR}
+		printf ${BLUE}"\n\n|------------------------{ dollars }\n\n"${DEF_COLOR}
 		main_test_call "/parser/dollar.txt" "exec_function" "traces/parse/dollar_trace.txt"
-		printf ${BLUE}"\n\n|------------------------{ quotes }\n"${DEF_COLOR}
+		printf ${BLUE}"\n\n|------------------------{ quotes }\n\n"${DEF_COLOR}
 		main_test_call "/parser/quotes.txt" "exec_function" "traces/parse/quotes_trace.txt"
-		printf ${BLUE}"\n\n|------------------------{ spaces }\n"${DEF_COLOR}
+		printf ${BLUE}"\n\n|------------------------{ spaces }\n\n"${DEF_COLOR}
 		main_test_call "/parser/spaces.txt" "exec_function" "traces/parse/spaces_trace.txt"
-		printf ${BLUE}"\n\n|------------------------{ tilde }\n"${DEF_COLOR}
+		printf ${BLUE}"\n\n|------------------------{ tilde }\n\n"${DEF_COLOR}
 		main_test_call "/parser/tilde.txt" "exec_function" "traces/parse/tilde_trace.txt"
-		printf ${BLUE}"\n\n|------------------------{ syntax_error }\n"${DEF_COLOR}
+		printf ${BLUE}"\n\n|------------------------{ syntax_error }\n\n"${DEF_COLOR}
 		main_test_call "/parser/syntax_error.txt" "exec_function" "traces/parse/syntax_error_trace.txt"
 		print_end_tests "${EOK}" "${ESF}" "traces/parse/*.txt"
 		TTPARSER="1";
