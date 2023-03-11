@@ -22,6 +22,7 @@
 		echo -e "${BLUE} Options:${DEF_COLOR}"
 		echo -e "\t-h --help\tShow this help message"
 		echo -e "\t-b --bonus\tWill execute the tester with bonus tests"
+		echo -e "\t-i --ignore\tWill run all tests except those specified by argument\n\t\t\t(compatible with bonus option)"
 		echo -e "\n${BLUE} Arguments:${DEF_COLOR}"
 		echo -e "\techo\t\tExecute the echo tests"
 		echo -e "\texport\t\tExecute the export tests"
@@ -32,7 +33,8 @@
 		echo -e "\tstatus\t\tExecute the exit status tests"
 		echo -e "\n${YELLOW} Examples:${DEF_COLOR}"
 		echo -e "\tmpanic.sh --help\tShow this help message"
-		echo -e "\tmpanic.sh -b echo\tExecute only the echo tests"
+		echo -e "\tmpanic.sh -b echo\tExecute only the echo tests with bonus"
+		echo -e "\tmpanic.sh -b -i echo\tExecute all the tests with bonus except the echo one"
 		echo -e "\tmpanic.sh parser pipe\tExecute the parser and pipe status tests"
 		echo -e "\n If no arguments are provided, all tests will be executed.\n"
 		exit 0
