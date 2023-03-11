@@ -1,3 +1,9 @@
+> no_cmd_file
+# rm no_cmd_file &> /dev/null
+>> no_cmd_test
+# rm no_cmd_test &> /dev/null
+echo hola | > filepipe
+# rm filepipe &> /dev/null
 
 echo hi > file;cat file;rm -rf file@echo hi > file
 echo hi >> file;echo hi >> file;cat file;rm -rf file@echo hi >> file
