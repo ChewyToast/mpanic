@@ -4,7 +4,6 @@
 	DEF_COLOR='\033[0;39m'
 	GRAY='\033[0;90m'
 	RED='\033[0;91m'
-	HARD_RED='\033[1;91m'
 	GREEN='\033[0;92m'
 	YELLOW='\033[0;93m'
 	BLUE='\033[0;94m'
@@ -142,7 +141,7 @@
 			fi
 		fi
 		print_color ${BLUE} "] - |"
-		printf ${MAGENTA};
+		printf ${CYAN};
 		if [ "$2" ]; then
 			printf "$2";
 		else
@@ -372,11 +371,11 @@
 		printf ${BLUE}"\n|=========================[ PARSER ]=========================|"${DEF_COLOR}
 		rm -rf traces/parse &> /dev/null
 		mkdir traces/parse &> /dev/null
-		print_in_traces "traces/parse/dollar_trace.txt"
-		print_in_traces "traces/parse/quotes_trace.txt"
-		print_in_traces "traces/parse/spaces_trace.txt"
-		print_in_traces "traces/parse/tilde_trace.txt"
-		print_in_traces "traces/parse/syntax_error_trace.txt"
+		print_in_traces "traces/parse/dollar_trace.txt" &> /dev/null
+		print_in_traces "traces/parse/quotes_trace.txt" &> /dev/null
+		print_in_traces "traces/parse/spaces_trace.txt" &> /dev/null
+		print_in_traces "traces/parse/tilde_trace.txt" &> /dev/null
+		print_in_traces "traces/parse/syntax_error_trace.txt" &> /dev/null
 		printf ${BLUE}"\n|------------------------{ dollars }"${DEF_COLOR}
 		main_test_call "/parser/dollar.txt" "exec_function" "traces/parse/dollar_trace.txt"
 		printf ${BLUE}"\n|------------------------{ quotes }"${DEF_COLOR}
