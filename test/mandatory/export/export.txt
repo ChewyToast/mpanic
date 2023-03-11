@@ -4,31 +4,3 @@ export TEST=test W:RON:G=wrong TESTT=test2;export | grep TEST wrong@export TEST=
 export EMPTY EMPTY_TOO= NOT_EMPTY=contnent;export | grep EMPTY@export EMPTY EMPTY_TOO= NOT_EMPTY=contnent
 export TEST=value TEST=value2;export | grep TEST@export TEST=value TEST=value2
 export TEST=value;export TEST+=" added value";export | grep TEST@export TEST+=" added value"
-
-echo $PATH
-echo $
-echo $.
-echo $
-$
-#export A
-export | grep -w A
-env | grep -w A
-#export B=
-export | grep -w B
-env | grep -w B
-#unset A B
-export | grep -w A
-env | grep -w A
-export | grep -w B
-env | grep -w B
-env | grep -w PATH
-export | grep -w USER
-#export A='a'
-unset A
-echo $A
-#export A='a'
-unset 'A '
-echo $A
-#export A='a'
-unset 'A='
-echo $A

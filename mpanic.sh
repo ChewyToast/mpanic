@@ -137,7 +137,7 @@
 					else
 						ESF="$ESF, $i"
 					fi
-				printf "${CYAN}SF${DEF_COLOR}"
+				printf "${MAGENTA}SF${DEF_COLOR}"
 				fi
 			fi
 		fi
@@ -314,6 +314,22 @@
 		printf "${BLUE}\n|============================================================|\n\n\n${DEF_COLOR}"
 	}
 
+	function env_test_call()
+	{
+		if [ "$TTENV" != "" ]; then
+			return ;
+		fi
+		EOK="OK"
+		ESF=""
+		printf ${BLUE}"\n|===========================[ ENV ]==========================|"${DEF_COLOR}
+		rm -rf traces/env_trace.txt &> /dev/null
+		print_in_traces "traces/env_trace.txt"
+		main_test_call "/env/env.txt" "exec_function" "traces/env_trace.txt"
+		print_end_tests "${EOK}" "${ESF}" "traces/env_trace.txt"
+		TTENV="1";
+		printf "${BLUE}\n|============================================================|\n\n\n${DEF_COLOR}"
+	}
+
 	function exit_test_call()
 	{
 		if [ "$TTEXIT" != "" ]; then
@@ -330,6 +346,22 @@
 		printf "${BLUE}\n|============================================================|\n\n\n${DEF_COLOR}"
 	}
 
+	function directory_test_call()
+	{
+		if [ "$TTDIR" != "" ]; then
+			return ;
+		fi
+		EOK="OK"
+		ESF=""
+		printf ${BLUE}"\n|========================[ DIRECTORY ]=======================|"${DEF_COLOR}
+		rm -rf traces/directory_trace.txt &> /dev/null
+		print_in_traces "traces/directory_trace.txt"
+		main_test_call "/dir/dir.txt" "exec_function" "traces/directory_trace.txt"
+		print_end_tests "${EOK}" "${ESF}" "traces/directory_trace.txt"
+		TTDIR="1";
+		printf "${BLUE}\n|============================================================|\n\n\n${DEF_COLOR}"
+	}
+
 	function parser_test_call()
 	{
 		if [ "$TTPARSER" != "" ]; then
@@ -338,11 +370,24 @@
 		EOK="OK"
 		ESF=""
 		printf ${BLUE}"\n|=========================[ PARSER ]=========================|"${DEF_COLOR}
-		rm -rf traces/parser_trace.txt &> /dev/null
-		print_in_traces "traces/parser_trace.txt"
-		main_test_call "/parser/parser.txt" "exec_function" "traces/parser_trace.txt"
-		main_test_call "/parser/syntax_error.txt" "exec_function" "traces/parser_trace.txt"
-		print_end_tests "${EOK}" "${ESF}" "traces/parser_trace.txt"
+		rm -rf traces/parse &> /dev/null
+		mkdir traces/parse &> /dev/null
+		print_in_traces "traces/parse/dollar_trace.txt"
+		print_in_traces "traces/parse/quotes_trace.txt"
+		print_in_traces "traces/parse/spaces_trace.txt"
+		print_in_traces "traces/parse/tilde_trace.txt"
+		print_in_traces "traces/parse/syntax_error_trace.txt"
+		printf ${BLUE}"\n|------------------------{ dollars }"${DEF_COLOR}
+		main_test_call "/parser/dollar.txt" "exec_function" "traces/parse/dollar_trace.txt"
+		printf ${BLUE}"\n|------------------------{ quotes }"${DEF_COLOR}
+		main_test_call "/parser/quotes.txt" "exec_function" "traces/parse/quotes_trace.txt"
+		printf ${BLUE}"\n|------------------------{ spaces }"${DEF_COLOR}
+		main_test_call "/parser/spaces.txt" "exec_function" "traces/parse/spaces_trace.txt"
+		printf ${BLUE}"\n|------------------------{ tilde }"${DEF_COLOR}
+		main_test_call "/parser/tilde.txt" "exec_function" "traces/parse/tilde_trace.txt"
+		printf ${BLUE}"\n|------------------------{ syntax_error }"${DEF_COLOR}
+		main_test_call "/parser/syntax_error.txt" "exec_function" "traces/parse/syntax_error_trace.txt"
+		print_end_tests "${EOK}" "${ESF}" "traces/parse/*.txt"
 		TTPARSER="1";
 		printf "${BLUE}\n|============================================================|\n\n\n${DEF_COLOR}"
 	}
@@ -354,7 +399,7 @@
 		fi
 		EOK="OK"
 		ESF=""
-		printf ${BLUE}"\n|==========================[ EXIT ]==========================|"${DEF_COLOR}
+		printf ${BLUE}"\n|==========================[ PIPES ]=========================|"${DEF_COLOR}
 		rm -rf traces/pipes_trace.txt &> /dev/null
 		print_in_traces "traces/pipes_trace.txt"
 		main_test_call "/pipe/pipe.txt" "exec_function" "traces/pipes_trace.txt"
@@ -417,7 +462,7 @@
 		case "$arg" in
 			"-h"|"--help") print_helper ;;
 			"-i"|"--ignore") IGNORE="1" ;;
-			"echo"|"export"|"exit"|"parser"|"pipe"|"redirection"|"status") ;;
+			"echo"|"export"|"exit"|"parser"|"pipe"|"redirection"|"status"|"env"|"directory") ;;
 			"-b"|"--bonus") TESTER_MODE="bonus" ;;
 			*) printf "\n Invalid argument:"${DEF_COLOR}" $arg\n Type "${BLUE}"--help"${DEF_COLOR}" to see the valid options\n\n"${DEF_COLOR} && exit 1 ;;
 		esac
@@ -502,15 +547,19 @@
 		TTECHO=""
 	# Export done
 		TTEXPORT=""
-	# Echo done
+	# Env done
+		TTENV=""
+	# Exit done
 		TTEXIT=""
-	# Export done
+	# Dir done
+		TTDIR=""
+	# Parser done
 		TTPARSER=""
-	# Echo done
+	# Pipe done
 		TTPIPE=""
-	# Export done
+	# Redirect done
 		TTREDIRECT=""
-	# Echo done
+	# Status done
 		TTSTATUS=""
 #
 
@@ -522,7 +571,9 @@
 			case "$arg" in
 				"echo") TTECHO="1";;
 				"export") TTEXPORT="1";;
+				"env") TTENV="1";;
 				"exit") TTEXIT="1";;
+				"dir") TTDIR="1";;
 				"parser") TTPARSER="1";;
 				"pipe") TTPIPE="1";;
 				"redirection") TTREDIRECT="1";;
@@ -531,7 +582,9 @@
 		done
 			echo_test_call;
 			export_test_call;
+			env_test_call;
 			exit_test_call;
+			directory_test_call;
 			parser_test_call;
 			pipe_test_call;
 			redirection_test_call;
@@ -540,7 +593,9 @@
 		if [[ "$#" == "1" && ( "$1" == "-b" || "$1" == "--bonus" ) ]]; then
 			echo_test_call;
 			export_test_call;
+			env_test_call;
 			exit_test_call;
+			directory_test_call;
 			parser_test_call;
 			pipe_test_call;
 			redirection_test_call;
@@ -551,7 +606,9 @@
 				case "$arg" in
 					"echo") echo_test_call ;;
 					"export") export_test_call ;;
+					"env") env_test_call;;
 					"exit") exit_test_call;;
+					"directory") directory_test_call;;
 					"parser") parser_test_call;;
 					"pipe") pipe_test_call;;
 					"redirection") redirection_test_call;;
@@ -561,7 +618,9 @@
 		else
 			echo_test_call;
 			export_test_call;
+			env_test_call;
 			exit_test_call;
+			directory_test_call;
 			parser_test_call;
 			pipe_test_call;
 			redirection_test_call;

@@ -1,0 +1,49 @@
+
+echo hi;echo $?;hi echo@echo $?@ echo $?
+
+echo $
+
+echo "'$'"
+
+echo $'\n' | cat -e@echo \$'\n'
+echo $'\r' | cat -e@echo \$'\r'
+echo $'\t' | cat -e@echo \$'\t'
+
+echo $USER
+echo $NONEXIST
+echo $USER$PATH$PWD
+
+echo "$USER$PATH$PWD"
+echo '$USER$PATH$PWD'
+echo $USER",$PATH,$PWD
+echo "$USER",$PATH,$PWD"
+echo '$USER",$PATH,$PWD'
+echo $USER"$PATH"$PWD"USER"$PATH"$PWD"
+echo $USER'$PATH'$PWD'USER'$PATH'$PWD'
+
+#export TMPENVVAR
+$TMPENVVAR
+
+export TMPENVVAR;$TMPENVVAR
+
+#export TMPENVVAR=echo
+$TMPENVVAR
+
+#export TMPENVVAR="         echo"
+$TMPENVVAR
+
+#export TMPENVVAR="         EcHO      hi"
+$TMPENVVAR
+
+#export A='foo   ' B='bar   ' C='baz   '
+
+echo $A"$B"$C"A"$B"$C"
+echo $A'$B'$C'A'$B'$C'
+echo $A"$B"$C"A"$B"$C"
+echo $A'$B'$C'A'$B'$C'
+echo $A
+echo $A$B
+echo $A$B$C
+echo $A$B$C$AA
+
+#unset A B C

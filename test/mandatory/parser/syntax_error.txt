@@ -1,38 +1,37 @@
-#echo ""
-#echo -e "============================"
-#echo -e "-------[ SYNTAX ERROR ]-----"
-#echo -e "============================"
-#echo ""
-
-< | a
-> | a
->> | a
-| < a
-| > a
-| >> a
-echo|
-echo |
-echo |
-|cat
-| cat
- | cat
- echo bonjour | | cat -e
- echo a ||| echo b
-> file
-echo bonjour > file
-< file
->
->>
+""
 <
+>>
+test
+
+|test
+ | test
+< | test
+<< | test
+> | test
+>> | test
+| < test
+| << test
+| > test
+| >> test
+| test
+
+> test;rm-rf test@> test
+>> test;rm-rf test@>> test
+> test | >> test2; rm -rf test test2@> test | >> test2
+
+echo hiecho hi
+echo hi|echo hi
+echo hi |echo hi
+echo hi| echo hi
+echo hi | | echo hi
+echo hi || echo hi
+echo hi ||| echo hi
+
 echo >
 echo >>
 echo <
-> test
->> test
-echo foo >>> test
-echo foo >>>> test
-echo foo >>>>> test
-echo bonjour > test
-cat << < test
-cat << << test
-cat <<<<< test
+echo >>>
+echo <<<
+
+echo > > test;rm -rf test@echo > > test
+echo > >> test;rm -rf test@echo > >> test

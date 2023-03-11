@@ -1,0 +1,23 @@
+""
+" "
+\necho hi@\\necho hi
+\techo hi@\\techo hi
+\vecho hi@\\vecho hi
+\fecho hi@\\fecho hi
+\recho hi@\\recho hi
+
+echo  hi
+echo		hi
+echo	""	hi
+
+echo\thi
+echo\t\t\t\t@echo\\t\\t\\t\\t
+echo \t\t\t\t@echo \\t\\t\\t\\t
+
+\fecho\fhi @form feed interpolation
+\necho\nhi @new line interpolation
+\recho\rhi @carriage return interpolation
+\vecho\vhi @vertical tab interpolation
+\r\v\fecho\r\v\fhi@ mixed interpolation
+
+\t\t\t\t\t\t@\\t\\t\\t\\t\\t\\t

@@ -1,0 +1,5 @@
+echo hi~
+echo ~
+echo ~$USER
+echo ~false
+echo \~

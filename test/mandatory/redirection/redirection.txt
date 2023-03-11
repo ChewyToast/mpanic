@@ -1,25 +1,20 @@
-> no_cmd_file
-# rm no_cmd_file &> /dev/null
->> no_cmd_test
-# rm no_cmd_test &> /dev/null
-echo hola | > filepipe
-# rm filepipe &> /dev/null
+> no_cmd_file;cat no_cmd_file;rm -rf no_cmd_file@> no_cmd_file
+>> no_cmd_test;cat no_cmd_test;rm -rf no_cmd_test@>> no_cmd_test
+echo hola | > filepipe;cat filepipe;rm -rf filepipe@echo hola | > filepipe
+> file_first | > file_second;cat file_first;cat file_second;rm -rf file_first;rm -rf file_second@> file_first | > file_second
 
 echo hi > file;cat file;rm -rf file@echo hi > file
 echo hi >> file;echo hi >> file;cat file;rm -rf file@echo hi >> file
 
 echo hi > $USER;cat $USER;rm -rf $USER@echo hi > $USER
 echo hi > *.txt;cat '*.txt';rm -rf '*.txt'@echo hi > *.txt
-echo hi >> ~;@echo hi >> ~
+echo hi >> ~;rm -rf ~@echo hi >> ~
 
 echo > file hi;cat file;rm -rf file@echo >> file hi
 echo >> file hi;echo >> file hi;cat file;rm -rf file@echo >> file2 hi
 
 > file echo hi;cat file;rm -rf file@> file echo hi
 >> file echo hi;>> file echo hi;cat file;rm -rf file@>> file echo hi
-
-> file echo hi >> echo;cat file;rm -rf file@> file echo hi
->> file echo hi;cat file;rm -rf file@>> file echo hi
 
 echo hi > file2 > file hi;cat file;cat file2;rm -rf file file2@echo hi > file2 > file hi
 echo hi >> file2 > file hi;echo hi >> file2 > file hi;cat file;cat file2;rm -rf file file2@echo hi >> file2 > file hi

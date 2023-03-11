@@ -1,0 +1,65 @@
+echo "~"ups
+echo '~'ups
+
+echo "'$'"
+echo "'$'"
+
+echo "|$USER|"
+echo "|$USE|"
+echo "|$USER_|"
+echo '|$USER|'
+echo '|$USE|'
+echo '|$USER_|'
+
+'echo' hi
+'''echo' hi
+'echo' 'hi'
+'echo' 'hi'''
+'echo' 'hi' ''
+
+"echo" hi
+"""echo" hi
+"echo" "hi"
+"echo" "hi"""
+"echo" "hi" ""
+echo '""""""""""""'
+'echo' "hi"'' " ' "' "' "" ''''''""
+
+echo hi"hi" hi'h"i'
+echo "hi" "hi"
+echo "hi"  "hi"
+echo "hi"	"hi"
+echo "hi"\t"hi"
+
+" echo"
+' echo'
+""echo
+" "echo
+''echo
+' 'echo
+''''''''''echo hi
+""""""""""echo hi
+"e"'c'h"o" hi
+ec""ho hi
+ec""h''o hi
+
+
+EcHo hi
+ECHO hi
+"ECHO" hi
+'ECHO' hi
+
+echo    \t  hi   \t    
+echo "   \t  hi   \t    "
+echo '   \t  hi   \t    '
+echo $"   \t  hi   \t    "
+echo $'   \t  hi   \t    '
+echo $'   \r  hi   \t    '
+
+echo hi > "fi le";rm -rf '"fi le"'@echo hi > "fi le"
+echo hi > 'fi le';rm 'fi le'@echo hi > 'fi le'
+
+#export ANA_VAR=".    hi, this is the hardest Ana test     "
+echo $ANA_VAR@echo $ANA_VAR with spaces in var value
+echo "$ANA_VAR"@echo "$ANA_VAR" with spaces in var value
+echo '$ANA_VAR'@echo '$ANA_VAR' with spaces in var value
