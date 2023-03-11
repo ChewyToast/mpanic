@@ -124,15 +124,19 @@
 		if [ "$ret" == "1" ]; then
 			printf "${GREEN}OK${DEF_COLOR}"
 		else
-			if [ "$ret" == "0" ]; then
-				printf "${RED}KO${DEF_COLOR}"
+			if [ "$ret" == "4" ]; then
+				printf "${YELLOW}OK${DEF_COLOR}"
 			else
-				if [ "$ESF" == "" ]; then
-					ESF="$i"
+				if [ "$ret" == "0" ]; then
+					printf "${RED}KO${DEF_COLOR}"
 				else
-					ESF="$ESF, $i"
+					if [ "$ESF" == "" ]; then
+						ESF="$i"
+					else
+						ESF="$ESF, $i"
+					fi
+				printf "${CYAN}SF${DEF_COLOR}"
 				fi
-			printf "${YELLOW}SF${DEF_COLOR}"
 			fi
 		fi
 		print_color ${BLUE} "] - |"
@@ -223,9 +227,14 @@
 				ret=1
 				trace_printer "traces/correct_log.txt" "${i}" "$(cat ${2})" "${ES2}" "${BASH_STDOUTP}" "${BASH_ERROUTP}" "${ES1}" "${MINI_STDOUTP}" "${MINI_ERROUTP}" "${SF_TMP}";
 			else
-				ret=0
-				EOK="KO"
-				trace_printer "${1}" "${i}" "$(cat ${2})" "${ES2}" "${BASH_STDOUTP}" "${BASH_ERROUTP}" "${ES1}" "${MINI_STDOUTP}" "${MINI_ERROUTP}" "${SF_TMP}";
+				if [ "${MINI_STDOUTP}" == "${BASH_STDOUTP}" ] && [ "${ES1}" == "${ES2}" ]; then
+					ret=4
+					trace_printer "traces/correct_log.txt" "${i}" "$(cat ${2})" "${ES2}" "${BASH_STDOUTP}" "${BASH_ERROUTP}" "${ES1}" "${MINI_STDOUTP}" "${MINI_ERROUTP}" "${SF_TMP}";
+				else
+					ret=0
+					EOK="KO"
+					trace_printer "${1}" "${i}" "$(cat ${2})" "${ES2}" "${BASH_STDOUTP}" "${BASH_ERROUTP}" "${ES1}" "${MINI_STDOUTP}" "${MINI_ERROUTP}" "${SF_TMP}";
+				fi
 			fi
 		fi
 
@@ -393,17 +402,19 @@
 	if [[ "$(ls -la)" != *".timmer"* ]]; then
 		touch .timmer
 		printf ${MAIN_COLOR}"\n\tWellocme to minishell panic 👹 !\n\n"${DEF_COLOR};
-		printf ${BLUE}" It looks like its ur first time using this tester,\n";
-		printf ${BLUE}" so let me explain u how it works:\n${DEF_COLOR}";
+		printf " It looks like its ur first time using this tester,\n";
+		printf " so let me explain u how it works:\n";
 		print_helper;
 	fi
 
 	# Test mode
 		TESTER_MODE="mandatory"
+		IGNORE="0"
 	for arg in "$@"
 	do
 		case "$arg" in
 			"-h"|"--help") print_helper ;;
+			"-i"|"--ignore") IGNORE="1" ;;
 			"echo"|"export"|"exit"|"parser"|"pipe"|"redirection"|"status") ;;
 			"-b"|"--bonus") TESTER_MODE="bonus" ;;
 			*) printf "\n Invalid argument:"${DEF_COLOR}" $arg\n Type "${BLUE}"--help"${DEF_COLOR}" to see the valid options\n\n"${DEF_COLOR} && exit 1 ;;
@@ -503,37 +514,58 @@
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  EXECUTOR
 
-	if [[ "$#" == "1" && ( "$1" == "-b" || "$1" == "--bonus" ) ]]; then
-		echo_test_call;
-		export_test_call;
-		exit_test_call;
-		parser_test_call;
-		pipe_test_call;
-		redirection_test_call;
-		status_test_call;
-	elif [[ "$#" != "0" ]]; then
+	if [[ $IGNORE == "1" ]]; then
 		for arg in "$@"
 		do
 			case "$arg" in
-				"echo") echo_test_call ;;
-				"export") export_test_call ;;
-				"exit") exit_test_call;;
-				"parser") parser_test_call;;
-				"pipe") pipe_test_call;;
-				"redirection") redirection_test_call;;
-				"status") status_test_call;;
+				"echo") TTECHO="1";;
+				"export") TTEXPORT="1";;
+				"exit") TTEXIT="1";;
+				"parser") TTPARSER="1";;
+				"pipe") TTPIPE="1";;
+				"redirection") TTREDIRECT="1";;
+				"status") TTSTATUS="1";;
 			esac
 		done
+			echo_test_call;
+			export_test_call;
+			exit_test_call;
+			parser_test_call;
+			pipe_test_call;
+			redirection_test_call;
+			status_test_call;
 	else
-		echo_test_call;
-		export_test_call;
-		exit_test_call;
-		parser_test_call;
-		pipe_test_call;
-		redirection_test_call;
-		status_test_call;
+		if [[ "$#" == "1" && ( "$1" == "-b" || "$1" == "--bonus" ) ]]; then
+			echo_test_call;
+			export_test_call;
+			exit_test_call;
+			parser_test_call;
+			pipe_test_call;
+			redirection_test_call;
+			status_test_call;
+		elif [[ "$#" != "0" ]]; then
+			for arg in "$@"
+			do
+				case "$arg" in
+					"echo") echo_test_call ;;
+					"export") export_test_call ;;
+					"exit") exit_test_call;;
+					"parser") parser_test_call;;
+					"pipe") pipe_test_call;;
+					"redirection") redirection_test_call;;
+					"status") status_test_call;;
+				esac
+			done
+		else
+			echo_test_call;
+			export_test_call;
+			exit_test_call;
+			parser_test_call;
+			pipe_test_call;
+			redirection_test_call;
+			status_test_call;
+		fi
 	fi
-
 #
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  ENDER
