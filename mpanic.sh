@@ -125,19 +125,10 @@
 		if [ "$ret" == "1" ]; then
 			printf "${GREEN}OK${DEF_COLOR}"
 		else
-			if [ "$ret" == "4" ]; then
-				printf "${YELLOW}OK${DEF_COLOR}"
+			if [ "$ret" == "0" ]; then
+				printf "${RED}KO${DEF_COLOR}"
 			else
-				if [ "$ret" == "0" ]; then
-					printf "${RED}KO${DEF_COLOR}"
-				else
-					if [ "$ESF" == "" ]; then
-						ESF="$i"
-					else
-						ESF="$ESF, $i"
-					fi
-				printf "${MAGENTA}SF${DEF_COLOR}"
-				fi
+				printf "${YELLOW}SF${DEF_COLOR}"
 			fi
 		fi
 		print_color ${BLUE} "] - |"
@@ -203,39 +194,33 @@
 		{ ./minishell; } < ${2} 1> .tmp/exec_outp.txt 2> .tmp/exec_error_outp.txt
 		ES1=$?
 		./cleaner ".tmp/exec_outp.txt"
-		# MINI_STDOUTP=$(cat -e .tmp/exec_outp.txt)
 		MINI_STDOUTP=$(cat -e .tmp/exec_outp_clean.txt)
 		MINI_ERROUTP_ALL=$(cat -e .tmp/exec_error_outp.txt)
-		# if [[ ${MINI_ERROUTP_ALL} == *"exit$" ]]; then
-			# MINI_ERROUTP=$(cat -e .tmp/exec_error_outp.txt |  sed -e "$ d")
-		# else
-			MINI_ERROUTP=$(cat -e .tmp/exec_error_outp.txt)
-		# fi
+		MINI_ERROUTP=$(cat -e .tmp/exec_error_outp.txt)
+	
 		{ bash; } < ${2} 1> .tmp/bash_outp.txt 2> .tmp/bash_error_outp.txt
 		ES2=$?
 		BASH_STDOUTP=$(cat -e .tmp/bash_outp.txt)
 		BASH_ERROUTP=$(cat -e .tmp/bash_error_outp.txt)
 		BASH_ERROUTP_CUT=${BASH_ERROUTP:18:${#BASH_ERROUTP}}
 
-		if [ "${ES1}" == "139" ]; then 
+		std_condition=$( [[ "${MINI_STDOUTP}" == "${BASH_STDOUTP}" ]] && echo "true" || echo "false" )
+		err_condition=$( [[ "${BASH_ERROUTP_CUT}" == "" && "${MINI_ERROUTP}" == "${BASH_ERROUTP_CUT}" ]] || [[ "${BASH_ERROUTP_CUT}" != "" && "${MINI_ERROUTP}" == *"${BASH_ERROUTP_CUT}"* ]] && echo "true" || echo "false" )
+		es_condition=$( [[ "${ES1}" == "${ES2}" ]] && echo "true" || echo "false" )
+		if [ "${ES1}" == "139" ] || [ "${ES1}" == "134" ] || [ "${ES1}" == "136" ] || [ "${ES1}" == "137" ] || [ "${ES1}" == "138" ]; then
 			{ ./minishell; } < ${2} &> .tmp/exec_other_outp.txt
 			ret=2
 			EOK="KO"
 			SF_TMP=$(cat .tmp/exec_other_outp.txt | sed -e "1d")
 			trace_printer "${1}" "${i}" "$(cat ${2})" "${ES2}" "${BASH_STDOUTP}" "${BASH_ERROUTP}" "${ES1}" "${MINI_STDOUTP}" "${MINI_ERROUTP}" "${SF_TMP}";
 		else
-			if [ "${MINI_STDOUTP}" == "${BASH_STDOUTP}" ] && [[ "${BASH_ERROUTP_CUT}" == "" && "${MINI_ERROUTP}" == "${BASH_ERROUTP_CUT}" ]] || [[ "${BASH_ERROUTP_CUT}" != "" && "${MINI_ERROUTP}" == *"${BASH_ERROUTP_CUT}"* ]] && [ "${ES1}" == "${ES2}" ]; then
+			if [[ "${std_condition}" == "true" && "${err_condition}" == "true" && "${es_condition}" == "true" ]]; then
 				ret=1
 				trace_printer "traces/correct_log.txt" "${i}" "$(cat ${2})" "${ES2}" "${BASH_STDOUTP}" "${BASH_ERROUTP}" "${ES1}" "${MINI_STDOUTP}" "${MINI_ERROUTP}" "${SF_TMP}";
 			else
-				if [ "${MINI_STDOUTP}" == "${BASH_STDOUTP}" ] && [ "${ES1}" == "${ES2}" ]; then
-					ret=4
-					trace_printer "traces/correct_log.txt" "${i}" "$(cat ${2})" "${ES2}" "${BASH_STDOUTP}" "${BASH_ERROUTP}" "${ES1}" "${MINI_STDOUTP}" "${MINI_ERROUTP}" "${SF_TMP}";
-				else
-					ret=0
-					EOK="KO"
-					trace_printer "${1}" "${i}" "$(cat ${2})" "${ES2}" "${BASH_STDOUTP}" "${BASH_ERROUTP}" "${ES1}" "${MINI_STDOUTP}" "${MINI_ERROUTP}" "${SF_TMP}";
-				fi
+				ret=0
+				EOK="KO"
+				trace_printer "${1}" "${i}" "$(cat ${2})" "${ES2}" "${BASH_STDOUTP}" "${BASH_ERROUTP}" "${ES1}" "${MINI_STDOUTP}" "${MINI_ERROUTP}" "${SF_TMP}";
 			fi
 		fi
 
@@ -450,13 +435,13 @@
 		EOK="OK"
 		ESF=""
 		printf ${BLUE}"\n|======================[ REDIRECTIONS ]======================|"${DEF_COLOR}
-		rm -rf traces/redi_trace.txt &> /dev/null
+		rm -rf traces/redirection_trace.txt &> /dev/null
 		print_in_traces "traces/pipes_trace.txt"
-		main_test_call "mandatory/redirection/redirection.txt" "exec_function" "traces/redi_trace.txt"
+		main_test_call "mandatory/redirection/redirection.txt" "exec_function" "traces/redirection_trace.txt"
 		if [ ${TESTER_MODE} == "bonus" ]; then
-			main_test_call "bonus/redirection/redirection.txt" "exec_function" "traces/redi_trace.txt"
+			main_test_call "bonus/redirection/redirection.txt" "exec_function" "traces/redirection_trace.txt"
 		fi
-		print_end_tests "${EOK}" "${ESF}" "traces/redi_trace.txt"
+		print_end_tests "${EOK}" "${ESF}" "traces/redirection_trace.txt"
 		TTREDIRECT="1";
 		printf "${BLUE}\n|============================================================|\n\n\n${DEF_COLOR}"
 	}
@@ -468,7 +453,7 @@
 		fi
 		EOK="OK"
 		ESF=""
-		printf ${BLUE}"\n|======================[ REDIRECTIONS ]======================|"${DEF_COLOR}
+		printf ${BLUE}"\n|=========================[ STATUS ]=========================|"${DEF_COLOR}
 		rm -rf traces/status_trace.txt &> /dev/null
 		print_in_traces "traces/pipes_trace.txt"
 		main_test_call "mandatory/status/status.txt" "exec_function" "traces/status_trace.txt"
