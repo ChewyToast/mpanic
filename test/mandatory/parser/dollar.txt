@@ -12,7 +12,6 @@ echo $'\t' | cat -e@echo \$'\t'
 echo $USER
 echo $NONEXIST
 echo $USER$PATH$PWD
-
 echo "$USER$PATH$PWD"
 echo '$USER$PATH$PWD'
 echo '$USER",$PATH,$PWD'

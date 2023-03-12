@@ -42,3 +42,4 @@
  || echo
 (cat /etc/shells) | (cat -e) | (cat -e | (cat -e)
 (cat /etc/shells | (cat -e) | (cat -e) | (cat -e)
+(echo hola)  cat -n
