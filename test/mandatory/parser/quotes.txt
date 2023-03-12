@@ -56,7 +56,7 @@ echo $"   \t  hi   \t    "
 echo $'   \t  hi   \t    '
 echo $'   \r  hi   \t    '
 
-echo hi > "fi le";rm '"fi le"'@echo hi > "fi le"
+echo hi > "fi le";rm "fi le"@echo hi > "fi le"
 echo hi > 'fi le';rm 'fi le'@echo hi > 'fi le'
 
 #export ANA_VAR=".    hi,   this  is  the  hardest  Ana  test     "

@@ -37,6 +37,8 @@ echo a | (cat -e | cat -e | cat -e) | cat -e
 (echo a) | (cat -e | cat -e | cat -e) | cat -e
 (echo a) | (cat -e | cat -e | cat -e) | (cat -e)
 (cat /etc/shells) | (cat -e) | (cat -e) | (cat -e)
+(echo hola) | (cat -n)
+(echo hola) | (cat -n | cat -e)
 
 @NOTA >> los que funcionan dan fallo y viceversa
 echo *
