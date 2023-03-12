@@ -254,7 +254,7 @@
 	function main_test_call()
 	{
 		# Nombre del archivo a leer
-		test_file="./test/${TESTER_MODE}${1}"
+		test_file="./test/${1}"
 		if [ ! -f "${test_file}" ]; then
 			printf "\n${RED} File needed to test ${test_file} not found\n\n${DEF_COLOR}"
 		else
@@ -291,7 +291,10 @@
 		printf ${BLUE}"\n|==========================[ ECHO ]==========================|"${DEF_COLOR}
 		rm -rf traces/echo_trace.txt &> /dev/null
 		print_in_traces "traces/echo_trace.txt"
-		main_test_call "/echo/echo.txt" "exec_function" "traces/echo_trace.txt"
+		main_test_call "mandatory/echo/echo.txt" "exec_function" "traces/echo_trace.txt"
+		if [ ${TESTER_MODE} == "bonus" ]; then
+			main_test_call "bonus/echo/echo.txt" "exec_function" "traces/echo_trace.txt"
+		fi
 		print_end_tests "${EOK}" "${ESF}" "traces/echo_trace.txt"
 		TTECHO="1";
 		printf "${BLUE}\n|============================================================|\n\n\n${DEF_COLOR}"
@@ -307,7 +310,10 @@
 		printf ${BLUE}"\n|=========================[ EXPORT ]=========================|"${DEF_COLOR}
 		rm -rf traces/export_trace.txt &> /dev/null
 		print_in_traces "traces/export_trace.txt"
-		main_test_call "/export/export.txt" "exec_function" "traces/export_trace.txt"
+		main_test_call "mandatory/export/export.txt" "exec_function" "traces/export_trace.txt"
+		if [ ${TESTER_MODE} == "bonus" ]; then
+			main_test_call "bonus/export/export.txt" "exec_function" "traces/export_trace.txt"
+		fi
 		print_end_tests "${EOK}" "${ESF}" "traces/export_trace.txt"
 		TTEXPORT="1";
 		printf "${BLUE}\n|============================================================|\n\n\n${DEF_COLOR}"
@@ -323,7 +329,10 @@
 		printf ${BLUE}"\n|===========================[ ENV ]==========================|"${DEF_COLOR}
 		rm -rf traces/env_trace.txt &> /dev/null
 		print_in_traces "traces/env_trace.txt"
-		main_test_call "/env/env.txt" "exec_function" "traces/env_trace.txt"
+		main_test_call "mandatory/env/env.txt" "exec_function" "traces/env_trace.txt"
+		if [ ${TESTER_MODE} == "bonus" ]; then
+			main_test_call "bonus/env/env.txt" "exec_function" "traces/env_trace.txt"
+		fi
 		print_end_tests "${EOK}" "${ESF}" "traces/env_trace.txt"
 		TTENV="1";
 		printf "${BLUE}\n|============================================================|\n\n\n${DEF_COLOR}"
@@ -339,7 +348,10 @@
 		printf ${BLUE}"\n|==========================[ EXIT ]==========================|"${DEF_COLOR}
 		rm -rf traces/exit_trace.txt &> /dev/null
 		print_in_traces "traces/exit_trace.txt"
-		main_test_call "/exit/exit.txt" "exec_function" "traces/exit_trace.txt"
+		main_test_call "mandatory/exit/exit.txt" "exec_function" "traces/exit_trace.txt"
+		if [ ${TESTER_MODE} == "bonus" ]; then
+			main_test_call "bonus/exit/exit.txt" "exec_function" "traces/exit_trace.txt"
+		fi
 		print_end_tests "${EOK}" "${ESF}" "traces/exit_trace.txt"
 		TTEXIT="1";
 		printf "${BLUE}\n|============================================================|\n\n\n${DEF_COLOR}"
@@ -355,7 +367,10 @@
 		printf ${BLUE}"\n|========================[ DIRECTORY ]=======================|"${DEF_COLOR}
 		rm -rf traces/directory_trace.txt &> /dev/null
 		print_in_traces "traces/directory_trace.txt"
-		main_test_call "/dir/dir.txt" "exec_function" "traces/directory_trace.txt"
+		main_test_call "mandatory/dir/dir.txt" "exec_function" "traces/directory_trace.txt"
+		if [ ${TESTER_MODE} == "bonus" ]; then
+			main_test_call "bonus/dir/dir.txt" "exec_function" "traces/directory_trace.txt"
+		fi
 		print_end_tests "${EOK}" "${ESF}" "traces/directory_trace.txt"
 		TTDIR="1";
 		printf "${BLUE}\n|============================================================|\n\n\n${DEF_COLOR}"
@@ -377,15 +392,32 @@
 		print_in_traces "traces/parse/tilde_trace.txt" &> /dev/null
 		print_in_traces "traces/parse/syntax_error_trace.txt" &> /dev/null
 		printf ${BLUE}"\n\n|------------------------{ dollars }\n\n"${DEF_COLOR}
-		main_test_call "/parser/dollar.txt" "exec_function" "traces/parse/dollar_trace.txt"
+		main_test_call "mandatory/parser/dollar.txt" "exec_function" "traces/parse/dollar_trace.txt"
+		if [ ${TESTER_MODE} == "bonus" ]; then
+			main_test_call "bonus/parser/dollar.txt" "exec_function" "traces/parse/dollar_trace.txt"
+		fi
 		printf ${BLUE}"\n\n|------------------------{ quotes }\n\n"${DEF_COLOR}
-		main_test_call "/parser/quotes.txt" "exec_function" "traces/parse/quotes_trace.txt"
+		main_test_call "mandatory/parser/quotes.txt" "exec_function" "traces/parse/quotes_trace.txt"
+		if [ ${TESTER_MODE} == "bonus" ]; then
+			main_test_call "bonus/parser/quotes.txt" "exec_function" "traces/parse/quotes_trace.txt"
+		fi
 		printf ${BLUE}"\n\n|------------------------{ spaces }\n\n"${DEF_COLOR}
-		main_test_call "/parser/spaces.txt" "exec_function" "traces/parse/spaces_trace.txt"
+		main_test_call "mandatory/parser/spaces.txt" "exec_function" "traces/parse/spaces_trace.txt"
+		if [ ${TESTER_MODE} == "bonus" ]; then
+			main_test_call "bonus/parser/spaces.txt" "exec_function" "traces/parse/spaces_trace.txt"
+		fi
 		printf ${BLUE}"\n\n|------------------------{ tilde }\n\n"${DEF_COLOR}
-		main_test_call "/parser/tilde.txt" "exec_function" "traces/parse/tilde_trace.txt"
+		main_test_call "mandatory/parser/tilde.txt" "exec_function" "traces/parse/tilde_trace.txt"
+		if [ ${TESTER_MODE} == "bonus" ]; then
+			main_test_call "bonus/parser/tilde.txt" "exec_function" "traces/parse/tilde_trace.txt"
+		fi
 		printf ${BLUE}"\n\n|------------------------{ syntax_error }\n\n"${DEF_COLOR}
-		main_test_call "/parser/syntax_error.txt" "exec_function" "traces/parse/syntax_error_trace.txt"
+		main_test_call "mandatory/parser/syntax_error.txt" "exec_function" "traces/parse/syntax_error_trace.txt"
+		if [ ${TESTER_MODE} == "bonus" ]; then
+			main_test_call "bonus/parser/syntax_error.txt" "exec_function" "traces/parse/syntax_error_trace.txt"
+			printf ${BLUE}"\n\n|------------------------{ operators }\n\n"${DEF_COLOR}
+			main_test_call "bonus/parser/operators.txt" "exec_function" "traces/parse/syntax_error_trace.txt"
+		fi
 		print_end_tests "${EOK}" "${ESF}" "traces/parse/*.txt"
 		TTPARSER="1";
 		printf "${BLUE}\n|============================================================|\n\n\n${DEF_COLOR}"
@@ -401,7 +433,10 @@
 		printf ${BLUE}"\n|==========================[ PIPES ]=========================|"${DEF_COLOR}
 		rm -rf traces/pipes_trace.txt &> /dev/null
 		print_in_traces "traces/pipes_trace.txt"
-		main_test_call "/pipe/pipe.txt" "exec_function" "traces/pipes_trace.txt"
+		main_test_call "mandatory/pipe/pipe.txt" "exec_function" "traces/pipes_trace.txt"
+		if [ ${TESTER_MODE} == "bonus" ]; then
+			main_test_call "bonus/pipe/pipe.txt" "exec_function" "traces/pipes_trace.txt"
+		fi
 		print_end_tests "${EOK}" "${ESF}" "traces/pipes_trace.txt"
 		TTPIPE="1";
 		printf "${BLUE}\n|============================================================|\n\n\n${DEF_COLOR}"
@@ -417,7 +452,10 @@
 		printf ${BLUE}"\n|======================[ REDIRECTIONS ]======================|"${DEF_COLOR}
 		rm -rf traces/redi_trace.txt &> /dev/null
 		print_in_traces "traces/pipes_trace.txt"
-		main_test_call "/redirection/redirection.txt" "exec_function" "traces/redi_trace.txt"
+		main_test_call "mandatory/redirection/redirection.txt" "exec_function" "traces/redi_trace.txt"
+		if [ ${TESTER_MODE} == "bonus" ]; then
+			main_test_call "bonus/redirection/redirection.txt" "exec_function" "traces/redi_trace.txt"
+		fi
 		print_end_tests "${EOK}" "${ESF}" "traces/redi_trace.txt"
 		TTREDIRECT="1";
 		printf "${BLUE}\n|============================================================|\n\n\n${DEF_COLOR}"
@@ -433,7 +471,10 @@
 		printf ${BLUE}"\n|======================[ REDIRECTIONS ]======================|"${DEF_COLOR}
 		rm -rf traces/status_trace.txt &> /dev/null
 		print_in_traces "traces/pipes_trace.txt"
-		main_test_call "/status/status.txt" "exec_function" "traces/status_trace.txt"
+		main_test_call "mandatory/status/status.txt" "exec_function" "traces/status_trace.txt"
+		if [ ${TESTER_MODE} == "bonus" ]; then
+			main_test_call "bonus/status/status.txt" "exec_function" "traces/status_trace.txt"
+		fi
 		print_end_tests "${EOK}" "${ESF}" "traces/status_trace.txt"
 		TTSTATUS="1";
 		printf "${BLUE}\n|============================================================|\n\n\n${DEF_COLOR}"

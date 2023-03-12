@@ -1,0 +1,59 @@
+echo hola&& echo adios
+echo hola &&echo adios
+echo hola && echo adios
+
+echo a&& b&&echo c&& echo k&& echo z
+echo a && echo b&& echo c &&echo d     &&   echo e   &&echo f&&        echo g
+ls doesnotexists&& echo adios
+echo hola&& ls doesnotexists
+
+echo hola|| echo adios
+echo hola ||echo adios
+echo hola || echo adios
+
+echo a|| b||echo c|| echo k|| echo z
+ls doesnotexists || echo bonjour
+ls doesnotexists|| echo bonjour
+echo hola|| ls doesnotexists
+echo a || echo b|| echo c ||echo d     ||   echo e   ||echo f&&        echo g
+
+(echo hola)
+(echo hola )
+( echo hola )
+(echo a && echo b) && echo c
+(echo a || echo b) || echo c
+(ls doesnotexist || echo b) || echo c
+(echo a || ls doesnotexist) || echo c
+echo aa && (echo b && echo c)
+ls doesnotexist || (echo b && echo c)
+(ls && ls)
+(ls doesntexist || ls)
+(ls doesntexist && ls)
+(ls && ls) && echo $?
+(echo a) | (cat -e)
+(echo a) | (cat -e | cat -e)
+echo a | (cat -e | cat -e | cat -e)
+echo a | (cat -e | cat -e | cat -e) | cat -e
+(echo a) | (cat -e | cat -e | cat -e) | cat -e
+(echo a) | (cat -e | cat -e | cat -e) | (cat -e)
+(cat /etc/shells) | (cat -e) | (cat -e) | (cat -e)
+
+@NOTA >> los que funcionan dan fallo y viceversa
+echo *
+#touch file1.txt file2.txt
+echo *.txt
+echo fil*
+echo *le*
+rm *.txt
+echo *.*
+#echo hola > "fil*e"
+cat "fil*e"
+
+echo hola && echo adios || echo noejecuta && echo si ejecuta
+echo hola && echon adios || echo siejecuta && echo fin
+ls | ( cat -e && cat -n ) | cat -n
+(ls | ( cata -e && cat -n ) | cat -e) && echo success
+export A=mivalor && echo $A
+(export A=mivalor) && echo $A
+export A=mivalor && (unset A) && echo$A
+echo hola | (cat -n | (cat -e && echo inception) && echo adios | (cat -n | (cat -e))) @ NOTA >> da syntax error y no deberia

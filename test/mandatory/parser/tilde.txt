@@ -3,3 +3,5 @@ echo ~
 echo ~$USER
 echo ~false
 echo \~
+echo ~$USER/sdfsfsfdsfs
+
