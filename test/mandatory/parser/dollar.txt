@@ -15,8 +15,6 @@ echo $USER$PATH$PWD
 
 echo "$USER$PATH$PWD"
 echo '$USER$PATH$PWD'
-echo $USER",$PATH,$PWD
-echo "$USER",$PATH,$PWD"
 echo '$USER",$PATH,$PWD'
 echo $USER"$PATH"$PWD"USER"$PATH"$PWD"
 echo $USER'$PATH'$PWD'USER'$PATH'$PWD'

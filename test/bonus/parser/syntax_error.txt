@@ -10,9 +10,6 @@
 < || a
 > || a
 >> || a
-< ( a
-> ( a
->> ( a
 < ) a
 > ) a
 >> ) a
@@ -20,7 +17,6 @@
 && > a
 && >> a
 && || a
-&& ( a
 && ) a
 || < a
 || > a
@@ -28,31 +24,19 @@
 || && a
 || ( a
 || ) a
-( < a
-( > a
-( >> a
 ) < a
 ) > a
 ) >> a
-( && a
-( || a
 ( ) a
 ) && a
 ) || a
 ) ( a
 () a
-( a
 ) a
 &&echo
 && echo
  && echo
 
-echo bonjour&&
-echo&&
-echo &&
-echo bonjour||
-echo||
-echo ||
 ||echo
 || echo
  || echo
