@@ -49,3 +49,7 @@ echo\ bonjour
 /bin/echo ' \\\ '
 echo \
 echo "\""'bonjour'
+echo "AH\""
+echo '\''
+echo "\""
+

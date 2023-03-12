@@ -101,7 +101,6 @@
 			echo "|--- STDERR:" >> ${1}
 			echo "->${9}<-" | sed 's/^/| /' >> ${1}
 		else
-			echo "| SEG FAULT!!" >> ${1}
 			echo "${10}" | sed 's/^/| /' >> ${1}
 		fi
 		echo "|">> ${1}
@@ -200,9 +199,11 @@
 	
 		{ bash; } < ${2} 1> .tmp/bash_outp.txt 2> .tmp/bash_error_outp.txt
 		ES2=$?
+		python3 err_cleaner.py
 		BASH_STDOUTP=$(cat -e .tmp/bash_outp.txt)
 		BASH_ERROUTP=$(cat -e .tmp/bash_error_outp.txt)
-		BASH_ERROUTP_CUT=${BASH_ERROUTP:18:${#BASH_ERROUTP}}
+		# BASH_ERROUTP_CUT=${BASH_ERROUTP:18:${#BASH_ERROUTP}}
+		BASH_ERROUTP_CUT=$(cat .tmp/bash_error_outp_clean.txt)
 
 		std_condition=$( [[ "${MINI_STDOUTP}" == "${BASH_STDOUTP}" ]] && echo "true" || echo "false" )
 		err_condition=$( [[ "${BASH_ERROUTP_CUT}" == "" && "${MINI_ERROUTP}" == "${BASH_ERROUTP_CUT}" ]] || [[ "${BASH_ERROUTP_CUT}" != "" && "${MINI_ERROUTP}" == *"${BASH_ERROUTP_CUT}"* ]] && echo "true" || echo "false" )
@@ -663,30 +664,6 @@
 	rm -rf minishell
 	printf ${DEF_COLOR};
 
-#
-
-# echo $'\n'"---------------------------------------------<"
-	# echo "| CMD: ->$FTEST<-"
-	# echo "|--------------------------------"
-	# echo "|  EXPECTED (BASH OUTP)  |  exit status: ($ES2)"$'\n'\|
-	# echo "|--- STDOUT:"
-	# echo "|->$(cat -e .tmp/bash_outp.txt)<-"
-	# echo "|"
-	# echo "|--- STDERR:"
-	# echo "|->$(cat -e .tmp/bash_error_outp.txt)<-"
-	# echo "|--------------------------------"
-	# echo "|--->FOUND (MINISHELL OUTP)  |  exit status: ($ES1)"$'\n'\|
-	# echo "|--- STDOUT:"
-	# echo "|->$(cat -e .tmp/exec_outp.txt |  sed -e "$ d" | sed -e "1d")<-"
-	# # echo "|->$(cat -e .tmp/exec_outp.txt |  sed -e "$ d" | sed -e "1d")<-"
-	# echo "|"
-	# echo "|--- STDERR:"
-	# echo "|->$(cat -e .tmp/exec_error_outp.txt | sed -e "$ d")<-"
-	# echo "|"
-	# echo "---------------------------------------------<"
-	# if [ "$i" == "3" ]; then
-	# 	exit;
-	# fi
 #
 
 #
