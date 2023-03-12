@@ -28,3 +28,6 @@ echo >>
 echo <
 echo >>>
 echo <<<
+
+echo $USER",$PATH,$PWD
+echo "$USER",$PATH,$PWD"
