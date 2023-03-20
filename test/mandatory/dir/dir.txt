@@ -1,7 +1,8 @@
 pwd
 cd;pwd@cd
+cd ~;cd non_exist@cd non_exist
 cd ..;pwd@cd ..
-cd -;pwd@cd -
+cd ~;pwd@cd ~
 cd ..;cd ~;pwd@cd ~
 cd .
 #mkdir testdirtest &> /dev/null;chmod 000 testdirtest &> /dev/null

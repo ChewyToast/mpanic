@@ -94,8 +94,10 @@ cat < nonexist@cat < nonexist
 cat < $USER@cat < $USER
 cat < file3@cat < file3 (no permision)
 
+# chmod 666 file3 &> /dev/null
+
 # rm file file2 file3 &> /dev/null
 
-# echo hi, I am the file > file &> /dev/null
+# echo hi, I am the file > file
 
-< file cat > file2 2> error_outp < non_exist;cat file;cat error_outp;rm file file2 error_outp@< file cat > file2 2> error_outp < non_exist
+@< file cat > file2 2> error_outp < non_exist;cat file;cat error_outp;rm file file2 error_outp@< file cat > file2 2> error_outp < non_exist

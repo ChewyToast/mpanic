@@ -1,3 +1,4 @@
+~
 echo hi~
 echo ~
 echo ~$USER

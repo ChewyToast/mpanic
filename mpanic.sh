@@ -62,7 +62,7 @@
 			printf "  To see full failure traces -> ${3}\n"
 		else
 			rm -rf ${3} &> /dev/null
-			printf "${BLUE}\n\n  All test passed successfully!! 🎉\n\n"
+			printf "${BLUE}\n\n  All ${4} test passed successfully!!\n\n"
 		fi
 	}
 
@@ -281,7 +281,7 @@
 		if [ ${TESTER_MODE} == "bonus" ]; then
 			main_test_call "bonus/echo/echo.txt" "exec_function" "traces/echo_trace.txt"
 		fi
-		print_end_tests "${EOK}" "${ESF}" "traces/echo_trace.txt"
+		print_end_tests "${EOK}" "${ESF}" "traces/echo_trace.txt" "echo"
 		TTECHO="1";
 		printf "${BLUE}\n|============================================================|\n\n\n${DEF_COLOR}"
 	}
@@ -300,7 +300,7 @@
 		if [ ${TESTER_MODE} == "bonus" ]; then
 			main_test_call "bonus/export/export.txt" "exec_function" "traces/export_trace.txt"
 		fi
-		print_end_tests "${EOK}" "${ESF}" "traces/export_trace.txt"
+		print_end_tests "${EOK}" "${ESF}" "traces/export_trace.txt" "export"
 		TTEXPORT="1";
 		printf "${BLUE}\n|============================================================|\n\n\n${DEF_COLOR}"
 	}
@@ -319,7 +319,7 @@
 		if [ ${TESTER_MODE} == "bonus" ]; then
 			main_test_call "bonus/env/env.txt" "exec_function" "traces/env_trace.txt"
 		fi
-		print_end_tests "${EOK}" "${ESF}" "traces/env_trace.txt"
+		print_end_tests "${EOK}" "${ESF}" "traces/env_trace.txt" "env"
 		TTENV="1";
 		printf "${BLUE}\n|============================================================|\n\n\n${DEF_COLOR}"
 	}
@@ -338,7 +338,7 @@
 		if [ ${TESTER_MODE} == "bonus" ]; then
 			main_test_call "bonus/exit/exit.txt" "exec_function" "traces/exit_trace.txt"
 		fi
-		print_end_tests "${EOK}" "${ESF}" "traces/exit_trace.txt"
+		print_end_tests "${EOK}" "${ESF}" "traces/exit_trace.txt" "exit"
 		TTEXIT="1";
 		printf "${BLUE}\n|============================================================|\n\n\n${DEF_COLOR}"
 	}
@@ -357,7 +357,7 @@
 		if [ ${TESTER_MODE} == "bonus" ]; then
 			main_test_call "bonus/dir/dir.txt" "exec_function" "traces/directory_trace.txt"
 		fi
-		print_end_tests "${EOK}" "${ESF}" "traces/directory_trace.txt"
+		print_end_tests "${EOK}" "${ESF}" "traces/directory_trace.txt" "directory"
 		TTDIR="1";
 		printf "${BLUE}\n|============================================================|\n\n\n${DEF_COLOR}"
 	}
@@ -404,7 +404,7 @@
 			printf ${BLUE}"\n\n|------------------------{ operators }\n\n"${DEF_COLOR}
 			main_test_call "bonus/parser/operators.txt" "exec_function" "traces/parse/syntax_error_trace.txt"
 		fi
-		print_end_tests "${EOK}" "${ESF}" "traces/parse/*.txt"
+		print_end_tests "${EOK}" "${ESF}" "traces/parse/*.txt" "parser"
 		TTPARSER="1";
 		printf "${BLUE}\n|============================================================|\n\n\n${DEF_COLOR}"
 	}
@@ -423,7 +423,7 @@
 		if [ ${TESTER_MODE} == "bonus" ]; then
 			main_test_call "bonus/pipe/pipe.txt" "exec_function" "traces/pipes_trace.txt"
 		fi
-		print_end_tests "${EOK}" "${ESF}" "traces/pipes_trace.txt"
+		print_end_tests "${EOK}" "${ESF}" "traces/pipes_trace.txt" "pipe"
 		TTPIPE="1";
 		printf "${BLUE}\n|============================================================|\n\n\n${DEF_COLOR}"
 	}
@@ -442,7 +442,7 @@
 		if [ ${TESTER_MODE} == "bonus" ]; then
 			main_test_call "bonus/redirection/redirection.txt" "exec_function" "traces/redirection_trace.txt"
 		fi
-		print_end_tests "${EOK}" "${ESF}" "traces/redirection_trace.txt"
+		print_end_tests "${EOK}" "${ESF}" "traces/redirection_trace.txt" "redirection"
 		TTREDIRECT="1";
 		printf "${BLUE}\n|============================================================|\n\n\n${DEF_COLOR}"
 	}
@@ -461,7 +461,7 @@
 		if [ ${TESTER_MODE} == "bonus" ]; then
 			main_test_call "bonus/status/status.txt" "exec_function" "traces/status_trace.txt"
 		fi
-		print_end_tests "${EOK}" "${ESF}" "traces/status_trace.txt"
+		print_end_tests "${EOK}" "${ESF}" "traces/status_trace.txt" "status"
 		TTSTATUS="1";
 		printf "${BLUE}\n|============================================================|\n\n\n${DEF_COLOR}"
 	}
@@ -551,7 +551,7 @@
 	print_color ${GRAY} "\033[2K\r\n Compilation done\n"
 	echo "exit" > .tmp/exec_read.txt
 	< .tmp/exec_read.txt ./minishell &> .tmp/start.txt
-	printf ${BLUE}"\n CARE!\n This tester doesnt work if ur readline prompt have newline\n"${DEF_COLOR}
+	printf ${BLUE}"\n CARE!\n This tester does not work if your prompt has a new line\n or changes during execution.\n"${DEF_COLOR}
 
 #
 
@@ -656,7 +656,7 @@
 #
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  ENDER
-	printf "${RED}\n\tmore test comming soon...👹${DEF_COLOR}\n\n"
+	# printf "${RED}\n\tmore test comming soon...👹${DEF_COLOR}\n\n"
 	printf "${BLUE}  Any issue send via slack bmoll-pe, arebelo or ailopez-o\n\n${DEF_COLOR}"
 	rm -rf .errors
 	rm -rf cleaner
