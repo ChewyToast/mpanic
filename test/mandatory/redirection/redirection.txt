@@ -64,7 +64,7 @@ echo hi 2> testfolder
 echo hi 2>> testfolder
 
 # chmod 666 testfolder &> /dev/null
-# rm testfolder &> /dev/null
+# rm -rf testfolder &> /dev/null
 
 # touch file &> /dev/null && touch file2 &> /dev/null && touch file3 &> /dev/null
 # chmod 000 file &> /dev/null && chmod 000 file2 &> /dev/null && chmod 000 file3 &> /dev/null

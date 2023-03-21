@@ -1,11 +1,6 @@
-echo 'AH\'
-echo "AH\"
-echo "\\""
-echo "\""
-echo "\$"
-echo "\\"
-echo "\a"
-echo "\A"
-echo "&&"
-echo "||"
+echo "&&"  echo hi
+echo "&&"  echo hi
+echo "||"  echo hi
+echo "|"|  echo hi
+echo " |"|  echo hi
 echo "()|&&))("
