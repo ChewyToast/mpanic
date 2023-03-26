@@ -13,7 +13,7 @@
 
 ## Description
 
-The mpanic tester has been developed to help you throught the process of testing your minishell. There are some other test in GitHub, but mpanic is quite special for two importante features:
+The mpanic tester has been developed to help you throught the process of testing your minishell. There are some other test in GitHub, but mpanic is quite special for two important features:
 
 - You dont need to modify your minishell to work with -C flag. Mpanic is able to catch your minishell exit and test agains bash.
 - We have develop kind of pseoudo-code to give you the ability to add your own test without going deep in the code, just modifying the txt files of the test.
@@ -40,9 +40,5 @@ Execute the script. First time you execute MPANIC, you get all the options you h
 </p>
 
 
-## Commands to test 🕹
 
-https://github.com/ChewyToast/minishell_panic/blob/main/to_test/aitor.txt
-https://github.com/ChewyToast/minishell_panic/blob/main/to_test/bruno.txt
-https://github.com/ChewyToast/minishell_panic/blob/main/to_test/gerard.txt
-https://github.com/ChewyToast/minishell_panic/blob/main/to_test/sebas.txt
+
