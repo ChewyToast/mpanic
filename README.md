@@ -30,10 +30,15 @@ Change the permissions of the script
 ```bash
 chmod 777 ./mpanic.sh
 ```
-Execute the script
+Execute the script. First time you execute MPANIC, you get all the options you have to execute the test
 ```bash
 ./mpanic
 ```
+
+<p align="center">
+	<img src="https://github.com/ChewyToast/mpanic/blob/main/.img/mpanic_ini.png?raw=true" />
+</p>
+
 
 ## Commands to test 🕹
 
