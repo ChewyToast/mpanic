@@ -25,11 +25,14 @@
 		echo -e "\n${BLUE} Arguments:${DEF_COLOR}"
 		echo -e "\techo\t\tExecute the echo tests"
 		echo -e "\texport\t\tExecute the export tests"
+		echo -e "\tenv\t\tExecute the env tests"
 		echo -e "\texit\t\tExecute the exit tests"
+		echo -e "\tdirectory\tExecute the directory tests"
 		echo -e "\tparser\t\tExecute the parser tests"
 		echo -e "\tpipe\t\tExecute the pipe tests"
 		echo -e "\tredirection\tExecute the redirection tests"
 		echo -e "\tstatus\t\tExecute the exit status tests"
+		echo -e "\tyour\t\tExecute the exit status tests"
 		echo -e "\n${YELLOW} Examples:${DEF_COLOR}"
 		echo -e "\tmpanic.sh --help\tShow this help message"
 		echo -e "\tmpanic.sh -b echo\tExecute only the echo tests with bonus"
@@ -466,11 +469,27 @@
 		printf "${BLUE}\n|============================================================|\n\n\n${DEF_COLOR}"
 	}
 
+	function your_test_call()
+	{
+		if [ "$TTYOUR" != "" ]; then
+			return ;
+		fi
+		EOK="OK"
+		ESF=""
+		printf ${BLUE}"\n|=======================[ YOUR TESTS ]=======================|"${DEF_COLOR}
+		rm -rf traces/your_trace.txt &> /dev/null
+		print_in_traces "traces/your_trace.txt"
+		main_test_call "your_tests.txt" "exec_function" "traces/your_trace.txt"
+		print_end_tests "${EOK}" "${ESF}" "traces/your_trace.txt" "your"
+		TTYOUR="1";
+		printf "${BLUE}\n|============================================================|\n\n\n${DEF_COLOR}"
+	}
+
 #
 
 #############################################################################
 
-# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  BANNER
+# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  PARSER
 
 	if [[ "$(ls -la)" != *".timmer"* ]]; then
 		touch .timmer
@@ -488,7 +507,7 @@
 		case "$arg" in
 			"-h"|"--help") print_helper ;;
 			"-i"|"--ignore") IGNORE="1" ;;
-			"echo"|"export"|"exit"|"parser"|"pipe"|"redirection"|"status"|"env"|"directory") ;;
+			"echo"|"export"|"exit"|"parser"|"pipe"|"redirection"|"status"|"env"|"directory"|"your") ;;
 			"-b"|"--bonus") TESTER_MODE="bonus" ;;
 			*) printf "\n Invalid argument:"${DEF_COLOR}" $arg\n Type "${BLUE}"--help"${DEF_COLOR}" to see the valid options\n\n"${DEF_COLOR} && exit 1 ;;
 		esac
@@ -587,6 +606,8 @@
 		TTREDIRECT=""
 	# Status done
 		TTSTATUS=""
+	# Status done
+		TTYOUR=""
 #
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  EXECUTOR
@@ -604,6 +625,7 @@
 				"pipe") TTPIPE="1";;
 				"redirection") TTREDIRECT="1";;
 				"status") TTSTATUS="1";;
+				"your") TTYOUR="1";;
 			esac
 		done
 			echo_test_call;
@@ -615,6 +637,7 @@
 			pipe_test_call;
 			redirection_test_call;
 			status_test_call;
+			your_test_call;
 	else
 		if [[ "$#" == "1" && ( "$1" == "-b" || "$1" == "--bonus" ) ]]; then
 			echo_test_call;
@@ -626,6 +649,7 @@
 			pipe_test_call;
 			redirection_test_call;
 			status_test_call;
+			your_test_call;
 		elif [[ "$#" != "0" ]]; then
 			for arg in "$@"
 			do
@@ -639,6 +663,7 @@
 					"pipe") pipe_test_call;;
 					"redirection") redirection_test_call;;
 					"status") status_test_call;;
+					"your") your_test_call;;
 				esac
 			done
 		else
@@ -651,6 +676,7 @@
 			pipe_test_call;
 			redirection_test_call;
 			status_test_call;
+			your_test_call;
 		fi
 	fi
 #
