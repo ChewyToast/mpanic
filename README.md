@@ -36,7 +36,8 @@ Execute the script. First time you execute MPANIC, you get all the options you h
 ```
 
 <p align="center">
-	<img src="https://github.com/ChewyToast/mpanic/blob/main/.img/mpanic_usage.png?raw=true" />
+	<br>
+	<img src="https://github.com/ChewyToast/mpanic/blob/main/.img/mpanic_usage.png?raw=true" style="width:65%"/>
 </p>
 
 
