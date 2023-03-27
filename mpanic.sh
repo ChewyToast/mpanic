@@ -612,6 +612,7 @@
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  EXECUTOR
 
+	rm ./traces/correct_log.txt
 	if [[ $IGNORE == "1" ]]; then
 		for arg in "$@"
 		do
