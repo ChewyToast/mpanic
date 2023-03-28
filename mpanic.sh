@@ -2,15 +2,16 @@
 
 # Colors
 	DEF_COLOR='\033[0;39m'
-	GRAY='\033[0;90m'
+	BLUE='\033[0;90m'
 	RED='\033[0;91m'
 	GREEN='\033[0;92m'
 	YELLOW='\033[0;93m'
-	BLUE='\033[0;94m'
+	# BLUE='\033[0;94m'
 	MAGENTA='\033[0;95m'
 	CYAN='\033[0;96m'
 	WHITE='\033[0;97m'
 	MAIN_COLOR='\033[0;96m'
+	UNDER='\033[48:5:91m'
 #
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  UTILS
@@ -113,6 +114,7 @@
 
 	function	print_test_result()
 	{
+		CLL=${BLUE}
 		if [ "${#i}" == "1" ]; then
 			print_color ${BLUE} "  ${i}.   [${DEF_COLOR}"
 		else
@@ -126,15 +128,18 @@
 		fi
 		if [ "$ret" == "1" ]; then
 			printf "${GREEN}OK${DEF_COLOR}"
+			CLL=${GREEN}
 		else
 			if [ "$ret" == "0" ]; then
 				printf "${RED}KO${DEF_COLOR}"
+				CLL=${RED}
 			else
-				printf "${YELLOW}SF${DEF_COLOR}"
+				printf "${YELLOW}${UNDER}SF${DEF_COLOR}"
+				CLL=${YELLOW}
 			fi
 		fi
 		print_color ${BLUE} "] - |"
-		printf ${BLUE};
+		printf ${CLL};
 		if [ "$2" ]; then
 			printf "$2";
 		else
@@ -517,9 +522,9 @@
 		print_helper;
 	fi
 
-	printf ${MAIN_COLOR}"\n\t\t    -----------------------"${DEF_COLOR};
-	printf ${MAIN_COLOR}"\n\t\t   | 👹 MINISHELL PANIC 👹 |\n"${DEF_COLOR};
-	printf ${MAIN_COLOR}"\t\t    -----------------------\n\n"${DEF_COLOR};
+	printf ${CYAN}"\n\t\t    -----------------------"${DEF_COLOR};
+	printf ${CYAN}"\n\t\t   | 👹 MINISHELL PANIC 👹 |\n"${DEF_COLOR};
+	printf ${CYAN}"\t\t    -----------------------\n\n"${DEF_COLOR};
 
 #
 
