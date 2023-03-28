@@ -1,29 +1,24 @@
 #!/bin/bash
 
 # Colors
+	MAIN_COLOR='\033[0;97m'
 	DEF_COLOR='\033[0;39m'
-	BLUE='\033[0;90m'
 	RED='\033[0;91m'
 	GREEN='\033[0;92m'
 	YELLOW='\033[0;93m'
-	# BLUE='\033[0;94m'
-	MAGENTA='\033[0;95m'
 	CYAN='\033[0;96m'
-	WHITE='\033[0;97m'
-	MAIN_COLOR='\033[0;96m'
-	UNDER='\033[0;37;41m'
 #
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  UTILS
 
 	function	print_helper()
 	{
-		echo -e "\n${BLUE} Usage:${DEF_COLOR} bash mpanic.sh [options] [arguments]\n"
-		echo -e "${BLUE} Options:${DEF_COLOR}"
+		echo -e "\n${MAIN_COLOR} Usage:${DEF_COLOR} bash mpanic.sh [options] [arguments]\n"
+		echo -e "${MAIN_COLOR} Options:${DEF_COLOR}"
 		echo -e "\t-h --help\tShow this help message"
 		echo -e "\t-b --bonus\tWill execute the tester with bonus tests"
 		echo -e "\t-i --ignore\tWill run all tests except those specified by argument\n\t\t\t(compatible with bonus option)"
-		echo -e "\n${BLUE} Arguments:${DEF_COLOR}"
+		echo -e "\n${MAIN_COLOR} Arguments:${DEF_COLOR}"
 		echo -e "\techo\t\tExecute the echo tests"
 		echo -e "\texport\t\tExecute the export tests"
 		echo -e "\tenv\t\tExecute the env tests"
@@ -53,26 +48,28 @@
 		echo "*                                                            *" >> ${1}
 		echo "**************************************************************" >> ${1}
 		echo "" >> ${1}
-		printf ${BLUE}"\n\n\n"${DEF_COLOR}
+		printf ${MAIN_COLOR}"\n\n\n"${DEF_COLOR}
 	}
 
 	function	print_end_tests()
 	{
 		if [ "${1}" == "KO" ]; then
-			printf "${BLUE}\n\n  It seems that there are some tests that have not passed...\n\n"
+			printf "${MAIN_COLOR}\n\n  It seems that there are some tests that have not passed..."
 			if [ "$ESF" != "" ]; then
-				printf "  and your minishell gives ${RED}segmentation fault${BLUE} at tests:\n  [${2}]\n\n"
+				printf "\n  and your minishell gives ${RED}segmentation fault${MAIN_COLOR} at tests:\n  [${2} ]"
 			fi
-			printf "  To see full failure traces -> ${3}\n"
+			printf "\n\n  To see full failure traces -> ${3}\n"
 		else
 			rm -rf ${3} &> /dev/null
-			printf "${BLUE}\n\n  All ${4} test passed successfully!!\n\n"
+			printf "${MAIN_COLOR}\n\n  All ${4} test passed successfully!!"
 		fi
+		printf "\n"
 	}
 
 	function	clean_exit()
 	{
 		rm -rf .errors
+		rm -rf cleaner
 		rm -rf .tmp
 		rm -rf minishell
 		exit
@@ -114,15 +111,15 @@
 
 	function	print_test_result()
 	{
-		CLL=${BLUE}
+		CLL=${MAIN_COLOR}
 		if [ "${#i}" == "1" ]; then
-			print_color ${BLUE} "  ${i}.   [${DEF_COLOR}"
+			print_color ${MAIN_COLOR} "  ${i}.   [${DEF_COLOR}"
 		else
 			if [ "${#i}" == "2" ]; then
-				print_color ${BLUE} "  ${i}.  [${DEF_COLOR}"
+				print_color ${MAIN_COLOR} "  ${i}.  [${DEF_COLOR}"
 			else
 				if [ "${#i}" == "3" ]; then
-					print_color ${BLUE} "  ${i}. [${DEF_COLOR}"
+					print_color ${MAIN_COLOR} "  ${i}. [${DEF_COLOR}"
 				fi
 			fi
 		fi
@@ -143,14 +140,14 @@
 				fi
 			fi
 		fi
-		print_color ${BLUE} "] - |"
+		print_color ${MAIN_COLOR} "] - |"
 		printf ${CLL};
 		if [ "$2" ]; then
 			printf "$2";
 		else
 			printf "$1";
 		fi
-		printf "${BLUE}|${DEF_COLOR}";
+		printf "${MAIN_COLOR}|${DEF_COLOR}";
 		if [ "$ret" == "3" ]; then
 			printf "${RED} <--- SF!${DEF_COLOR}\n";
 		else
@@ -219,7 +216,6 @@
 		python3 err_cleaner.py
 		BASH_STDOUTP=$(cat -e .tmp/bash_outp.txt)
 		BASH_ERROUTP=$(cat -e .tmp/bash_error_outp.txt)
-		# BASH_ERROUTP_CUT=${BASH_ERROUTP:18:${#BASH_ERROUTP}}
 		BASH_ERROUTP_CUT=$(cat .tmp/bash_error_outp_clean.txt)
 
 		std_condition=$( [[ "${MINI_STDOUTP}" == "${BASH_STDOUTP}" ]] && echo "true" || echo "false" )
@@ -229,6 +225,7 @@
 			{ ./minishell; } < ${2} &> .tmp/exec_other_outp.txt
 			ret=3
 			EOK="KO"
+			ESF="${ESK} ${i}"
 			SF_TMP=$(cat .tmp/exec_other_outp.txt | sed -e "1d")
 			trace_printer "${1}" "${i}" "$(cat ${2})" "${ES2}" "${BASH_STDOUTP}" "${BASH_ERROUTP}" "${ES1}" "${MINI_STDOUTP}" "${MINI_ERROUTP}" "${SF_TMP}";
 		else
@@ -291,8 +288,7 @@
 		if [ "$TTECHO" != "" ]; then
 			return ;
 		fi
-		printf ${BLUE}"\n|==========================[ ECHO ]==========================|"${DEF_COLOR}
-		rm -rf traces/echo_trace.txt &> /dev/null
+		printf ${MAIN_COLOR}"\n|==========================[ ECHO ]==========================|"${DEF_COLOR}
 		print_in_traces "traces/echo_trace.txt"
 		main_test_call "mandatory/echo/echo.txt" "exec_function" "traces/echo_trace.txt"
 		if [ ${TESTER_MODE} == "bonus" ]; then
@@ -300,7 +296,7 @@
 		fi
 		print_end_tests "${EOK}" "${ESF}" "traces/echo_trace.txt" "echo"
 		TTECHO="1";
-		printf "${BLUE}\n|============================================================|\n\n\n${DEF_COLOR}"
+		# printf "${MAIN_COLOR}\n|============================================================|\n\n\n${DEF_COLOR}"
 	}
 
 	function export_test_call()
@@ -310,8 +306,7 @@
 		fi
 		EOK="OK"
 		ESF=""
-		printf ${BLUE}"\n|=========================[ EXPORT ]=========================|"${DEF_COLOR}
-		rm -rf traces/export_trace.txt &> /dev/null
+		printf ${MAIN_COLOR}"\n|=========================[ EXPORT ]=========================|"${DEF_COLOR}
 		print_in_traces "traces/export_trace.txt"
 		main_test_call "mandatory/export/export.txt" "exec_function" "traces/export_trace.txt"
 		if [ ${TESTER_MODE} == "bonus" ]; then
@@ -319,7 +314,7 @@
 		fi
 		print_end_tests "${EOK}" "${ESF}" "traces/export_trace.txt" "export"
 		TTEXPORT="1";
-		printf "${BLUE}\n|============================================================|\n\n\n${DEF_COLOR}"
+		# printf "${MAIN_COLOR}\n|============================================================|\n\n\n${DEF_COLOR}"
 	}
 
 	function env_test_call()
@@ -329,8 +324,7 @@
 		fi
 		EOK="OK"
 		ESF=""
-		printf ${BLUE}"\n|===========================[ ENV ]==========================|"${DEF_COLOR}
-		rm -rf traces/env_trace.txt &> /dev/null
+		printf ${MAIN_COLOR}"\n|===========================[ ENV ]==========================|"${DEF_COLOR}
 		print_in_traces "traces/env_trace.txt"
 		main_test_call "mandatory/env/env.txt" "exec_function" "traces/env_trace.txt"
 		if [ ${TESTER_MODE} == "bonus" ]; then
@@ -338,7 +332,7 @@
 		fi
 		print_end_tests "${EOK}" "${ESF}" "traces/env_trace.txt" "env"
 		TTENV="1";
-		printf "${BLUE}\n|============================================================|\n\n\n${DEF_COLOR}"
+		# printf "${MAIN_COLOR}\n|============================================================|\n\n\n${DEF_COLOR}"
 	}
 
 	function exit_test_call()
@@ -348,8 +342,7 @@
 		fi
 		EOK="OK"
 		ESF=""
-		printf ${BLUE}"\n|==========================[ EXIT ]==========================|"${DEF_COLOR}
-		rm -rf traces/exit_trace.txt &> /dev/null
+		printf ${MAIN_COLOR}"\n|==========================[ EXIT ]==========================|"${DEF_COLOR}
 		print_in_traces "traces/exit_trace.txt"
 		main_test_call "mandatory/exit/exit.txt" "exec_function" "traces/exit_trace.txt"
 		if [ ${TESTER_MODE} == "bonus" ]; then
@@ -357,7 +350,7 @@
 		fi
 		print_end_tests "${EOK}" "${ESF}" "traces/exit_trace.txt" "exit"
 		TTEXIT="1";
-		printf "${BLUE}\n|============================================================|\n\n\n${DEF_COLOR}"
+		# printf "${MAIN_COLOR}\n|============================================================|\n\n\n${DEF_COLOR}"
 	}
 
 	function directory_test_call()
@@ -367,8 +360,7 @@
 		fi
 		EOK="OK"
 		ESF=""
-		printf ${BLUE}"\n|========================[ DIRECTORY ]=======================|"${DEF_COLOR}
-		rm -rf traces/directory_trace.txt &> /dev/null
+		printf ${MAIN_COLOR}"\n|========================[ DIRECTORY ]=======================|"${DEF_COLOR}
 		print_in_traces "traces/directory_trace.txt"
 		main_test_call "mandatory/dir/dir.txt" "exec_function" "traces/directory_trace.txt"
 		if [ ${TESTER_MODE} == "bonus" ]; then
@@ -376,7 +368,7 @@
 		fi
 		print_end_tests "${EOK}" "${ESF}" "traces/directory_trace.txt" "directory"
 		TTDIR="1";
-		printf "${BLUE}\n|============================================================|\n\n\n${DEF_COLOR}"
+		# printf "${MAIN_COLOR}\n|============================================================|\n\n\n${DEF_COLOR}"
 	}
 
 	function parser_test_call()
@@ -386,44 +378,43 @@
 		fi
 		EOK="OK"
 		ESF=""
-		printf ${BLUE}"\n|=========================[ PARSER ]=========================|"${DEF_COLOR}
-		rm -rf traces/parse &> /dev/null
+		printf ${MAIN_COLOR}"\n|=========================[ PARSER ]=========================|"${DEF_COLOR}
 		mkdir traces/parse &> /dev/null
 		print_in_traces "traces/parse/dollar_trace.txt" &> /dev/null
 		print_in_traces "traces/parse/quotes_trace.txt" &> /dev/null
 		print_in_traces "traces/parse/spaces_trace.txt" &> /dev/null
 		print_in_traces "traces/parse/tilde_trace.txt" &> /dev/null
 		print_in_traces "traces/parse/syntax_error_trace.txt" &> /dev/null
-		printf ${BLUE}"\n\n|------------------------{ dollars }\n\n"${DEF_COLOR}
+		printf ${MAIN_COLOR}"\n\n|------------------------{ dollars }\n\n"${DEF_COLOR}
 		main_test_call "mandatory/parser/dollar.txt" "exec_function" "traces/parse/dollar_trace.txt"
 		if [ ${TESTER_MODE} == "bonus" ]; then
 			main_test_call "bonus/parser/dollar.txt" "exec_function" "traces/parse/dollar_trace.txt"
 		fi
-		printf ${BLUE}"\n\n|------------------------{ quotes }\n\n"${DEF_COLOR}
+		printf ${MAIN_COLOR}"\n\n|------------------------{ quotes }\n\n"${DEF_COLOR}
 		main_test_call "mandatory/parser/quotes.txt" "exec_function" "traces/parse/quotes_trace.txt"
 		if [ ${TESTER_MODE} == "bonus" ]; then
 			main_test_call "bonus/parser/quotes.txt" "exec_function" "traces/parse/quotes_trace.txt"
 		fi
-		printf ${BLUE}"\n\n|------------------------{ spaces }\n\n"${DEF_COLOR}
+		printf ${MAIN_COLOR}"\n\n|------------------------{ spaces }\n\n"${DEF_COLOR}
 		main_test_call "mandatory/parser/spaces.txt" "exec_function" "traces/parse/spaces_trace.txt"
 		if [ ${TESTER_MODE} == "bonus" ]; then
 			main_test_call "bonus/parser/spaces.txt" "exec_function" "traces/parse/spaces_trace.txt"
 		fi
-		printf ${BLUE}"\n\n|------------------------{ tilde }\n\n"${DEF_COLOR}
+		printf ${MAIN_COLOR}"\n\n|------------------------{ tilde }\n\n"${DEF_COLOR}
 		main_test_call "mandatory/parser/tilde.txt" "exec_function" "traces/parse/tilde_trace.txt"
 		if [ ${TESTER_MODE} == "bonus" ]; then
 			main_test_call "bonus/parser/tilde.txt" "exec_function" "traces/parse/tilde_trace.txt"
 		fi
-		printf ${BLUE}"\n\n|------------------------{ syntax_error }\n\n"${DEF_COLOR}
+		printf ${MAIN_COLOR}"\n\n|------------------------{ syntax_error }\n\n"${DEF_COLOR}
 		main_test_call "mandatory/parser/syntax_error.txt" "exec_function" "traces/parse/syntax_error_trace.txt"
 		if [ ${TESTER_MODE} == "bonus" ]; then
-			main_test_call "bonus/parser/syntax_error.txt" "exec_function" "traces/parse/syntax_error_trace.txt"
-			printf ${BLUE}"\n\n|------------------------{ operators }\n\n"${DEF_COLOR}
-			main_test_call "bonus/parser/operators.txt" "exec_function" "traces/parse/syntax_error_trace.txt"
+			main_test_call "bonus/parser/syntax_error.txt" "exec_function" "traces/parse/operators_trace.txt"
+			printf ${MAIN_COLOR}"\n\n|------------------------{ operators }\n\n"${DEF_COLOR}
+			main_test_call "bonus/parser/operators.txt" "exec_function" "traces/parse/operators_trace.txt"
 		fi
 		print_end_tests "${EOK}" "${ESF}" "traces/parse/*.txt" "parser"
 		TTPARSER="1";
-		printf "${BLUE}\n|============================================================|\n\n\n${DEF_COLOR}"
+		# printf "${MAIN_COLOR}\n|============================================================|\n\n\n${DEF_COLOR}"
 	}
 
 	function pipe_test_call()
@@ -433,8 +424,7 @@
 		fi
 		EOK="OK"
 		ESF=""
-		printf ${BLUE}"\n|==========================[ PIPES ]=========================|"${DEF_COLOR}
-		rm -rf traces/pipes_trace.txt &> /dev/null
+		printf ${MAIN_COLOR}"\n|==========================[ PIPES ]=========================|"${DEF_COLOR}
 		print_in_traces "traces/pipes_trace.txt"
 		main_test_call "mandatory/pipe/pipe.txt" "exec_function" "traces/pipes_trace.txt"
 		if [ ${TESTER_MODE} == "bonus" ]; then
@@ -442,7 +432,7 @@
 		fi
 		print_end_tests "${EOK}" "${ESF}" "traces/pipes_trace.txt" "pipe"
 		TTPIPE="1";
-		printf "${BLUE}\n|============================================================|\n\n\n${DEF_COLOR}"
+		# printf "${MAIN_COLOR}\n|============================================================|\n\n\n${DEF_COLOR}"
 	}
 
 	function redirection_test_call()
@@ -452,8 +442,7 @@
 		fi
 		EOK="OK"
 		ESF=""
-		printf ${BLUE}"\n|======================[ REDIRECTIONS ]======================|"${DEF_COLOR}
-		rm -rf traces/redirection_trace.txt &> /dev/null
+		printf ${MAIN_COLOR}"\n|======================[ REDIRECTIONS ]======================|"${DEF_COLOR}
 		print_in_traces "traces/pipes_trace.txt"
 		main_test_call "mandatory/redirection/redirection.txt" "exec_function" "traces/redirection_trace.txt"
 		if [ ${TESTER_MODE} == "bonus" ]; then
@@ -461,7 +450,7 @@
 		fi
 		print_end_tests "${EOK}" "${ESF}" "traces/redirection_trace.txt" "redirection"
 		TTREDIRECT="1";
-		printf "${BLUE}\n|============================================================|\n\n\n${DEF_COLOR}"
+		# printf "${MAIN_COLOR}\n|============================================================|\n\n\n${DEF_COLOR}"
 	}
 
 	function status_test_call()
@@ -471,8 +460,7 @@
 		fi
 		EOK="OK"
 		ESF=""
-		printf ${BLUE}"\n|=========================[ STATUS ]=========================|"${DEF_COLOR}
-		rm -rf traces/status_trace.txt &> /dev/null
+		printf ${MAIN_COLOR}"\n|=========================[ STATUS ]=========================|"${DEF_COLOR}
 		print_in_traces "traces/pipes_trace.txt"
 		main_test_call "mandatory/status/status.txt" "exec_function" "traces/status_trace.txt"
 		if [ ${TESTER_MODE} == "bonus" ]; then
@@ -480,7 +468,7 @@
 		fi
 		print_end_tests "${EOK}" "${ESF}" "traces/status_trace.txt" "status"
 		TTSTATUS="1";
-		printf "${BLUE}\n|============================================================|\n\n\n${DEF_COLOR}"
+		# printf "${MAIN_COLOR}\n|============================================================|\n\n\n${DEF_COLOR}"
 	}
 
 	function your_test_call()
@@ -490,13 +478,12 @@
 		fi
 		EOK="OK"
 		ESF=""
-		printf ${BLUE}"\n|=======================[ YOUR TESTS ]=======================|"${DEF_COLOR}
-		rm -rf traces/your_trace.txt &> /dev/null
+		printf ${MAIN_COLOR}"\n|=======================[ YOUR TESTS ]=======================|"${DEF_COLOR}
 		print_in_traces "traces/your_trace.txt"
 		main_test_call "your_tests.txt" "exec_function" "traces/your_trace.txt"
 		print_end_tests "${EOK}" "${ESF}" "traces/your_trace.txt" "your"
 		TTYOUR="1";
-		printf "${BLUE}\n|============================================================|\n\n\n${DEF_COLOR}"
+		# printf "${MAIN_COLOR}\n|============================================================|\n\n\n${DEF_COLOR}"
 	}
 
 #
@@ -523,7 +510,7 @@
 			"-i"|"--ignore") IGNORE="1" ;;
 			"echo"|"export"|"exit"|"parser"|"pipe"|"redirection"|"status"|"env"|"directory"|"your") ;;
 			"-b"|"--bonus") TESTER_MODE="bonus" ;;
-			*) printf "\n Invalid argument:"${DEF_COLOR}" $arg\n Type "${BLUE}"--help"${DEF_COLOR}" to see the valid options\n\n"${DEF_COLOR} && exit 1 ;;
+			*) printf "\n Invalid argument:"${DEF_COLOR}" $arg\n Type "${MAIN_COLOR}"--help"${DEF_COLOR}" to see the valid options\n\n"${DEF_COLOR} && exit 1 ;;
 		esac
 	done
 
@@ -582,9 +569,11 @@
 		chmod 777 minishell &> /dev/null
 	fi
 	print_color ${GRAY} "\033[2K\r\n Compilation done\n"
+	rm -rf traces/
+	mkdir traces/
 	echo "exit" > .tmp/exec_read.txt
 	< .tmp/exec_read.txt ./minishell &> .tmp/start.txt
-	printf ${BLUE}"\n CARE!\n This tester does not work if your prompt has a new line\n or changes during execution.\n"${DEF_COLOR}
+	printf ${MAIN_COLOR}"\n CARE!\n This tester does not work if your prompt has a new line\n or changes during execution.\n"${DEF_COLOR}
 
 #
 
@@ -594,6 +583,14 @@
 		size_prom_cat_exit=${#prmp}
 		size_prom=$(($size_prom_cat_exit - 5))
 		PRMP=$(echo "$prmp" | cut -c 1-$size_prom)
+	# SUMARY TEXT
+		SUMARY=""
+	# SUMARY OK COUNT
+		OK_COUNT=0
+	# SUMARY KO COUNT
+		KO_COUNT=0
+	# SUMARY SF COUNT
+		SF_COUNT=0
 	# TEST COUNTER
 		i=0
 	# TEST RESULT
@@ -626,7 +623,6 @@
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  EXECUTOR
 
-	rm ./traces/correct_log.txt
 	if [[ $IGNORE == "1" ]]; then
 		for arg in "$@"
 		do
@@ -698,13 +694,11 @@
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  ENDER
 	# printf "${RED}\n\tmore test comming soon...👹${DEF_COLOR}\n\n"
-	printf "${BLUE}  Any issue send via slack bmoll-pe, arebelo or ailopez-o\n\n${DEF_COLOR}"
-	rm -rf .errors
-	rm -rf cleaner
-	rm -rf .tmp
-	rm -rf minishell
+	printf "${MAIN_COLOR}\n|============================================================|\n\n${DEF_COLOR}"
+	printf "${SUMARY}\n"
+	printf "${MAIN_COLOR}  Any issue send via slack bmoll-pe, arebelo or ailopez-o\n\n${DEF_COLOR}"
 	printf ${DEF_COLOR};
-
+	clean_exit
 #
 
 #

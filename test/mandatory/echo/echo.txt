@@ -1,4 +1,5 @@
 echo
+echo ñ
 echo hi
 echo $PATH
 echo $NONEXIST

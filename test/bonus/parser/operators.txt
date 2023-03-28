@@ -3,7 +3,7 @@ echo hola &&echo adios
 echo hola && echo adios
 
 echo a&& b&&echo c&& echo k&& echo z
-echo a && echo b&& echo c &&echo d     &&   echo e   &&echo f&&        echo g
+echo a && echo b&& echo c &&echo d  &&   echo e   &&echo f&&   echo g@&& with spaces
 ls doesnotexists&& echo adios
 echo hola&& ls doesnotexists
 
@@ -15,7 +15,7 @@ echo a|| b||echo c|| echo k|| echo z
 ls doesnotexists || echo bonjour
 ls doesnotexists|| echo bonjour
 echo hola|| ls doesnotexists
-echo a || echo b|| echo c ||echo d     ||   echo e   ||echo f&&        echo g
+echo a || echo b|| echo c ||echo d     ||   echo e   ||echo f&&        echo g@|| with spaces
 
 (echo hola)
 (echo hola )
@@ -58,4 +58,4 @@ ls | ( cat -e && cat -n ) | cat -n
 export A=mivalor && echo $A
 (export A=mivalor) && echo $A
 export A=mivalor && (unset A) && echo$A
-echo hola | (cat -n | (cat -e && echo inception) && echo adios | (cat -n | (cat -e))) @ NOTA >> da syntax error y no deberia
+echo hola | (cat -n | (cat -e && echo inception) && echo adios | (cat -n | (cat -e))) @ mix () || && and &
