@@ -11,6 +11,5 @@ cd testdirtest;@cd testdirtest(no permision)
 #mkdir testdirtest &> /dev/null
 cd testdirtest;bash;cd .. && rm -rf testdirtest && exit;pwd;cd .;pwd@rm -rf actual dir and cd .
 #mkdir testdirtest &> /dev/null
-cd testdirtest;bash;cd .. && rm testdirtest && exit;pwd;cd .;pwd@rm actual dir and cd .
 cd 255chars255chars255chars255char255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars@cd maxpathlen
 cd 256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars@cd maxpathlen + 1

@@ -5,7 +5,7 @@ cat -e /etc/shells | cat -e | cat -e | head -c 10
 echo hola | cat
 echo hola | cat -e
 echo hola | cat -e | cat -n
-echo hola | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e
+echo hola | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e@echo hola with many pipes cat -e
 ls | cat -e
 ls -l | cat -e
 ls -l | cat -e | cat | cat | cat

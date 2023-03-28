@@ -11,7 +11,7 @@
 	CYAN='\033[0;96m'
 	WHITE='\033[0;97m'
 	MAIN_COLOR='\033[0;96m'
-	UNDER='\033[48:5:91m'
+	UNDER='\033[0;37;41m'
 #
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  UTILS
@@ -134,8 +134,13 @@
 				printf "${RED}KO${DEF_COLOR}"
 				CLL=${RED}
 			else
-				printf "${YELLOW}${UNDER}SF${DEF_COLOR}"
-				CLL=${YELLOW}
+				if [ "$ret" == "2" ]; then
+					printf "${YELLOW}OK${DEF_COLOR}"
+					CLL=${YELLOW}
+				else
+					printf "${RED}SF${DEF_COLOR}"
+					CLL=${RED}
+				fi
 			fi
 		fi
 		print_color ${BLUE} "] - |"
@@ -145,8 +150,12 @@
 		else
 			printf "$1";
 		fi
-		printf "${BLUE}|${DEF_COLOR}\n";
-
+		printf "${BLUE}|${DEF_COLOR}";
+		if [ "$ret" == "3" ]; then
+			printf "${RED} <--- SF!${DEF_COLOR}\n";
+		else
+			printf "\n";
+		fi
 	}
 
 #
@@ -218,14 +227,14 @@
 		es_condition=$( [[ "${ES1}" == "${ES2}" ]] && echo "true" || echo "false" )
 		if [ "${ES1}" == "139" ] || [ "${ES1}" == "134" ] || [ "${ES1}" == "136" ] || [ "${ES1}" == "137" ] || [ "${ES1}" == "138" ]; then
 			{ ./minishell; } < ${2} &> .tmp/exec_other_outp.txt
-			ret=2
+			ret=3
 			EOK="KO"
 			SF_TMP=$(cat .tmp/exec_other_outp.txt | sed -e "1d")
 			trace_printer "${1}" "${i}" "$(cat ${2})" "${ES2}" "${BASH_STDOUTP}" "${BASH_ERROUTP}" "${ES1}" "${MINI_STDOUTP}" "${MINI_ERROUTP}" "${SF_TMP}";
 		else
-			if [[ "${std_condition}" == "true" && "${err_condition}" == "true" && "${es_condition}" == "true" ]]; then
-				ret=1
+			if [[ "${std_condition}" == "true" && "${es_condition}" == "true" && "${err_condition}" == "true" ]]; then
 				trace_printer "traces/correct_log.txt" "${i}" "$(cat ${2})" "${ES2}" "${BASH_STDOUTP}" "${BASH_ERROUTP}" "${ES1}" "${MINI_STDOUTP}" "${MINI_ERROUTP}" "${SF_TMP}";
+				ret=1
 			else
 				ret=0
 				EOK="KO"

@@ -2,7 +2,7 @@ echo "~"ups
 echo '~'ups
 
 echo "'$'"
-echo "'$'"
+echo '"$"'
 
 echo "|$USER|"
 echo "|$USE|"
