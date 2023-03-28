@@ -172,7 +172,7 @@
 		echo "|--- STDERR:"
 		echo "|->$(cat -e .tmp/bash_error_outp.txt)<-"
 		echo "|--------------------------------"
-		echo "|--->FOUND (MINISHELL OUTP)  |  exit status: ($ES1)"$'\n'\|
+		echo "|  FOUND (MINISHELL OUTP)  |  exit status: ($ES1)"$'\n'\|
 		echo "|--- STDOUT:"
 		echo "|->$(cat .tmp/exec_outp.txt)<-"
 		echo "|"
