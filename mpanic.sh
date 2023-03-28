@@ -155,6 +155,11 @@
 		fi
 	}
 
+	function	add_summary()
+	{
+		printf -v SUMARY "%s\n  %-35s ${GREEN}%-5s${DEF_COLOR} ${RED}%-5s${DEF_COLOR} ${RED}%-5s${DEF_COLOR}" "${SUMARY}" "[${1}]" " ${2}" " ${3}" " ${4}"
+	}
+
 #
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  TESTS FUNCTIONS
@@ -223,6 +228,8 @@
 		es_condition=$( [[ "${ES1}" == "${ES2}" ]] && echo "true" || echo "false" )
 		if [ "${ES1}" == "139" ] || [ "${ES1}" == "134" ] || [ "${ES1}" == "136" ] || [ "${ES1}" == "137" ] || [ "${ES1}" == "138" ]; then
 			{ ./minishell; } < ${2} &> .tmp/exec_other_outp.txt
+			TOTAL_SF_COUNT=$((TOTAL_SF_COUNT+1))
+			SF_COUNT=$((SF_COUNT+1))
 			ret=3
 			EOK="KO"
 			ESF="${ESK} ${i}"
@@ -231,8 +238,12 @@
 		else
 			if [[ "${std_condition}" == "true" && "${es_condition}" == "true" && "${err_condition}" == "true" ]]; then
 				trace_printer "traces/correct_log.txt" "${i}" "$(cat ${2})" "${ES2}" "${BASH_STDOUTP}" "${BASH_ERROUTP}" "${ES1}" "${MINI_STDOUTP}" "${MINI_ERROUTP}" "${SF_TMP}";
+				TOTAL_OK_COUNT=$((TOTAL_OK_COUNT+1))
+				OK_COUNT=$((OK_COUNT+1))
 				ret=1
 			else
+				TOTAL_KO_COUNT=$((TOTAL_KO_COUNT+1))
+				KO_COUNT=$((KO_COUNT+1))
 				ret=0
 				EOK="KO"
 				trace_printer "${1}" "${i}" "$(cat ${2})" "${ES2}" "${BASH_STDOUTP}" "${BASH_ERROUTP}" "${ES1}" "${MINI_STDOUTP}" "${MINI_ERROUTP}" "${SF_TMP}";
@@ -288,12 +299,16 @@
 		if [ "$TTECHO" != "" ]; then
 			return ;
 		fi
+		OK_COUNT=0
+		KO_COUNT=0
+		SF_COUNT=0
 		printf ${MAIN_COLOR}"\n|==========================[ ECHO ]==========================|"${DEF_COLOR}
 		print_in_traces "traces/echo_trace.txt"
 		main_test_call "mandatory/echo/echo.txt" "exec_function" "traces/echo_trace.txt"
 		if [ ${TESTER_MODE} == "bonus" ]; then
 			main_test_call "bonus/echo/echo.txt" "exec_function" "traces/echo_trace.txt"
 		fi
+		add_summary "echo" "${OK_COUNT}" "${KO_COUNT}" "${SF_COUNT}"
 		print_end_tests "${EOK}" "${ESF}" "traces/echo_trace.txt" "echo"
 		TTECHO="1";
 		# printf "${MAIN_COLOR}\n|============================================================|\n\n\n${DEF_COLOR}"
@@ -304,6 +319,9 @@
 		if [ "$TTEXPORT" != "" ]; then
 			return ;
 		fi
+		OK_COUNT=0
+		KO_COUNT=0
+		SF_COUNT=0
 		EOK="OK"
 		ESF=""
 		printf ${MAIN_COLOR}"\n|=========================[ EXPORT ]=========================|"${DEF_COLOR}
@@ -312,6 +330,7 @@
 		if [ ${TESTER_MODE} == "bonus" ]; then
 			main_test_call "bonus/export/export.txt" "exec_function" "traces/export_trace.txt"
 		fi
+		add_summary "export" "${OK_COUNT}" "${KO_COUNT}" "${SF_COUNT}"
 		print_end_tests "${EOK}" "${ESF}" "traces/export_trace.txt" "export"
 		TTEXPORT="1";
 		# printf "${MAIN_COLOR}\n|============================================================|\n\n\n${DEF_COLOR}"
@@ -322,6 +341,9 @@
 		if [ "$TTENV" != "" ]; then
 			return ;
 		fi
+		OK_COUNT=0
+		KO_COUNT=0
+		SF_COUNT=0
 		EOK="OK"
 		ESF=""
 		printf ${MAIN_COLOR}"\n|===========================[ ENV ]==========================|"${DEF_COLOR}
@@ -330,6 +352,7 @@
 		if [ ${TESTER_MODE} == "bonus" ]; then
 			main_test_call "bonus/env/env.txt" "exec_function" "traces/env_trace.txt"
 		fi
+		add_summary "env" "${OK_COUNT}" "${KO_COUNT}" "${SF_COUNT}"
 		print_end_tests "${EOK}" "${ESF}" "traces/env_trace.txt" "env"
 		TTENV="1";
 		# printf "${MAIN_COLOR}\n|============================================================|\n\n\n${DEF_COLOR}"
@@ -340,6 +363,9 @@
 		if [ "$TTEXIT" != "" ]; then
 			return ;
 		fi
+		OK_COUNT=0
+		KO_COUNT=0
+		SF_COUNT=0
 		EOK="OK"
 		ESF=""
 		printf ${MAIN_COLOR}"\n|==========================[ EXIT ]==========================|"${DEF_COLOR}
@@ -348,6 +374,7 @@
 		if [ ${TESTER_MODE} == "bonus" ]; then
 			main_test_call "bonus/exit/exit.txt" "exec_function" "traces/exit_trace.txt"
 		fi
+		add_summary "exit" "${OK_COUNT}" "${KO_COUNT}" "${SF_COUNT}"
 		print_end_tests "${EOK}" "${ESF}" "traces/exit_trace.txt" "exit"
 		TTEXIT="1";
 		# printf "${MAIN_COLOR}\n|============================================================|\n\n\n${DEF_COLOR}"
@@ -358,6 +385,9 @@
 		if [ "$TTDIR" != "" ]; then
 			return ;
 		fi
+		OK_COUNT=0
+		KO_COUNT=0
+		SF_COUNT=0
 		EOK="OK"
 		ESF=""
 		printf ${MAIN_COLOR}"\n|========================[ DIRECTORY ]=======================|"${DEF_COLOR}
@@ -366,6 +396,7 @@
 		if [ ${TESTER_MODE} == "bonus" ]; then
 			main_test_call "bonus/dir/dir.txt" "exec_function" "traces/directory_trace.txt"
 		fi
+		add_summary "directory" "${OK_COUNT}" "${KO_COUNT}" "${SF_COUNT}"
 		print_end_tests "${EOK}" "${ESF}" "traces/directory_trace.txt" "directory"
 		TTDIR="1";
 		# printf "${MAIN_COLOR}\n|============================================================|\n\n\n${DEF_COLOR}"
@@ -386,31 +417,57 @@
 		print_in_traces "traces/parse/tilde_trace.txt" &> /dev/null
 		print_in_traces "traces/parse/syntax_error_trace.txt" &> /dev/null
 		printf ${MAIN_COLOR}"\n\n|------------------------{ dollars }\n\n"${DEF_COLOR}
+		OK_COUNT=0
+		KO_COUNT=0
+		SF_COUNT=0
 		main_test_call "mandatory/parser/dollar.txt" "exec_function" "traces/parse/dollar_trace.txt"
 		if [ ${TESTER_MODE} == "bonus" ]; then
 			main_test_call "bonus/parser/dollar.txt" "exec_function" "traces/parse/dollar_trace.txt"
 		fi
+		add_summary "dollars" "${OK_COUNT}" "${KO_COUNT}" "${SF_COUNT}"
 		printf ${MAIN_COLOR}"\n\n|------------------------{ quotes }\n\n"${DEF_COLOR}
+		OK_COUNT=0
+		KO_COUNT=0
+		SF_COUNT=0
 		main_test_call "mandatory/parser/quotes.txt" "exec_function" "traces/parse/quotes_trace.txt"
 		if [ ${TESTER_MODE} == "bonus" ]; then
 			main_test_call "bonus/parser/quotes.txt" "exec_function" "traces/parse/quotes_trace.txt"
 		fi
+		add_summary "quotes" "${OK_COUNT}" "${KO_COUNT}" "${SF_COUNT}"
 		printf ${MAIN_COLOR}"\n\n|------------------------{ spaces }\n\n"${DEF_COLOR}
+		OK_COUNT=0
+		KO_COUNT=0
+		SF_COUNT=0
 		main_test_call "mandatory/parser/spaces.txt" "exec_function" "traces/parse/spaces_trace.txt"
 		if [ ${TESTER_MODE} == "bonus" ]; then
 			main_test_call "bonus/parser/spaces.txt" "exec_function" "traces/parse/spaces_trace.txt"
 		fi
+		add_summary "spaces" "${OK_COUNT}" "${KO_COUNT}" "${SF_COUNT}"
 		printf ${MAIN_COLOR}"\n\n|------------------------{ tilde }\n\n"${DEF_COLOR}
+		OK_COUNT=0
+		KO_COUNT=0
+		SF_COUNT=0
 		main_test_call "mandatory/parser/tilde.txt" "exec_function" "traces/parse/tilde_trace.txt"
 		if [ ${TESTER_MODE} == "bonus" ]; then
 			main_test_call "bonus/parser/tilde.txt" "exec_function" "traces/parse/tilde_trace.txt"
 		fi
+		add_summary "tilde" "${OK_COUNT}" "${KO_COUNT}" "${SF_COUNT}"
 		printf ${MAIN_COLOR}"\n\n|------------------------{ syntax_error }\n\n"${DEF_COLOR}
+		OK_COUNT=0
+		KO_COUNT=0
+		SF_COUNT=0
 		main_test_call "mandatory/parser/syntax_error.txt" "exec_function" "traces/parse/syntax_error_trace.txt"
 		if [ ${TESTER_MODE} == "bonus" ]; then
 			main_test_call "bonus/parser/syntax_error.txt" "exec_function" "traces/parse/operators_trace.txt"
+			add_summary "syntax_error" "${OK_COUNT}" "${KO_COUNT}" "${SF_COUNT}"
 			printf ${MAIN_COLOR}"\n\n|------------------------{ operators }\n\n"${DEF_COLOR}
+			OK_COUNT=0
+			KO_COUNT=0
+			SF_COUNT=0
 			main_test_call "bonus/parser/operators.txt" "exec_function" "traces/parse/operators_trace.txt"
+			add_summary "operators" "${OK_COUNT}" "${KO_COUNT}" "${SF_COUNT}"
+		else
+			add_summary "syntax_error" "${OK_COUNT}" "${KO_COUNT}" "${SF_COUNT}"
 		fi
 		print_end_tests "${EOK}" "${ESF}" "traces/parse/*.txt" "parser"
 		TTPARSER="1";
@@ -430,6 +487,7 @@
 		if [ ${TESTER_MODE} == "bonus" ]; then
 			main_test_call "bonus/pipe/pipe.txt" "exec_function" "traces/pipes_trace.txt"
 		fi
+		add_summary "pipe" "${OK_COUNT}" "${KO_COUNT}" "${SF_COUNT}"
 		print_end_tests "${EOK}" "${ESF}" "traces/pipes_trace.txt" "pipe"
 		TTPIPE="1";
 		# printf "${MAIN_COLOR}\n|============================================================|\n\n\n${DEF_COLOR}"
@@ -440,6 +498,9 @@
 		if [ "$TTREDIRECT" != "" ]; then
 			return ;
 		fi
+		OK_COUNT=0
+		KO_COUNT=0
+		SF_COUNT=0
 		EOK="OK"
 		ESF=""
 		printf ${MAIN_COLOR}"\n|======================[ REDIRECTIONS ]======================|"${DEF_COLOR}
@@ -448,6 +509,7 @@
 		if [ ${TESTER_MODE} == "bonus" ]; then
 			main_test_call "bonus/redirection/redirection.txt" "exec_function" "traces/redirection_trace.txt"
 		fi
+		add_summary "redirection" "${OK_COUNT}" "${KO_COUNT}" "${SF_COUNT}"
 		print_end_tests "${EOK}" "${ESF}" "traces/redirection_trace.txt" "redirection"
 		TTREDIRECT="1";
 		# printf "${MAIN_COLOR}\n|============================================================|\n\n\n${DEF_COLOR}"
@@ -458,6 +520,9 @@
 		if [ "$TTSTATUS" != "" ]; then
 			return ;
 		fi
+		OK_COUNT=0
+		KO_COUNT=0
+		SF_COUNT=0
 		EOK="OK"
 		ESF=""
 		printf ${MAIN_COLOR}"\n|=========================[ STATUS ]=========================|"${DEF_COLOR}
@@ -466,6 +531,7 @@
 		if [ ${TESTER_MODE} == "bonus" ]; then
 			main_test_call "bonus/status/status.txt" "exec_function" "traces/status_trace.txt"
 		fi
+		add_summary "status" "${OK_COUNT}" "${KO_COUNT}" "${SF_COUNT}"
 		print_end_tests "${EOK}" "${ESF}" "traces/status_trace.txt" "status"
 		TTSTATUS="1";
 		# printf "${MAIN_COLOR}\n|============================================================|\n\n\n${DEF_COLOR}"
@@ -476,12 +542,16 @@
 		if [ "$TTYOUR" != "" ]; then
 			return ;
 		fi
+		OK_COUNT=0
+		KO_COUNT=0
+		SF_COUNT=0
 		EOK="OK"
 		ESF=""
 		printf ${MAIN_COLOR}"\n|=======================[ YOUR TESTS ]=======================|"${DEF_COLOR}
 		print_in_traces "traces/your_trace.txt"
 		main_test_call "your_tests.txt" "exec_function" "traces/your_trace.txt"
 		print_end_tests "${EOK}" "${ESF}" "traces/your_trace.txt" "your"
+		add_summary "your" "${OK_COUNT}" "${KO_COUNT}" "${SF_COUNT}"
 		TTYOUR="1";
 		# printf "${MAIN_COLOR}\n|============================================================|\n\n\n${DEF_COLOR}"
 	}
@@ -585,6 +655,12 @@
 		PRMP=$(echo "$prmp" | cut -c 1-$size_prom)
 	# SUMARY TEXT
 		SUMARY=""
+	# SUMARY TOTAL OK COUNT
+		TOTAL_OK_COUNT=0
+	# SUMARY TOTAL KO COUNT
+		TOTAL_KO_COUNT=0
+	# SUMARY TOTAL SF COUNT
+		TOTAL_SF_COUNT=0
 	# SUMARY OK COUNT
 		OK_COUNT=0
 	# SUMARY KO COUNT
@@ -695,8 +771,10 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  ENDER
 	# printf "${RED}\n\tmore test comming soon...👹${DEF_COLOR}\n\n"
 	printf "${MAIN_COLOR}\n|============================================================|\n\n${DEF_COLOR}"
+	printf "  %-35s ${GREEN}%-5s${DEF_COLOR} ${RED}%-5s${DEF_COLOR} ${RED}%-5s${DEF_COLOR}" "SUMARY" "[OK]" "[KO]" "[SF]"
 	printf "${SUMARY}\n"
-	printf "${MAIN_COLOR}  Any issue send via slack bmoll-pe, arebelo or ailopez-o\n\n${DEF_COLOR}"
+	printf "\n  %-35s ${GREEN}[%03d]${DEF_COLOR} ${RED}[%03d]${DEF_COLOR} ${RED}[%03d]${DEF_COLOR}" "total" ${TOTAL_OK_COUNT} ${TOTAL_KO_COUNT} ${TOTAL_SF_COUNT}
+	printf "\n\n${MAIN_COLOR}  Any issue send via slack bmoll-pe, arebelo or ailopez-o\n\n${DEF_COLOR}"
 	printf ${DEF_COLOR};
 	clean_exit
 #
