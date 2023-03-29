@@ -1,0 +1,4 @@
+export A="adios" && (export A="hola" && echo $A) && echo $A
+export A="adios" && (unset A) && echo $A
+ls && (unset PATH) && ls
+
