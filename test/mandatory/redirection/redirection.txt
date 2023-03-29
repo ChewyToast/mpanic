@@ -83,9 +83,9 @@ echo hi > file2 >> file hi;cat file;cat file2;rm file file2@echo hi > file2 >> f
 echo hi > file2 > file hi;cat file;cat file2;rm file file2@echo hi > file2 > file hi
 echo hi >> file2 >> file hi;cat file;cat file2;rm file file2@echo hi >> file2 >> file hi
 
-# echo hi, I am the file > file &> /dev/null
-# echo hi, I am the file2 > file2 &> /dev/null
-# echo hi, I am the file3 > file3 &> /dev/null
+# echo hi, I am the file > file
+# echo hi, I am the file2 > file2
+# echo hi, I am the file3 > file3
 # chmod 000 file3 &> /dev/null
 
 cat < file@cat < file

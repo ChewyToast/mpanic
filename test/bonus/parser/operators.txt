@@ -57,4 +57,4 @@ ls | ( cat -e && cat -n ) | cat -n
 export A=mivalor && echo $A
 (export A=mivalor) && echo $A
 export A=mivalor && (unset A) && echo$A
-echo hola | (cat -n | (cat -e && echo inception) && echo adios | (cat -n | (cat -e))) @ mix () || && and &
+echo hola | (cat -n | (cat -e && echo inception) && echo adios | (cat -n | (cat -e)))@mix () || && and &
