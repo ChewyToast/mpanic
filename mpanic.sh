@@ -183,7 +183,6 @@
 	
 		{ bash; } < ${2} 1> .tmp/bash_outp.txt 2> .tmp/bash_error_outp.txt
 		ES2=$?
-		python3 err_cleaner.py
 		BASH_STDOUTP=$(cat -e .tmp/bash_outp.txt)
 		BASH_ERROUTP=$(cat -e .tmp/bash_error_outp.txt)
 		BASH_ERROUTP_CUT=$(head -n 1 .tmp/bash_error_outp.txt)
