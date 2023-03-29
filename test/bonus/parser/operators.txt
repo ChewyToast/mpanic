@@ -40,13 +40,12 @@ echo a | (cat -e | cat -e | cat -e) | cat -e
 (echo hola) | (cat -n)
 (echo hola) | (cat -n | cat -e)
 
-@NOTA >> los que funcionan dan fallo y viceversa
 echo *
 #touch file1.txt file2.txt
 echo *.txt
 echo fil*
 echo *le*
-rm *.txt
+touch file1.txt file2.txt;rm *.txt@rm *.txt
 echo *.*
 #echo hola > "fil*e"
 cat "fil*e"

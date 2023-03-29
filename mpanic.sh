@@ -92,6 +92,9 @@
 		echo "->${5}<-" | sed 's/^/| /' >> ${1}
 		echo "|" >> ${1}
 		echo "|--- STDERR:" >> ${1}
+		echo "->${11}<-" | sed 's/^/| /' >> ${1}
+		echo "|">> ${1}
+		echo "|--- COMPARED STR:" >> ${1}
 		echo "->${6}<-" | sed 's/^/| /' >> ${1}
 		echo "|--------------------------------" >> ${1}
 		echo "|--->FOUND (MINISHELL OUTP)  |  exit status: (${7})"$'\n'\| >> ${1}
@@ -164,51 +167,13 @@
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  TESTS FUNCTIONS
 
-	function pruebas_function()
-	{
-		# Declaramos variables para funcion
-		SF_TMP=""
-		let "i=i+1"
-
-		# Preparamos archivo que va a ser el input con los argumentos
-		echo "${2}" > .tmp/exec_read.txt
-		echo "exit" >> .tmp/exec_read.txt
-
-		{ ./minishell; } < .tmp/exec_read.txt 1> .tmp/exec_outp.txt 2> .tmp/exec_error_outp.txt
-		ES1=$?
-		{ bash; } < .tmp/exec_read.txt 1> .tmp/bash_outp.txt 2> .tmp/bash_error_outp.txt
-		ES2=$?
-		echo $'\n'"---------------------------------------------< [${i}]"
-		echo "| CMD: ->$FTEST<-"
-		echo "|--------------------------------"
-		echo "|  EXPECTED (BASH OUTP)  |  exit status: ($ES2)"$'\n'\|
-		echo "|--- STDOUT:"
-		echo "->$(cat -e .tmp/bash_outp.txt)<-"
-		echo "|"
-		echo "|--- STDERR:"
-		echo "|->$(cat -e .tmp/bash_error_outp.txt)<-"
-		echo "|--------------------------------"
-		echo "|  FOUND (MINISHELL OUTP)  |  exit status: ($ES1)"$'\n'\|
-		echo "|--- STDOUT:"
-		echo "|->$(cat .tmp/exec_outp.txt)<-"
-		echo "|"
-		echo "|--- STDERR:"
-		echo "|->$(cat -e .tmp/exec_error_outp.txt)<-"
-		echo "|"
-		echo "---------------------------------------------<"
-		if [ "$i" == "3" ]; then
-			exit;
-		fi
-	}
-
 	function exec_function()
 	{
-		# Declaramos variables para funcion
 		SF_TMP=""
 		let "i=i+1"
-
-		# Preparamos archivo que va a ser el input con los argumentos
 		echo $'\n' >> ${2}
+
+
 		{ ./minishell; } < ${2} 1> .tmp/exec_outp.txt 2> .tmp/exec_error_outp.txt
 		ES1=$?
 		./cleaner ".tmp/exec_outp.txt"
@@ -221,11 +186,20 @@
 		python3 err_cleaner.py
 		BASH_STDOUTP=$(cat -e .tmp/bash_outp.txt)
 		BASH_ERROUTP=$(cat -e .tmp/bash_error_outp.txt)
-		BASH_ERROUTP_CUT=$(cat .tmp/bash_error_outp_clean.txt)
+		BASH_ERROUTP_CUT=$(head -n 1 .tmp/bash_error_outp.txt)
+		if [ -n "$BASH_ERROUTP_CUT" ]; then
+			BASH_ERROUTP_CUT="${BASH_ERROUTP_CUT:14}"
+			if [ ${#BASH_ERROUTP_CUT} -ge 9 ]; then
+				BASH_ERROUTP_CUT="${BASH_ERROUTP_CUT%?????????}"
+			fi
+		fi
+
 
 		std_condition=$( [[ "${MINI_STDOUTP}" == "${BASH_STDOUTP}" ]] && echo "true" || echo "false" )
 		err_condition=$( [[ "${BASH_ERROUTP_CUT}" == "" && "${MINI_ERROUTP}" == "${BASH_ERROUTP_CUT}" ]] || [[ "${BASH_ERROUTP_CUT}" != "" && "${MINI_ERROUTP}" == *"${BASH_ERROUTP_CUT}"* ]] && echo "true" || echo "false" )
 		es_condition=$( [[ "${ES1}" == "${ES2}" ]] && echo "true" || echo "false" )
+
+
 		if [ "${ES1}" == "139" ] || [ "${ES1}" == "134" ] || [ "${ES1}" == "136" ] || [ "${ES1}" == "137" ] || [ "${ES1}" == "138" ]; then
 			{ ./minishell; } < ${2} &> .tmp/exec_other_outp.txt
 			TOTAL_SF_COUNT=$((TOTAL_SF_COUNT+1))
@@ -234,10 +208,10 @@
 			EOK="KO"
 			ESF="${ESK} ${i}"
 			SF_TMP=$(cat .tmp/exec_other_outp.txt | sed -e "1d")
-			trace_printer "${1}" "${i}" "$(cat ${2})" "${ES2}" "${BASH_STDOUTP}" "${BASH_ERROUTP}" "${ES1}" "${MINI_STDOUTP}" "${MINI_ERROUTP}" "${SF_TMP}";
+			trace_printer "${1}" "${i}" "$(cat ${2})" "${ES2}" "${BASH_STDOUTP}" "${BASH_ERROUTP_CUT}" "${ES1}" "${MINI_STDOUTP}" "${MINI_ERROUTP}" "${SF_TMP}" "${BASH_ERROUTP}";
 		else
 			if [[ "${std_condition}" == "true" && "${es_condition}" == "true" && "${err_condition}" == "true" ]]; then
-				trace_printer "traces/correct_log.txt" "${i}" "$(cat ${2})" "${ES2}" "${BASH_STDOUTP}" "${BASH_ERROUTP}" "${ES1}" "${MINI_STDOUTP}" "${MINI_ERROUTP}" "${SF_TMP}";
+				trace_printer "traces/correct_log.txt" "${i}" "$(cat ${2})" "${ES2}" "${BASH_STDOUTP}" "${BASH_ERROUTP_CUT}" "${ES1}" "${MINI_STDOUTP}" "${MINI_ERROUTP}" "${SF_TMP}" "${BASH_ERROUTP}";
 				TOTAL_OK_COUNT=$((TOTAL_OK_COUNT+1))
 				OK_COUNT=$((OK_COUNT+1))
 				ret=1
@@ -246,9 +220,10 @@
 				KO_COUNT=$((KO_COUNT+1))
 				ret=0
 				EOK="KO"
-				trace_printer "${1}" "${i}" "$(cat ${2})" "${ES2}" "${BASH_STDOUTP}" "${BASH_ERROUTP}" "${ES1}" "${MINI_STDOUTP}" "${MINI_ERROUTP}" "${SF_TMP}";
+				trace_printer "${1}" "${i}" "$(cat ${2})" "${ES2}" "${BASH_STDOUTP}" "${BASH_ERROUTP_CUT}" "${ES1}" "$(cat -e .tmp/exec_outp.txt)" "${MINI_ERROUTP}" "${SF_TMP}" "${BASH_ERROUTP}";
 			fi
 		fi
+
 
 		print_test_result "${4}" "${3}";
 		echo -n "" > .tmp/exec_read.txt
@@ -311,7 +286,6 @@
 		add_summary "echo" "${OK_COUNT}" "${KO_COUNT}" "${SF_COUNT}"
 		print_end_tests "${EOK}" "${ESF}" "traces/echo_trace.txt" "echo"
 		TTECHO="1";
-		# printf "${MAIN_COLOR}\n|============================================================|\n\n\n${DEF_COLOR}"
 	}
 
 	function export_test_call()
@@ -333,7 +307,6 @@
 		add_summary "export" "${OK_COUNT}" "${KO_COUNT}" "${SF_COUNT}"
 		print_end_tests "${EOK}" "${ESF}" "traces/export_trace.txt" "export"
 		TTEXPORT="1";
-		# printf "${MAIN_COLOR}\n|============================================================|\n\n\n${DEF_COLOR}"
 	}
 
 	function env_test_call()
@@ -355,7 +328,6 @@
 		add_summary "env" "${OK_COUNT}" "${KO_COUNT}" "${SF_COUNT}"
 		print_end_tests "${EOK}" "${ESF}" "traces/env_trace.txt" "env"
 		TTENV="1";
-		# printf "${MAIN_COLOR}\n|============================================================|\n\n\n${DEF_COLOR}"
 	}
 
 	function exit_test_call()
@@ -377,7 +349,6 @@
 		add_summary "exit" "${OK_COUNT}" "${KO_COUNT}" "${SF_COUNT}"
 		print_end_tests "${EOK}" "${ESF}" "traces/exit_trace.txt" "exit"
 		TTEXIT="1";
-		# printf "${MAIN_COLOR}\n|============================================================|\n\n\n${DEF_COLOR}"
 	}
 
 	function directory_test_call()
@@ -399,7 +370,6 @@
 		add_summary "directory" "${OK_COUNT}" "${KO_COUNT}" "${SF_COUNT}"
 		print_end_tests "${EOK}" "${ESF}" "traces/directory_trace.txt" "directory"
 		TTDIR="1";
-		# printf "${MAIN_COLOR}\n|============================================================|\n\n\n${DEF_COLOR}"
 	}
 
 	function parser_test_call()
@@ -458,6 +428,7 @@
 		SF_COUNT=0
 		main_test_call "mandatory/parser/syntax_error.txt" "exec_function" "traces/parse/syntax_error_trace.txt"
 		if [ ${TESTER_MODE} == "bonus" ]; then
+			print_in_traces "traces/parse/operators_trace.txt" &> /dev/null
 			main_test_call "bonus/parser/syntax_error.txt" "exec_function" "traces/parse/operators_trace.txt"
 			add_summary "syntax_error" "${OK_COUNT}" "${KO_COUNT}" "${SF_COUNT}"
 			printf ${MAIN_COLOR}"\n\n|------------------------{ operators }\n\n"${DEF_COLOR}
@@ -471,7 +442,6 @@
 		fi
 		print_end_tests "${EOK}" "${ESF}" "traces/parse/*.txt" "parser"
 		TTPARSER="1";
-		# printf "${MAIN_COLOR}\n|============================================================|\n\n\n${DEF_COLOR}"
 	}
 
 	function pipe_test_call()
@@ -490,7 +460,6 @@
 		add_summary "pipe" "${OK_COUNT}" "${KO_COUNT}" "${SF_COUNT}"
 		print_end_tests "${EOK}" "${ESF}" "traces/pipes_trace.txt" "pipe"
 		TTPIPE="1";
-		# printf "${MAIN_COLOR}\n|============================================================|\n\n\n${DEF_COLOR}"
 	}
 
 	function redirection_test_call()
@@ -512,7 +481,6 @@
 		add_summary "redirection" "${OK_COUNT}" "${KO_COUNT}" "${SF_COUNT}"
 		print_end_tests "${EOK}" "${ESF}" "traces/redirection_trace.txt" "redirection"
 		TTREDIRECT="1";
-		# printf "${MAIN_COLOR}\n|============================================================|\n\n\n${DEF_COLOR}"
 	}
 
 	function status_test_call()
@@ -534,7 +502,6 @@
 		add_summary "status" "${OK_COUNT}" "${KO_COUNT}" "${SF_COUNT}"
 		print_end_tests "${EOK}" "${ESF}" "traces/status_trace.txt" "status"
 		TTSTATUS="1";
-		# printf "${MAIN_COLOR}\n|============================================================|\n\n\n${DEF_COLOR}"
 	}
 
 	function your_test_call()
@@ -553,7 +520,6 @@
 		print_end_tests "${EOK}" "${ESF}" "traces/your_trace.txt" "your"
 		add_summary "your" "${OK_COUNT}" "${KO_COUNT}" "${SF_COUNT}"
 		TTYOUR="1";
-		# printf "${MAIN_COLOR}\n|============================================================|\n\n\n${DEF_COLOR}"
 	}
 
 #
@@ -777,10 +743,4 @@
 	printf "\n\n${MAIN_COLOR}  Any issue send via slack bmoll-pe, arebelo or ailopez-o\n\n${DEF_COLOR}"
 	printf ${DEF_COLOR};
 	clean_exit
-#
-
-#
-##
-###find . -type f -not \( -name 'mpanic' -or -name 'mpanic.sh' -or -name 'README.md' -or -name 'cleaner.c' -or -name 'test' -or -name '.timmer' -or -name '.img' -or -name '.git' -or -name '.gitignore' -or -name 'cleaner' -or -name 'traces' \) -delete
-##
 #
