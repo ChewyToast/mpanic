@@ -219,7 +219,7 @@
 				KO_COUNT=$((KO_COUNT+1))
 				ret=0
 				EOK="KO"
-				trace_printer "${1}" "${i}" "$(cat ${2})" "${ES2}" "${BASH_STDOUTP}" "${BASH_ERROUTP_CUT}" "${ES1}" "$(cat -e .tmp/exec_outp.txt)" "${MINI_ERROUTP}" "${SF_TMP}" "${BASH_ERROUTP}";
+				trace_printer "${1}" "${i}" "$(cat ${2})" "${ES2}" "${BASH_STDOUTP}" "${BASH_ERROUTP_CUT}" "${ES1}" "${MINI_STDOUTP}" "${MINI_ERROUTP}" "${SF_TMP}" "${BASH_ERROUTP}";
 			fi
 		fi
 
