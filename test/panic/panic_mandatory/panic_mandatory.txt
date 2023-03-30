@@ -1,0 +1,2 @@
+mkdir testdirtest;cd testdirtest;bash;cd .. && rm -rf testdirtest && exit;pwd;cd .;pwd@rm -rf actual dir and cd .
+exit --

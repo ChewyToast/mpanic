@@ -49,6 +49,8 @@ touch file1.txt file2.txt;rm *.txt@rm *.txt
 echo *.*
 #echo hola > "fil*e"
 cat "fil*e"
+#rm "fil*e"
+
 
 echo hola && echo adios || echo noejecuta && echo si ejecuta
 echo hola && echon adios || echo siejecuta && echo fin

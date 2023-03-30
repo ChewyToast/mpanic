@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Colors
-	MAIN_COLOR='\033[0;97m'
+	MAIN_COLOR='\033[38;5;247m'
 	DEF_COLOR='\033[0;39m'
 	RED='\033[0;91m'
 	GREEN='\033[0;92m'
@@ -13,12 +13,12 @@
 
 	function	print_helper()
 	{
-		echo -e "\n${MAIN_COLOR} Usage:${DEF_COLOR} bash mpanic.sh [options] [arguments]\n"
-		echo -e "${MAIN_COLOR} Options:${DEF_COLOR}"
+		echo -e "\n${MAIN_COLOR} Usage:${MAIN_COLOR} bash mpanic.sh [options] [arguments]\n"
+		echo -e "${MAIN_COLOR} Options:${MAIN_COLOR}"
 		echo -e "\t-h --help\tShow this help message"
 		echo -e "\t-b --bonus\tWill execute the tester with bonus tests"
 		echo -e "\t-i --ignore\tWill run all tests except those specified by argument\n\t\t\t(compatible with bonus option)"
-		echo -e "\n${MAIN_COLOR} Arguments:${DEF_COLOR}"
+		echo -e "\n${MAIN_COLOR} Arguments:${MAIN_COLOR}"
 		echo -e "\techo\t\tExecute the echo tests"
 		echo -e "\texport\t\tExecute the export tests"
 		echo -e "\tenv\t\tExecute the env tests"
@@ -28,8 +28,9 @@
 		echo -e "\tpipe\t\tExecute the pipe tests"
 		echo -e "\tredirection\tExecute the redirection tests"
 		echo -e "\tstatus\t\tExecute the exit status tests"
+		echo -e "\tpanicm\t\tExecute the panic mandatory tests"
 		echo -e "\tyour\t\tExecute the exit status tests"
-		echo -e "\n${YELLOW} Examples:${DEF_COLOR}"
+		echo -e "\n${YELLOW} Examples:${MAIN_COLOR}"
 		echo -e "\tmpanic.sh --help\tShow this help message"
 		echo -e "\tmpanic.sh -b echo\tExecute only the echo tests with bonus"
 		echo -e "\tmpanic.sh -b -i echo\tExecute all the tests with bonus except the echo one"
@@ -48,7 +49,7 @@
 		echo "*                                                            *" >> ${1}
 		echo "**************************************************************" >> ${1}
 		echo "" >> ${1}
-		printf ${MAIN_COLOR}"\n\n\n"${DEF_COLOR}
+		printf ${MAIN_COLOR}"\n\n\n"${MAIN_COLOR}
 	}
 
 	function	print_end_tests()
@@ -72,6 +73,7 @@
 		rm -rf cleaner
 		rm -rf .tmp
 		rm -rf minishell
+		printf ${DEF_COLOR};
 		exit
 	}
 
@@ -79,7 +81,7 @@
 	{
 		printf "$1"
 		printf "$2"
-		printf ${DEF_COLOR}	
+		printf ${MAIN_COLOR}	
 	}
 
 	function	trace_printer()
@@ -116,29 +118,29 @@
 	{
 		CLL=${MAIN_COLOR}
 		if [ "${#i}" == "1" ]; then
-			print_color ${MAIN_COLOR} "  ${i}.   [${DEF_COLOR}"
+			print_color ${MAIN_COLOR} "  ${i}.   [${MAIN_COLOR}"
 		else
 			if [ "${#i}" == "2" ]; then
-				print_color ${MAIN_COLOR} "  ${i}.  [${DEF_COLOR}"
+				print_color ${MAIN_COLOR} "  ${i}.  [${MAIN_COLOR}"
 			else
 				if [ "${#i}" == "3" ]; then
-					print_color ${MAIN_COLOR} "  ${i}. [${DEF_COLOR}"
+					print_color ${MAIN_COLOR} "  ${i}. [${MAIN_COLOR}"
 				fi
 			fi
 		fi
 		if [ "$ret" == "1" ]; then
-			printf "${GREEN}OK${DEF_COLOR}"
+			printf "${GREEN}OK${MAIN_COLOR}"
 			CLL=${GREEN}
 		else
 			if [ "$ret" == "0" ]; then
-				printf "${RED}KO${DEF_COLOR}"
+				printf "${RED}KO${MAIN_COLOR}"
 				CLL=${RED}
 			else
 				if [ "$ret" == "2" ]; then
-					printf "${YELLOW}OK${DEF_COLOR}"
+					printf "${YELLOW}OK${MAIN_COLOR}"
 					CLL=${YELLOW}
 				else
-					printf "${RED}SF${DEF_COLOR}"
+					printf "${RED}SF${MAIN_COLOR}"
 					CLL=${RED}
 				fi
 			fi
@@ -150,9 +152,9 @@
 		else
 			printf "$1";
 		fi
-		printf "${MAIN_COLOR}|${DEF_COLOR}";
+		printf "${MAIN_COLOR}|${MAIN_COLOR}";
 		if [ "$ret" == "3" ]; then
-			printf "${RED} <--- SF!${DEF_COLOR}\n";
+			printf "${RED} <--- SF!${MAIN_COLOR}\n";
 		else
 			printf "\n";
 		fi
@@ -160,7 +162,7 @@
 
 	function	add_summary()
 	{
-		printf -v SUMARY "%s\n  %-35s ${GREEN}%-5s${DEF_COLOR} ${RED}%-5s${DEF_COLOR} ${RED}%-5s${DEF_COLOR}" "${SUMARY}" "[${1}]" " ${2}" " ${3}" " ${4}"
+		printf -v SUMARY "%s\n  %-30s  ${GREEN}%03d${MAIN_COLOR}    ${RED}%03d${MAIN_COLOR}    ${RED}%03d${MAIN_COLOR}    %03d" "${SUMARY}" "[${1}]" ${2} ${3} ${4} $((${2}+${3}+${4}))
 	}
 
 #
@@ -241,7 +243,7 @@
 		# Nombre del archivo a leer
 		test_file="./test/${1}"
 		if [ ! -f "${test_file}" ]; then
-			printf "\n${RED} File needed to test ${test_file} not found\n\n${DEF_COLOR}"
+			printf "\n${RED} File needed to test ${test_file} not found\n\n${MAIN_COLOR}"
 		else
 			while read test_cmd; do
 				if [ "${#test_cmd}" != "0" ]; then
@@ -276,7 +278,7 @@
 		OK_COUNT=0
 		KO_COUNT=0
 		SF_COUNT=0
-		printf ${MAIN_COLOR}"\n|==========================[ ECHO ]==========================|"${DEF_COLOR}
+		printf ${MAIN_COLOR}"\n|==========================[ ECHO ]==========================|"${MAIN_COLOR}
 		print_in_traces "traces/echo_trace.txt"
 		main_test_call "mandatory/echo/echo.txt" "exec_function" "traces/echo_trace.txt"
 		if [ ${TESTER_MODE} == "bonus" ]; then
@@ -297,7 +299,7 @@
 		SF_COUNT=0
 		EOK="OK"
 		ESF=""
-		printf ${MAIN_COLOR}"\n|=========================[ EXPORT ]=========================|"${DEF_COLOR}
+		printf ${MAIN_COLOR}"\n|=========================[ EXPORT ]=========================|"${MAIN_COLOR}
 		print_in_traces "traces/export_trace.txt"
 		main_test_call "mandatory/export/export.txt" "exec_function" "traces/export_trace.txt"
 		if [ ${TESTER_MODE} == "bonus" ]; then
@@ -318,7 +320,7 @@
 		SF_COUNT=0
 		EOK="OK"
 		ESF=""
-		printf ${MAIN_COLOR}"\n|===========================[ ENV ]==========================|"${DEF_COLOR}
+		printf ${MAIN_COLOR}"\n|===========================[ ENV ]==========================|"${MAIN_COLOR}
 		print_in_traces "traces/env_trace.txt"
 		main_test_call "mandatory/env/env.txt" "exec_function" "traces/env_trace.txt"
 		if [ ${TESTER_MODE} == "bonus" ]; then
@@ -339,7 +341,7 @@
 		SF_COUNT=0
 		EOK="OK"
 		ESF=""
-		printf ${MAIN_COLOR}"\n|==========================[ EXIT ]==========================|"${DEF_COLOR}
+		printf ${MAIN_COLOR}"\n|==========================[ EXIT ]==========================|"${MAIN_COLOR}
 		print_in_traces "traces/exit_trace.txt"
 		main_test_call "mandatory/exit/exit.txt" "exec_function" "traces/exit_trace.txt"
 		if [ ${TESTER_MODE} == "bonus" ]; then
@@ -360,7 +362,7 @@
 		SF_COUNT=0
 		EOK="OK"
 		ESF=""
-		printf ${MAIN_COLOR}"\n|========================[ DIRECTORY ]=======================|"${DEF_COLOR}
+		printf ${MAIN_COLOR}"\n|========================[ DIRECTORY ]=======================|"${MAIN_COLOR}
 		print_in_traces "traces/directory_trace.txt"
 		main_test_call "mandatory/dir/dir.txt" "exec_function" "traces/directory_trace.txt"
 		if [ ${TESTER_MODE} == "bonus" ]; then
@@ -378,14 +380,14 @@
 		fi
 		EOK="OK"
 		ESF=""
-		printf ${MAIN_COLOR}"\n|=========================[ PARSER ]=========================|"${DEF_COLOR}
+		printf ${MAIN_COLOR}"\n|=========================[ PARSER ]=========================|"${MAIN_COLOR}
 		mkdir traces/parse &> /dev/null
 		print_in_traces "traces/parse/dollar_trace.txt" &> /dev/null
 		print_in_traces "traces/parse/quotes_trace.txt" &> /dev/null
 		print_in_traces "traces/parse/spaces_trace.txt" &> /dev/null
 		print_in_traces "traces/parse/tilde_trace.txt" &> /dev/null
 		print_in_traces "traces/parse/syntax_error_trace.txt" &> /dev/null
-		printf ${MAIN_COLOR}"\n\n|------------------------{ dollars }\n\n"${DEF_COLOR}
+		printf ${MAIN_COLOR}"\n\n|------------------------{ dollars }\n\n"${MAIN_COLOR}
 		OK_COUNT=0
 		KO_COUNT=0
 		SF_COUNT=0
@@ -394,7 +396,7 @@
 			main_test_call "bonus/parser/dollar.txt" "exec_function" "traces/parse/dollar_trace.txt"
 		fi
 		add_summary "dollars" "${OK_COUNT}" "${KO_COUNT}" "${SF_COUNT}"
-		printf ${MAIN_COLOR}"\n\n|------------------------{ quotes }\n\n"${DEF_COLOR}
+		printf ${MAIN_COLOR}"\n\n|------------------------{ quotes }\n\n"${MAIN_COLOR}
 		OK_COUNT=0
 		KO_COUNT=0
 		SF_COUNT=0
@@ -403,7 +405,7 @@
 			main_test_call "bonus/parser/quotes.txt" "exec_function" "traces/parse/quotes_trace.txt"
 		fi
 		add_summary "quotes" "${OK_COUNT}" "${KO_COUNT}" "${SF_COUNT}"
-		printf ${MAIN_COLOR}"\n\n|------------------------{ spaces }\n\n"${DEF_COLOR}
+		printf ${MAIN_COLOR}"\n\n|------------------------{ spaces }\n\n"${MAIN_COLOR}
 		OK_COUNT=0
 		KO_COUNT=0
 		SF_COUNT=0
@@ -412,7 +414,7 @@
 			main_test_call "bonus/parser/spaces.txt" "exec_function" "traces/parse/spaces_trace.txt"
 		fi
 		add_summary "spaces" "${OK_COUNT}" "${KO_COUNT}" "${SF_COUNT}"
-		printf ${MAIN_COLOR}"\n\n|------------------------{ tilde }\n\n"${DEF_COLOR}
+		printf ${MAIN_COLOR}"\n\n|------------------------{ tilde }\n\n"${MAIN_COLOR}
 		OK_COUNT=0
 		KO_COUNT=0
 		SF_COUNT=0
@@ -421,7 +423,7 @@
 			main_test_call "bonus/parser/tilde.txt" "exec_function" "traces/parse/tilde_trace.txt"
 		fi
 		add_summary "tilde" "${OK_COUNT}" "${KO_COUNT}" "${SF_COUNT}"
-		printf ${MAIN_COLOR}"\n\n|------------------------{ syntax_error }\n\n"${DEF_COLOR}
+		printf ${MAIN_COLOR}"\n\n|------------------------{ syntax_error }\n\n"${MAIN_COLOR}
 		OK_COUNT=0
 		KO_COUNT=0
 		SF_COUNT=0
@@ -430,7 +432,7 @@
 			print_in_traces "traces/parse/operators_trace.txt" &> /dev/null
 			main_test_call "bonus/parser/syntax_error.txt" "exec_function" "traces/parse/operators_trace.txt"
 			add_summary "syntax_error" "${OK_COUNT}" "${KO_COUNT}" "${SF_COUNT}"
-			printf ${MAIN_COLOR}"\n\n|------------------------{ operators }\n\n"${DEF_COLOR}
+			printf ${MAIN_COLOR}"\n\n|------------------------{ operators }\n\n"${MAIN_COLOR}
 			OK_COUNT=0
 			KO_COUNT=0
 			SF_COUNT=0
@@ -450,7 +452,7 @@
 		fi
 		EOK="OK"
 		ESF=""
-		printf ${MAIN_COLOR}"\n|==========================[ PIPES ]=========================|"${DEF_COLOR}
+		printf ${MAIN_COLOR}"\n|==========================[ PIPES ]=========================|"${MAIN_COLOR}
 		print_in_traces "traces/pipes_trace.txt"
 		main_test_call "mandatory/pipe/pipe.txt" "exec_function" "traces/pipes_trace.txt"
 		if [ ${TESTER_MODE} == "bonus" ]; then
@@ -471,7 +473,7 @@
 		SF_COUNT=0
 		EOK="OK"
 		ESF=""
-		printf ${MAIN_COLOR}"\n|======================[ REDIRECTIONS ]======================|"${DEF_COLOR}
+		printf ${MAIN_COLOR}"\n|======================[ REDIRECTIONS ]======================|"${MAIN_COLOR}
 		print_in_traces "traces/pipes_trace.txt"
 		main_test_call "mandatory/redirection/redirection.txt" "exec_function" "traces/redirection_trace.txt"
 		if [ ${TESTER_MODE} == "bonus" ]; then
@@ -492,7 +494,7 @@
 		SF_COUNT=0
 		EOK="OK"
 		ESF=""
-		printf ${MAIN_COLOR}"\n|=========================[ STATUS ]=========================|"${DEF_COLOR}
+		printf ${MAIN_COLOR}"\n|=========================[ STATUS ]=========================|"${MAIN_COLOR}
 		print_in_traces "traces/pipes_trace.txt"
 		main_test_call "mandatory/status/status.txt" "exec_function" "traces/status_trace.txt"
 		if [ ${TESTER_MODE} == "bonus" ]; then
@@ -513,12 +515,32 @@
 		SF_COUNT=0
 		EOK="OK"
 		ESF=""
-		printf ${MAIN_COLOR}"\n|=======================[ YOUR TESTS ]=======================|"${DEF_COLOR}
+		printf ${MAIN_COLOR}"\n|=======================[ YOUR TESTS ]=======================|"${MAIN_COLOR}
 		print_in_traces "traces/your_trace.txt"
 		main_test_call "your_tests.txt" "exec_function" "traces/your_trace.txt"
 		print_end_tests "${EOK}" "${ESF}" "traces/your_trace.txt" "your"
 		add_summary "your" "${OK_COUNT}" "${KO_COUNT}" "${SF_COUNT}"
 		TTYOUR="1";
+	}
+
+	function panic_mandatory_test_call()
+	{
+		rm-rf traces/panic &> /dev/null
+		mkdir traces/panic &> /dev/null
+		if [ "$TTPM" != "" ]; then
+			return ;
+		fi
+		OK_COUNT=0
+		KO_COUNT=0
+		SF_COUNT=0
+		EOK="OK"
+		ESF=""
+		printf ${MAIN_COLOR}"\n|====================[ PANIC MANDATORY ]=====================|"${MAIN_COLOR}
+		print_in_traces "traces/panic/panic_mandatory.txt"
+		main_test_call "panic/panic_mandatory/panic_mandatory.txt" "exec_function" "traces/panic/panic_mandatory.txt"
+		print_end_tests "${EOK}" "${ESF}" "traces/panic/panic_mandatory.txt" "panic mandatory"
+		add_summary "panic mandatory" "${OK_COUNT}" "${KO_COUNT}" "${SF_COUNT}"
+		TTPM="1";
 	}
 
 #
@@ -529,7 +551,7 @@
 
 	if [[ "$(ls -la)" != *".timmer"* ]]; then
 		touch .timmer
-		printf ${MAIN_COLOR}"\n\tWellocme to minishell panic 👹 !\n\n"${DEF_COLOR};
+		printf ${MAIN_COLOR}"\n\tWellocme to minishell panic 👹 !\n\n"${MAIN_COLOR};
 		printf " It looks like its ur first time using this tester,\n";
 		printf " so let me explain u how it works:\n";
 		print_helper;
@@ -543,9 +565,9 @@
 		case "$arg" in
 			"-h"|"--help") print_helper ;;
 			"-i"|"--ignore") IGNORE="1" ;;
-			"echo"|"export"|"exit"|"parser"|"pipe"|"redirection"|"status"|"env"|"directory"|"your") ;;
+			"echo"|"export"|"exit"|"parser"|"pipe"|"redirection"|"status"|"env"|"directory"|"your"|"panicm") ;;
 			"-b"|"--bonus") TESTER_MODE="bonus" ;;
-			*) printf "\n Invalid argument:"${DEF_COLOR}" $arg\n Type "${MAIN_COLOR}"--help"${DEF_COLOR}" to see the valid options\n\n"${DEF_COLOR} && exit 1 ;;
+			*) printf "\n Invalid argument:"${MAIN_COLOR}" $arg\n Type "${MAIN_COLOR}"--help"${MAIN_COLOR}" to see the valid options\n\n"${MAIN_COLOR} && exit 1 ;;
 		esac
 	done
 
@@ -553,9 +575,9 @@
 		print_helper;
 	fi
 
-	printf ${CYAN}"\n\t\t    -----------------------"${DEF_COLOR};
-	printf ${CYAN}"\n\t\t   | 👹 MINISHELL PANIC 👹 |\n"${DEF_COLOR};
-	printf ${CYAN}"\t\t    -----------------------\n\n"${DEF_COLOR};
+	printf ${CYAN}"\n\t\t    -----------------------"${MAIN_COLOR};
+	printf ${CYAN}"\n\t\t   | 👹 MINISHELL PANIC 👹 |\n"${MAIN_COLOR};
+	printf ${CYAN}"\t\t    -----------------------\n\n"${MAIN_COLOR};
 
 #
 
@@ -576,14 +598,14 @@
 
 	mkdir .errors &> /dev/null
 	mkdir .tmp &> /dev/null
-	print_color ${GRAY} "Compiling Makefile ... Please wait!${DEF_COLOR}"
+	print_color ${GRAY} "Compiling Makefile ... Please wait!${MAIN_COLOR}"
 	MKFF=$(make -C ../ &> .errors/error.txt)
 	MK_1=$?
 	MKFF=$(cat .errors/error.txt | cut -c 1-46)
 
 	if [ "$MK_1" != "0" ]; then
 		if [ "$MKFF" == "make: *** No targets specified and no makefile" ]; then
-			print_color ${RED} "\033[2K\rMakefile not found!\n${DEF_COLOR}"
+			print_color ${RED} "\033[2K\rMakefile not found!\n${MAIN_COLOR}"
 			echo "Remember to clone it and run as follows:"
 			echo "  1. cd minishell_project_folder"
 			echo "  2. git clone git@github.com:ChewyToast/minishell_panic.git"
@@ -592,9 +614,9 @@
 			echo ""
 			clean_exit
 		else
-			print_color ${RED} "\033[2K\rCompilation error\n${DEF_COLOR}"
+			print_color ${RED} "\033[2K\rCompilation error\n${MAIN_COLOR}"
 			echo "-------------"
-			echo "${DEF_COLOR}$MKFF${DEF_COLOR}"
+			echo "${MAIN_COLOR}$MKFF${MAIN_COLOR}"
 			echo "-------------"
 			clean_exit
 		fi
@@ -608,7 +630,7 @@
 	mkdir traces/
 	echo "exit" > .tmp/exec_read.txt
 	< .tmp/exec_read.txt ./minishell &> .tmp/start.txt
-	printf ${MAIN_COLOR}"\n CARE!\n This tester does not work if your prompt has a new line\n or changes during execution.\n"${DEF_COLOR}
+	printf ${MAIN_COLOR}"\n CARE!\n This tester does not work if your prompt has a new line\n or changes during execution.\n"${MAIN_COLOR}
 
 #
 
@@ -689,6 +711,7 @@
 			pipe_test_call;
 			redirection_test_call;
 			status_test_call;
+			panic_mandatory_test_call;
 			your_test_call;
 	else
 		if [[ "$#" == "1" && ( "$1" == "-b" || "$1" == "--bonus" ) ]]; then
@@ -701,6 +724,7 @@
 			pipe_test_call;
 			redirection_test_call;
 			status_test_call;
+			panic_mandatory_test_call;
 			your_test_call;
 		elif [[ "$#" != "0" ]]; then
 			for arg in "$@"
@@ -715,6 +739,7 @@
 					"pipe") pipe_test_call;;
 					"redirection") redirection_test_call;;
 					"status") status_test_call;;
+					"panicm") panic_mandatory_test_call;;
 					"your") your_test_call;;
 				esac
 			done
@@ -728,6 +753,7 @@
 			pipe_test_call;
 			redirection_test_call;
 			status_test_call;
+			panic_mandatory_test_call;
 			your_test_call;
 		fi
 	fi
@@ -735,11 +761,10 @@
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  ENDER
 	# printf "${RED}\n\tmore test comming soon...👹${DEF_COLOR}\n\n"
-	printf "${MAIN_COLOR}\n|============================================================|\n\n${DEF_COLOR}"
-	printf "  %-35s ${GREEN}%-5s${DEF_COLOR} ${RED}%-5s${DEF_COLOR} ${RED}%-5s${DEF_COLOR}" "SUMARY" "[OK]" "[KO]" "[SF]"
+	printf "${MAIN_COLOR}\n|============================================================|\n\n${MAIN_COLOR}"
+	printf "  %-30s ${GREEN}%-5s${MAIN_COLOR} ${RED}%-5s${MAIN_COLOR} ${RED}%-5s${MAIN_COLOR} %-5s" "SUMARY" "[ OK ]" "[ KO ]" "[ SF ]" "[ TT ]"
 	printf "${SUMARY}\n"
-	printf "\n  %-35s ${GREEN}[%03d]${DEF_COLOR} ${RED}[%03d]${DEF_COLOR} ${RED}[%03d]${DEF_COLOR}" "total" ${TOTAL_OK_COUNT} ${TOTAL_KO_COUNT} ${TOTAL_SF_COUNT}
-	printf "\n\n${MAIN_COLOR}  Any issue send via slack bmoll-pe, arebelo or ailopez-o\n\n${DEF_COLOR}"
-	printf ${DEF_COLOR};
+	printf "\n  %-30s ${GREEN}[%04d]${MAIN_COLOR} ${RED}[%04d]${MAIN_COLOR} ${RED}[%04d]${MAIN_COLOR} [%04d]" "total" ${TOTAL_OK_COUNT} ${TOTAL_KO_COUNT} ${TOTAL_SF_COUNT} $((TOTAL_OK_COUNT+TOTAL_KO_COUNT+TOTAL_SF_COUNT))
+	printf "\n\n${MAIN_COLOR}  Any issue send via slack bmoll-pe, arebelo or ailopez-o\n\n${MAIN_COLOR}"
 	clean_exit
 #

@@ -8,8 +8,5 @@ cd .
 #mkdir testdirtest &> /dev/null;chmod 000 testdirtest &> /dev/null
 cd testdirtest;@cd testdirtest(no permision)
 #chmod 666 testdirtest &> /dev/null;rm -rf testdirtest &> /dev/null
-#mkdir testdirtest &> /dev/null
-cd testdirtest;bash;cd .. && rm -rf testdirtest && exit;pwd;cd .;pwd@rm -rf actual dir and cd .
-#mkdir testdirtest &> /dev/null
 cd 255chars255chars255chars255char255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars255chars@cd maxpathlen
 cd 256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars256chars@cd maxpathlen + 1

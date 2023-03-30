@@ -98,6 +98,5 @@ cat < file3@cat < file3 (no permision)
 
 # rm file file2 file3 &> /dev/null
 
-# echo hi, I am the file > file
-
-@< file cat > file2 2> error_outp < non_exist;cat file;cat error_outp;rm file file2 error_outp@< file cat > file2 2> error_outp < non_exist
+echo hi 2> error_outp < non_exist@echo hi 2> error_outp < non_exist
+# rm error_outp &> /dev/null
