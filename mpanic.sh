@@ -117,47 +117,37 @@
 	function	print_test_result()
 	{
 		CLL=${MAIN_COLOR}
-		if [ "${#i}" == "1" ]; then
-			print_color ${MAIN_COLOR} "  ${i}.   [${MAIN_COLOR}"
-		else
-			if [ "${#i}" == "2" ]; then
-				print_color ${MAIN_COLOR} "  ${i}.  [${MAIN_COLOR}"
-			else
-				if [ "${#i}" == "3" ]; then
-					print_color ${MAIN_COLOR} "  ${i}. [${MAIN_COLOR}"
-				fi
-			fi
-		fi
-		if [ "$ret" == "1" ]; then
-			printf "${GREEN}OK${MAIN_COLOR}"
-			CLL=${GREEN}
-		else
-			if [ "$ret" == "0" ]; then
-				printf "${RED}KO${MAIN_COLOR}"
-				CLL=${RED}
-			else
-				if [ "$ret" == "2" ]; then
-					printf "${YELLOW}OK${MAIN_COLOR}"
-					CLL=${YELLOW}
-				else
-					printf "${RED}SF${MAIN_COLOR}"
-					CLL=${RED}
-				fi
-			fi
-		fi
+
+		case ${#i} in
+			1) print_color ${MAIN_COLOR} "  ${i}.   [${MAIN_COLOR}" ;;
+			2) print_color ${MAIN_COLOR} "  ${i}.  [${MAIN_COLOR}" ;;
+			3) print_color ${MAIN_COLOR} "  ${i}. [${MAIN_COLOR}" ;;
+		esac
+
+		case $ret in
+			1) printf "${GREEN}OK${MAIN_COLOR}"; CLL=${GREEN} ;;
+			0) printf "${RED}KO${MAIN_COLOR}"; CLL=${RED} ;;
+			2) printf "${YELLOW}OK${MAIN_COLOR}"; CLL=${YELLOW} ;;
+			*) printf "${RED}SF${MAIN_COLOR}"; CLL=${RED} ;;
+		esac
+
 		print_color ${MAIN_COLOR} "] - |"
-		printf ${CLL};
+		printf ${CLL}
+
 		if [ "$2" ]; then
-			printf "$2";
+		printf "$2"
 		else
-			printf "$1";
+		printf "$1"
 		fi
-		printf "${MAIN_COLOR}|${MAIN_COLOR}";
+
+		printf "${MAIN_COLOR}|${MAIN_COLOR}"
+
 		if [ "$ret" == "3" ]; then
-			printf "${RED} <--- SF!${MAIN_COLOR}\n";
+		printf "${RED} <--- SF!${MAIN_COLOR}\n"
 		else
-			printf "\n";
+		printf "\n"
 		fi
+
 	}
 
 	function	add_summary()
@@ -387,7 +377,8 @@
 		print_in_traces "traces/parse/spaces_trace.txt" &> /dev/null
 		print_in_traces "traces/parse/tilde_trace.txt" &> /dev/null
 		print_in_traces "traces/parse/syntax_error_trace.txt" &> /dev/null
-		printf ${MAIN_COLOR}"\n\n|------------------------{ dollars }\n\n"${MAIN_COLOR}
+		printf "\n\n    ----------------------[ dollar ]----------------------\n\n"
+		# printf "\n%62s\n\n" "[ dollars ]-------------------------|"
 		OK_COUNT=0
 		KO_COUNT=0
 		SF_COUNT=0
@@ -396,7 +387,7 @@
 			main_test_call "bonus/parser/dollar.txt" "exec_function" "traces/parse/dollar_trace.txt"
 		fi
 		add_summary "dollars" "${OK_COUNT}" "${KO_COUNT}" "${SF_COUNT}"
-		printf ${MAIN_COLOR}"\n\n|------------------------{ quotes }\n\n"${MAIN_COLOR}
+		printf "\n    ----------------------[ quotes ]----------------------\n\n"
 		OK_COUNT=0
 		KO_COUNT=0
 		SF_COUNT=0
@@ -405,7 +396,7 @@
 			main_test_call "bonus/parser/quotes.txt" "exec_function" "traces/parse/quotes_trace.txt"
 		fi
 		add_summary "quotes" "${OK_COUNT}" "${KO_COUNT}" "${SF_COUNT}"
-		printf ${MAIN_COLOR}"\n\n|------------------------{ spaces }\n\n"${MAIN_COLOR}
+		printf "\n    ----------------------[ spaces ]----------------------\n\n"
 		OK_COUNT=0
 		KO_COUNT=0
 		SF_COUNT=0
@@ -414,7 +405,7 @@
 			main_test_call "bonus/parser/spaces.txt" "exec_function" "traces/parse/spaces_trace.txt"
 		fi
 		add_summary "spaces" "${OK_COUNT}" "${KO_COUNT}" "${SF_COUNT}"
-		printf ${MAIN_COLOR}"\n\n|------------------------{ tilde }\n\n"${MAIN_COLOR}
+		printf "\n    -----------------------[ tilde ]----------------------\n\n"
 		OK_COUNT=0
 		KO_COUNT=0
 		SF_COUNT=0
@@ -423,7 +414,7 @@
 			main_test_call "bonus/parser/tilde.txt" "exec_function" "traces/parse/tilde_trace.txt"
 		fi
 		add_summary "tilde" "${OK_COUNT}" "${KO_COUNT}" "${SF_COUNT}"
-		printf ${MAIN_COLOR}"\n\n|------------------------{ syntax_error }\n\n"${MAIN_COLOR}
+		printf "\n    -------------------[ syntax_error ]-------------------\n\n"
 		OK_COUNT=0
 		KO_COUNT=0
 		SF_COUNT=0
@@ -432,7 +423,7 @@
 			print_in_traces "traces/parse/operators_trace.txt" &> /dev/null
 			main_test_call "bonus/parser/syntax_error.txt" "exec_function" "traces/parse/operators_trace.txt"
 			add_summary "syntax_error" "${OK_COUNT}" "${KO_COUNT}" "${SF_COUNT}"
-			printf ${MAIN_COLOR}"\n\n|------------------------{ operators }\n\n"${MAIN_COLOR}
+			printf "\n    ---------------------[ operators ]----------------------\n\n"
 			OK_COUNT=0
 			KO_COUNT=0
 			SF_COUNT=0
@@ -766,5 +757,11 @@
 	printf "${SUMARY}\n"
 	printf "\n  %-30s ${GREEN}[%04d]${MAIN_COLOR} ${RED}[%04d]${MAIN_COLOR} ${RED}[%04d]${MAIN_COLOR} [%04d]" "total" ${TOTAL_OK_COUNT} ${TOTAL_KO_COUNT} ${TOTAL_SF_COUNT} $((TOTAL_OK_COUNT+TOTAL_KO_COUNT+TOTAL_SF_COUNT))
 	printf "\n\n${MAIN_COLOR}  Any issue send via slack bmoll-pe, arebelo or ailopez-o\n\n${MAIN_COLOR}"
+
+	# command="este_es_un_comando_muy_largo"
+	# status="OK"
+	# printf "%-56s %s\n" "|$command|" "[$status]"
+	# printf "|%-*s| %s\n" "$(tput cols)" "$command" "[$status]"
+
 	clean_exit
 #
