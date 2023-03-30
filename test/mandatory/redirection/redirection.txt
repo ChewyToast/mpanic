@@ -100,3 +100,7 @@ cat < file3@cat < file3 (no permision)
 
 echo hi 2> error_outp < non_exist@echo hi 2> error_outp < non_exist
 # rm error_outp &> /dev/null
+
+echo hi < non_exist > wrong;ls;rm wrong@echo hi < non_exist > wrong
+< non_exist echo hi > wrong;ls;rm wrong@echo hi < non_exist > wrong
+> correct echo hi < non_exist;ls;rm correct@echo hi < non_exist > wrong
