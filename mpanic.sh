@@ -135,7 +135,6 @@
 			1) printf "${GREEN}%s${MAIN_COLOR}|" "$msg" ;;
 			*) printf "${RED}%s${MAIN_COLOR}|" "$msg" ;;
 		esac
-		# printf "${GREEN}%s${MAIN_COLOR}|" "$msg"
 
 		local padding=$(( 47 - ${#msg} ))
 
