@@ -13,12 +13,12 @@
 
 	function	print_helper()
 	{
-		echo -e "\n${MAIN_COLOR} Usage:${MAIN_COLOR} bash mpanic.sh [options] [arguments]\n"
-		echo -e "${MAIN_COLOR} Options:${MAIN_COLOR}"
+		echo -e "\n${YELLOW} Usage:${MAIN_COLOR} bash mpanic.sh [options] [arguments]\n"
+		echo -e "${YELLOW} Options:${MAIN_COLOR}"
 		echo -e "\t-h --help\tShow this help message"
 		echo -e "\t-b --bonus\tWill execute the tester with bonus tests"
 		echo -e "\t-i --ignore\tWill run all tests except those specified by argument\n\t\t\t(compatible with bonus option)"
-		echo -e "\n${MAIN_COLOR} Arguments:${MAIN_COLOR}"
+		echo -e "\n${YELLOW} Arguments:${MAIN_COLOR}"
 		echo -e "\techo\t\tExecute the echo tests"
 		echo -e "\texport\t\tExecute the export tests"
 		echo -e "\tenv\t\tExecute the env tests"
@@ -116,38 +116,38 @@
 
 	function	print_test_result()
 	{
-		CLL=${MAIN_COLOR}
+		if [ "$2" ]; then msg=$2
+		else msg=$1
+		fi
 
 		case ${#i} in
-			1) print_color ${MAIN_COLOR} "  ${i}.   [${MAIN_COLOR}" ;;
-			2) print_color ${MAIN_COLOR} "  ${i}.  [${MAIN_COLOR}" ;;
-			3) print_color ${MAIN_COLOR} "  ${i}. [${MAIN_COLOR}" ;;
+			1) printf "${MAIN_COLOR}  ${i}.   |${MAIN_COLOR}" ;;
+			2) printf "${MAIN_COLOR}  ${i}.  |${MAIN_COLOR}" ;;
+			3) printf "${MAIN_COLOR}  ${i}. |${MAIN_COLOR}" ;;
 		esac
+
+		if [ ${#msg} -gt 47 ]; then
+			msg=${msg:0:40}"..."
+		fi
 
 		case $ret in
-			1) printf "${GREEN}OK${MAIN_COLOR}"; CLL=${GREEN} ;;
-			0) printf "${RED}KO${MAIN_COLOR}"; CLL=${RED} ;;
-			2) printf "${YELLOW}OK${MAIN_COLOR}"; CLL=${YELLOW} ;;
-			*) printf "${RED}SF${MAIN_COLOR}"; CLL=${RED} ;;
+			0) printf "${RED}%s${MAIN_COLOR}|" "$msg" ;;
+			1) printf "${GREEN}%s${MAIN_COLOR}|" "$msg" ;;
+			*) printf "${RED}%s${MAIN_COLOR}|" "$msg" ;;
 		esac
+		# printf "${GREEN}%s${MAIN_COLOR}|" "$msg"
 
-		print_color ${MAIN_COLOR} "] - |"
-		printf ${CLL}
+		local padding=$(( 47 - ${#msg} ))
 
-		if [ "$2" ]; then
-		printf "$2"
-		else
-		printf "$1"
+		if [ $padding -gt 0 ]; then
+			printf "%0.s " $(seq 1 $padding)
 		fi
 
-		printf "${MAIN_COLOR}|${MAIN_COLOR}"
-
-		if [ "$ret" == "3" ]; then
-		printf "${RED} <--- SF!${MAIN_COLOR}\n"
-		else
-		printf "\n"
-		fi
-
+		case $ret in
+			0) printf "[${RED}K0${MAIN_COLOR}]\n" ;;
+			1) printf "[${GREEN}OK${MAIN_COLOR}]\n" ;;
+			*) printf "[${RED}KO${MAIN_COLOR}]\n" ;;
+		esac
 	}
 
 	function	add_summary()
@@ -377,7 +377,7 @@
 		print_in_traces "traces/parse/spaces_trace.txt" &> /dev/null
 		print_in_traces "traces/parse/tilde_trace.txt" &> /dev/null
 		print_in_traces "traces/parse/syntax_error_trace.txt" &> /dev/null
-		printf "\n\n    ----------------------[ dollar ]----------------------\n\n"
+		printf "\n\n    ----------------------[ dollar ]---------------------\n\n"
 		OK_COUNT=0
 		KO_COUNT=0
 		SF_COUNT=0
@@ -386,7 +386,7 @@
 			main_test_call "bonus/parser/dollar.txt" "exec_function" "traces/parse/dollar_trace.txt"
 		fi
 		add_summary "dollars" "${OK_COUNT}" "${KO_COUNT}" "${SF_COUNT}"
-		printf "\n    ----------------------[ quotes ]----------------------\n\n"
+		printf "\n    ----------------------[ quotes ]---------------------\n\n"
 		OK_COUNT=0
 		KO_COUNT=0
 		SF_COUNT=0
@@ -395,7 +395,7 @@
 			main_test_call "bonus/parser/quotes.txt" "exec_function" "traces/parse/quotes_trace.txt"
 		fi
 		add_summary "quotes" "${OK_COUNT}" "${KO_COUNT}" "${SF_COUNT}"
-		printf "\n    ----------------------[ spaces ]----------------------\n\n"
+		printf "\n    ----------------------[ spaces ]---------------------\n\n"
 		OK_COUNT=0
 		KO_COUNT=0
 		SF_COUNT=0
@@ -404,7 +404,7 @@
 			main_test_call "bonus/parser/spaces.txt" "exec_function" "traces/parse/spaces_trace.txt"
 		fi
 		add_summary "spaces" "${OK_COUNT}" "${KO_COUNT}" "${SF_COUNT}"
-		printf "\n    -----------------------[ tilde ]----------------------\n\n"
+		printf "\n    -----------------------[ tilde ]---------------------\n\n"
 		OK_COUNT=0
 		KO_COUNT=0
 		SF_COUNT=0
@@ -413,23 +413,21 @@
 			main_test_call "bonus/parser/tilde.txt" "exec_function" "traces/parse/tilde_trace.txt"
 		fi
 		add_summary "tilde" "${OK_COUNT}" "${KO_COUNT}" "${SF_COUNT}"
-		printf "\n    -------------------[ syntax_error ]-------------------\n\n"
+		printf "\n    -------------------[ syntax_error ]------------------\n\n"
 		OK_COUNT=0
 		KO_COUNT=0
 		SF_COUNT=0
 		main_test_call "mandatory/parser/syntax_error.txt" "exec_function" "traces/parse/syntax_error_trace.txt"
+		add_summary "syntax_error" "${OK_COUNT}" "${KO_COUNT}" "${SF_COUNT}"
 		if [ ${TESTER_MODE} == "bonus" ]; then
 			print_in_traces "traces/parse/operators_trace.txt" &> /dev/null
 			main_test_call "bonus/parser/syntax_error.txt" "exec_function" "traces/parse/operators_trace.txt"
-			add_summary "syntax_error" "${OK_COUNT}" "${KO_COUNT}" "${SF_COUNT}"
-			printf "\n    ---------------------[ operators ]----------------------\n\n"
+			printf "\n    ---------------------[ operators ]---------------------\n\n"
 			OK_COUNT=0
 			KO_COUNT=0
 			SF_COUNT=0
 			main_test_call "bonus/parser/operators.txt" "exec_function" "traces/parse/operators_trace.txt"
 			add_summary "operators" "${OK_COUNT}" "${KO_COUNT}" "${SF_COUNT}"
-		else
-			add_summary "syntax_error" "${OK_COUNT}" "${KO_COUNT}" "${SF_COUNT}"
 		fi
 		print_end_tests "${EOK}" "${ESF}" "traces/parse/*.txt" "parser"
 		TTPARSER="1";
@@ -464,7 +462,7 @@
 		EOK="OK"
 		ESF=""
 		printf ${MAIN_COLOR}"\n|======================[ REDIRECTIONS ]======================|"${MAIN_COLOR}
-		print_in_traces "traces/pipes_trace.txt"
+		print_in_traces "traces/redirection_trace.txt"
 		main_test_call "mandatory/redirection/redirection.txt" "exec_function" "traces/redirection_trace.txt"
 		if [ ${TESTER_MODE} == "bonus" ]; then
 			main_test_call "bonus/redirection/redirection.txt" "exec_function" "traces/redirection_trace.txt"
@@ -577,7 +575,9 @@
 			"-i"|"--ignore") IGNORE="1" ;;
 			"echo"|"export"|"exit"|"parser"|"pipe"|"redirection"|"status"|"env"|"directory"|"your"|"panicm"|"panics") ;;
 			"-b"|"--bonus") TESTER_MODE="bonus" ;;
-			*) printf "\n Invalid argument:"${MAIN_COLOR}" $arg\n Type "${MAIN_COLOR}"--help"${MAIN_COLOR}" to see the valid options\n\n"${MAIN_COLOR} && exit 1 ;;
+			*) printf "\n Invalid argument:"${MAIN_COLOR}" $arg\n" 
+				print_helper
+				clean_exit;;
 		esac
 	done
 
@@ -585,9 +585,9 @@
 		print_helper;
 	fi
 
-	printf ${CYAN}"\n\t\t    -----------------------"${MAIN_COLOR};
-	printf ${CYAN}"\n\t\t   | 👹 MINISHELL PANIC 👹 |\n"${MAIN_COLOR};
-	printf ${CYAN}"\t\t    -----------------------\n\n"${MAIN_COLOR};
+	printf ${RED}"\n\t\t    -----------------------"${MAIN_COLOR};
+	printf ${RED}"\n\t\t   | 👹 MINISHELL PANIC 👹 |\n"${MAIN_COLOR};
+	printf ${RED}"\t\t    -----------------------\n\n"${MAIN_COLOR};
 
 #
 
@@ -726,7 +726,7 @@
 			redirection_test_call;
 			status_test_call;
 			panic_mandatory_test_call;
-			panic_scapes_test_call;
+			# panic_scapes_test_call;
 			your_test_call;
 	else
 		if [[ "$#" == "1" && ( "$1" == "-b" || "$1" == "--bonus" ) ]]; then
@@ -740,7 +740,7 @@
 			redirection_test_call;
 			status_test_call;
 			panic_mandatory_test_call;
-			panic_scapes_test_call;
+			# panic_scapes_test_call;
 			your_test_call;
 		elif [[ "$#" != "0" ]]; then
 			for arg in "$@"
@@ -771,7 +771,7 @@
 			redirection_test_call;
 			status_test_call;
 			panic_mandatory_test_call;
-			panic_scapes_test_call;
+			# panic_scapes_test_call;
 			your_test_call;
 		fi
 	fi

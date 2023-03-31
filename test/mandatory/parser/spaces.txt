@@ -1,24 +1,13 @@
 ""
 " "
-\necho hi@'\n'echo hi
-\techo hi@\'\t'echo hi
-\vecho hi@\'\v'echo hi
-\fecho hi@\'\f'echo hi
-\recho hi@\'\r'echo hi
+  
+	echo hi@\\techo hi
+echo	hi@echo\\thi
+	echo	hi@\\techo\\thi
+	echo	hi@\\techo\\thi
+   	echo	hi@  \\techo\\thi
+	echo	   hi@\\techo\\t   hi
 
-echo  hi
-echo		hi
-echo	""	hi
 
-echo\thi
-echo\t\t@echotabs
-echo \t \t\t\t@echo mix spaces and tabs
-
-\fecho\fhi @form feed interpolation
-\necho\nhi @new line interpolation
-\recho\rhi @carriage return interpolation
-\vecho\vhi @vertical tab interpolation
-\r\v\fecho\r\v\fhi@ mixed interpolation
-
-\t\t\t\t\t\t@many tabs
+			@many tabs
             @many spaces

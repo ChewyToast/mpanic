@@ -1,4 +1,12 @@
 echo hola | ( cat -n && cat -e) | cat -n
 echo hola | ( catn -n && cat -e) | cat -n
 echo hola | ( echo adios | cat -e) | cat -n
-
+(echo a) | (cat -e)
+(echo a) | (cat -e | cat -e)
+echo a | (cat -e | cat -e | cat -e)
+echo a | (cat -e | cat -e | cat -e) | cat -e
+(echo a) | (cat -e | cat -e | cat -e) | cat -e
+(echo a) | (cat -e | cat -e | cat -e) | (cat -e)
+(cat /etc/shells) | (cat -e) | (cat -e) | (cat -e)
+(echo hola) | (cat -n)
+(echo hola) | (cat -n | cat -e)

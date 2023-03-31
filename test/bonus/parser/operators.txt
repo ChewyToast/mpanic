@@ -30,15 +30,6 @@ ls doesnotexist || (echo b && echo c)
 (ls doesntexist || ls)
 (ls doesntexist && ls)
 (ls && ls) && echo $?
-(echo a) | (cat -e)
-(echo a) | (cat -e | cat -e)
-echo a | (cat -e | cat -e | cat -e)
-echo a | (cat -e | cat -e | cat -e) | cat -e
-(echo a) | (cat -e | cat -e | cat -e) | cat -e
-(echo a) | (cat -e | cat -e | cat -e) | (cat -e)
-(cat /etc/shells) | (cat -e) | (cat -e) | (cat -e)
-(echo hola) | (cat -n)
-(echo hola) | (cat -n | cat -e)
 
 echo *
 #touch file1.txt file2.txt

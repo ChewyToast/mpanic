@@ -1,5 +1,5 @@
 
-echo hi;echo $?;hi echo@echo $?@ echo $?
+echo hi;echo $?@echo $?
 
 echo $
 echo hi$
@@ -7,9 +7,9 @@ echo '$ '
 echo $/
 echo "'$'"
 
-echo $'\n' | cat -e@echo \$'\n'
-echo $'\r' | cat -e@echo \$'\r'
-echo $'\t' | cat -e@echo \$'\t'
+echo $'\\n' | cat -e@echo \$'\\n'
+echo $'\\r' | cat -e@echo \$'\\r'
+echo $'\\t' | cat -e@echo \$'\\t'
 
 echo $USER
 echo $NONEXIST

@@ -28,8 +28,7 @@ echo '""""""""""""'
 echo hi"hi" hi'h"i'
 echo "hi" "hi"
 echo "hi"  "hi"
-echo "hi"	"hi"
-echo "hi"\t"hi"
+echo "hi"\t"hi"@echo "hi"tab"hi"
 
 " echo"
 ' echo'

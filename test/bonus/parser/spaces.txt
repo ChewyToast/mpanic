@@ -1,0 +1,3 @@
+	echo hi		||	echo hi@\\techo hi\\t\\t||\\techo hi
+	echo hi		&&	echo hi@\\techo hi\\t\\t&&\\techo hi
+	echo hi		&&	(		echo hi&&          echo hi)@\\techo hi\\t\\t&&\\t(\\t\\techo hi&&          echo hi)

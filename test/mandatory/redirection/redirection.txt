@@ -106,3 +106,6 @@ echo hi < non_exist > wrong;ls;rm wrong@echo hi < non_exist > wrong
 > correct echo hi < non_exist;ls;rm correct@> correct echo hi < non_exist
 
 #rm correct
+
+echo hi 0> file;cat file;rm file
+cat hi 0> file;cat file;rm file
