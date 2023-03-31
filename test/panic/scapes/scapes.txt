@@ -1,55 +1,16 @@
-echo \a
-\e\c\h\o bonjour
-echo charles\
-echo \ \ jesuis\ \ charles
-echo \ \ jesuis\; \ charles
-echo \ \ jesuis\&\& \ charles
-echo \ \ jesuis\|\| \ charles
-echo \ \ jesuis \|\| \ charles
-echo \ \ jesuis\; \ charles
-echo \ \ \ \ \ \ \ \
-echo \ \ \ \ \ \ \ \               \ \ \ \ \ \
-echo \$PATH
-echo \$\P\A\T\H
-echo\ bonjour
-\ echo bonjour
- \ echo bonjour
-                 \ echo bonjour
- \                 echo bonjour
-                 \                    echo bonjour
-/bin/echo " \  "
-/bin/echo " \" "
-/bin/echo " \' "
-/bin/echo " \a "
-/bin/echo " \b "
-/bin/echo " \| "
-/bin/echo " \! "
-/bin/echo " \@ "
-/bin/echo " \$ "
-/bin/echo " \$LESS "
-/bin/echo " \$? "
-/bin/echo " \\ "
-/bin/echo " \\\ "
-/bin/echo " \\\\ "
-/bin/echo " \\\\\ "
-/bin/echo " \\\\\\ "
-/bin/echo " \\\\\\\ "
-/bin/echo " \\\\\\\\ "
-/bin/echo ' \  '
-/bin/echo ' \" '
-/bin/echo ' \a '
-/bin/echo ' \b '
-/bin/echo ' \| '
-/bin/echo ' \! '
-/bin/echo ' \@ '
-/bin/echo ' \$ '
-/bin/echo ' $LESS '
-/bin/echo ' \$? '
-/bin/echo ' \\ '
-/bin/echo ' \\\ '
-echo \
-echo "\""'bonjour'
-echo "AH\""
-echo '\''
-echo "\""
-
+echo \\a
+echo \\ 
+e\\cho hi
+\\eCho hi
+\\Echo hi
+echo \\ hi
+echo hi \\ 
+echo hi \\ \\| echo hi
+echo hi \\ \\&\\& echo hi
+echo \\$USER
+echo $\\USER
+echo " \\" "
+echo " \\' "
+echo ' \\" '
+echo ' \\' '
+echo\\ hi

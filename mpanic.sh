@@ -213,7 +213,7 @@
 				KO_COUNT=$((KO_COUNT+1))
 				ret=0
 				EOK="KO"
-				trace_printer "${1}" "${i}" "$(cat ${2})" "${ES2}" "${BASH_STDOUTP}" "${BASH_ERROUTP_CUT}" "${ES1}" "$(cat -e .tmp/exec_outp.txt)" "${MINI_ERROUTP}" "${SF_TMP}" "${BASH_ERROUTP}";
+				trace_printer "${1}" "${i}" "$(cat ${2})" "${ES2}" "${BASH_STDOUTP}" "${BASH_ERROUTP_CUT}" "${ES1}" "${MINI_STDOUTP}" "${MINI_ERROUTP}" "${SF_TMP}" "${BASH_ERROUTP}";
 			fi
 		fi
 
@@ -380,7 +380,6 @@
 		print_in_traces "traces/parse/tilde_trace.txt" &> /dev/null
 		print_in_traces "traces/parse/syntax_error_trace.txt" &> /dev/null
 		printf "\n\n    ----------------------[ dollar ]----------------------\n\n"
-		# printf "\n%62s\n\n" "[ dollars ]-------------------------|"
 		OK_COUNT=0
 		KO_COUNT=0
 		SF_COUNT=0
@@ -518,7 +517,7 @@
 
 	function panic_mandatory_test_call()
 	{
-		rm-rf traces/panic &> /dev/null
+		rm-rf traces/panic/panic_mandatory.txt &> /dev/null
 		mkdir traces/panic &> /dev/null
 		if [ "$TTPM" != "" ]; then
 			return ;
@@ -534,6 +533,26 @@
 		print_end_tests "${EOK}" "${ESF}" "traces/panic/panic_mandatory.txt" "panic mandatory"
 		add_summary "panic mandatory" "${OK_COUNT}" "${KO_COUNT}" "${SF_COUNT}"
 		TTPM="1";
+	}
+
+	function panic_scapes_test_call()
+	{
+		rm-rf traces/panic/panic_scapes.txt &> /dev/null
+		mkdir traces/panic &> /dev/null
+		if [ "$TTPS" != "" ]; then
+			return ;
+		fi
+		OK_COUNT=0
+		KO_COUNT=0
+		SF_COUNT=0
+		EOK="OK"
+		ESF=""
+		printf ${MAIN_COLOR}"\n|======================[ PANIC SCAPES ]======================|"${MAIN_COLOR}
+		print_in_traces "traces/panic/panic_scapes.txt"
+		main_test_call "panic/scapes/scapes.txt" "exec_function" "traces/panic/panic_scapes.txt"
+		print_end_tests "${EOK}" "${ESF}" "traces/panic/panic_scapes.txt" "panic scapes"
+		add_summary "panic scapes" "${OK_COUNT}" "${KO_COUNT}" "${SF_COUNT}"
+		TTPS="1";
 	}
 
 #
@@ -558,7 +577,7 @@
 		case "$arg" in
 			"-h"|"--help") print_helper ;;
 			"-i"|"--ignore") IGNORE="1" ;;
-			"echo"|"export"|"exit"|"parser"|"pipe"|"redirection"|"status"|"env"|"directory"|"your"|"panicm") ;;
+			"echo"|"export"|"exit"|"parser"|"pipe"|"redirection"|"status"|"env"|"directory"|"your"|"panicm"|"panics") ;;
 			"-b"|"--bonus") TESTER_MODE="bonus" ;;
 			*) printf "\n Invalid argument:"${MAIN_COLOR}" $arg\n Type "${MAIN_COLOR}"--help"${MAIN_COLOR}" to see the valid options\n\n"${MAIN_COLOR} && exit 1 ;;
 		esac
@@ -673,8 +692,10 @@
 		TTREDIRECT=""
 	# Status done
 		TTSTATUS=""
-	# Status done
-		TTYOUR=""
+	# Panic mandatori done
+		TTPM=""
+	# Panic scapes done
+		TTPS=""
 #
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  EXECUTOR
@@ -692,6 +713,8 @@
 				"pipe") TTPIPE="1";;
 				"redirection") TTREDIRECT="1";;
 				"status") TTSTATUS="1";;
+				"panicm") TTPM="1";;
+				"panics") TTPS="1";;
 				"your") TTYOUR="1";;
 			esac
 		done
@@ -705,6 +728,7 @@
 			redirection_test_call;
 			status_test_call;
 			panic_mandatory_test_call;
+			panic_scapes_test_call;
 			your_test_call;
 	else
 		if [[ "$#" == "1" && ( "$1" == "-b" || "$1" == "--bonus" ) ]]; then
@@ -718,6 +742,7 @@
 			redirection_test_call;
 			status_test_call;
 			panic_mandatory_test_call;
+			panic_scapes_test_call;
 			your_test_call;
 		elif [[ "$#" != "0" ]]; then
 			for arg in "$@"
@@ -733,6 +758,7 @@
 					"redirection") redirection_test_call;;
 					"status") status_test_call;;
 					"panicm") panic_mandatory_test_call;;
+					"panics") panic_scapes_test_call;;
 					"your") your_test_call;;
 				esac
 			done
@@ -747,6 +773,7 @@
 			redirection_test_call;
 			status_test_call;
 			panic_mandatory_test_call;
+			panic_scapes_test_call;
 			your_test_call;
 		fi
 	fi
