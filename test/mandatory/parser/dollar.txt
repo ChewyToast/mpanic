@@ -2,7 +2,9 @@
 echo hi;echo $?;hi echo@echo $?@ echo $?
 
 echo $
-
+echo hi$
+echo '$ '
+echo $/
 echo "'$'"
 
 echo $'\n' | cat -e@echo \$'\n'

@@ -11,8 +11,8 @@ echo		hi
 echo	""	hi
 
 echo\thi
-echo\t\t\t\t@'echo\\t\\t\\t\\t'
-echo \t\t\t\t@'echo \\t\\t\\t\\t'
+echo\t\t@echotabs
+echo \t \t\t\t@echo mix spaces and tabs
 
 \fecho\fhi @form feed interpolation
 \necho\nhi @new line interpolation
@@ -20,4 +20,5 @@ echo \t\t\t\t@'echo \\t\\t\\t\\t'
 \vecho\vhi @vertical tab interpolation
 \r\v\fecho\r\v\fhi@ mixed interpolation
 
-\t\t\t\t\t\t@'\\t\\t\\t\\t\\t\\t'
+\t\t\t\t\t\t@many tabs
+            @many spaces

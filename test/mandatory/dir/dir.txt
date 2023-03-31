@@ -1,5 +1,19 @@
 pwd
 cd;pwd@cd
+pwd;cd "";pwd@cd ""
+cd " "
+cd "" ""
+cd / non_existent
+cd /.
+cd //
+cd ' / '
+#touch file &> /dev/null
+cd file
+#chmod 000 &> /dev/null
+cd file@cd file (no permission)
+cd file/non_existent
+#chmod 777 file &> /dev/null
+#rm -rf file &> /dev/null
 cd ~;cd non_exist@cd non_exist
 cd ..;pwd@cd ..
 cd ~;pwd@cd ~

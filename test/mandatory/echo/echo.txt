@@ -3,6 +3,7 @@ echo ñ
 echo hi
 echo $PATH
 echo $NONEXIST
+echoecho
 echo -n
 echo -n hi
 echo --n hi
