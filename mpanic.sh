@@ -152,8 +152,6 @@
 
 	function	add_summary()
 	{
-		# printf -v SUMMARY "%s\n  %-30s  ${GREEN}%3d${MAIN_COLOR}    ${RED}%3d${MAIN_COLOR}    ${RED}%3d${MAIN_COLOR}    %3d" "${SUMMARY}" "[${1}]" ${2} ${3} ${4} $((${2}+${3}+${4}))
-		# printf -v SUMMARY "%s\n  %-30s  ${GREEN}%3d${MAIN_COLOR}    ${RED}%3d${MAIN_COLOR}    ${RED}%3d${MAIN_COLOR}    %3d" "${SUMMARY}" "[${1}]" ${2} ${3} ${4} $((${2}+${3}+${4}))
 		printf -v SUMARY "%s\n  %-30s  ${GREEN}%3d${MAIN_COLOR}    ${RED}%3d${MAIN_COLOR}    ${RED}%3d${MAIN_COLOR}    %3d" "${SUMARY}" "[${1}]" ${2} ${3} ${4} $((${2}+${3}+${4}))
 	}
 
@@ -780,17 +778,10 @@
 #
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  ENDER
-	# printf "${RED}\n\tmore test comming soon...👹${DEF_COLOR}\n\n"
 	printf "${MAIN_COLOR}\n|============================================================|\n\n${MAIN_COLOR}"
 	printf "  %-30s ${GREEN}%-5s${MAIN_COLOR} ${RED}%-5s${MAIN_COLOR} ${RED}%-5s${MAIN_COLOR} %-5s" "SUMARY" "[ OK ]" "[ KO ]" "[ SF ]" "[ TT ]"
 	printf "${SUMARY}\n"
 	printf "\n  %-30s ${GREEN}[%04d]${MAIN_COLOR} ${RED}[%04d]${MAIN_COLOR} ${RED}[%04d]${MAIN_COLOR} [%04d]" "total" ${TOTAL_OK_COUNT} ${TOTAL_KO_COUNT} ${TOTAL_SF_COUNT} $((TOTAL_OK_COUNT+TOTAL_KO_COUNT+TOTAL_SF_COUNT))
 	printf "\n\n\n${MAIN_COLOR}  Any issue send via slack bmoll-pe, arebelo or ailopez-o\n\n${MAIN_COLOR}"
-
-	# command="este_es_un_comando_muy_largo"
-	# status="OK"
-	# printf "%-56s %s\n" "|$command|" "[$status]"
-	# printf "|%-*s| %s\n" "$(tput cols)" "$command" "[$status]"
-
 	clean_exit
 #

@@ -1,8 +1,8 @@
 echo \\a
 echo \\ 
 e\\cho hi
-\\eCho hi
-\\Echo hi
+eC\\ho hi
+e\\Cho hi
 echo \\ hi
 echo hi \\ 
 echo hi \\ \\| echo hi
