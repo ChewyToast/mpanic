@@ -1,3 +1,4 @@
+
 > no_cmd_file;cat no_cmd_file;rm no_cmd_file@> no_cmd_file
 >> no_cmd_test;cat no_cmd_test;rm no_cmd_test@>> no_cmd_test
 echo hola | > filepipe;cat filepipe;rm filepipe@echo hola | > filepipe
@@ -50,6 +51,10 @@ echo hi >>'with spaces';echo hi >>'with spaces';cat 'with spaces';rm 'with space
 
 echo hi > "mixed"'file 'name;cat "mixedfile name";rm "mixedfile name"@echo hi > "mixed"'file 'name
 echo hi >> "mixed"'file 'name;echo hi >> "mixed"'file 'name;cat "mixedfile name";rm "mixedfile name"@echo hi >> "mixed"'file 'name
+
+echo hi 4> file; rm file
+echo hi 5< file; rm file
+echo hi 0< file; rm file
 
 # mkdir testfolder &> /dev/null
 echo hi > testfolder
