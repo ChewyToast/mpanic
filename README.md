@@ -26,13 +26,9 @@ Clone this repo inside your minishell folder
 git clone git@github.com:ChewyToast/mpanic.git
 ```
 
-Change the permissions of the script
-```bash
-chmod 777 ./mpanic.sh
-```
 Execute the script. First time you execute MPANIC, you get all the options you have to execute the test
 ```bash
-./mpanic
+bash mpanic
 ```
 
 <p align="center">
