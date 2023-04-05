@@ -149,6 +149,23 @@
 		esac
 	}
 
+	function	stop_tester()
+	{
+		while true; do
+			read -p "It looks like u getting all red.. do u want to stop the tester? [yes/no]: " answer
+			case $answer in
+				[Yy][Ee][Ss]) 
+					echo "Continuando con el tester..."
+					break ;;
+				[Nn][Oo]) 
+					echo "Saliendo del tester."
+					exit ;;
+				*) 
+					echo "Respuesta inválida. Por favor, escriba 'yes' o 'no'." ;;
+			esac
+		done
+	}
+
 	function	add_summary()
 	{
 		printf -v SUMARY "%s\n  %-30s  ${GREEN}%3d${MAIN_COLOR}    ${RED}%3d${MAIN_COLOR}    ${RED}%3d${MAIN_COLOR}    %3d" "${SUMARY}" "[${1}]" ${2} ${3} ${4} $((${2}+${3}+${4}))
@@ -213,7 +230,6 @@
 				trace_printer "${1}" "${i}" "$(cat ${2})" "${ES2}" "${BASH_STDOUTP}" "${BASH_ERROUTP_CUT}" "${ES1}" "${MINI_STDOUTP}" "${MINI_ERROUTP}" "${SF_TMP}" "${BASH_ERROUTP}";
 			fi
 		fi
-
 
 		print_test_result "${4}" "${3}";
 		echo -n "" > .tmp/exec_read.txt
