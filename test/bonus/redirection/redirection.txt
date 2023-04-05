@@ -7,5 +7,13 @@ echo hola && (echo adios) >> f1
 (echo hola) > f1 >> f2 > f3
 (echo hola > f1 && echo adios | cat -e) > f1 
 (echo hola > f1) > f2
+(echo hola > f1) 2> f2
+(echo hola > f1) 2>f2
+(echo hola > f1)2> f2
+(echo hola > f1)2>f2
+(echo hola > f1) a> f2
+(echo hola > f1)a> f2
+(echo hola > f1)a>f2
+(echo hola > f1) a>f2
 echo hola || 1> file;rm file@echo hola || 1> file
 #rm f1 f2 f3
