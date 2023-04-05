@@ -7,3 +7,7 @@ cd testdir;pwd;cd -;pwd@cd -
 #export TEMPVAR=$HOME;unset HOME
 echo ~@echo ~ (without $HOME in env)
 #export HOME=$TEMPVAR;unset TEMPVAR
+#mkdir testdirtest &> /dev/null
+env | grep PWD; cd testdirtest; env | grep PWD; unset PWD; cd ..; env | grep PWD
+env | grep PWD; cd testdirtest; env | grep PWD; export PWD=nosensedir; cd ..; env | grep PWD
+#rm -rf testdirtest &> /dev/null

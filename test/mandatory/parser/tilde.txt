@@ -5,3 +5,5 @@ echo ~$USER
 echo ~false
 echo \~
 echo ~$USER/sdfsfsfdsfs
+
+unset HOME ; echo ~
