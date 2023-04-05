@@ -482,7 +482,7 @@
 		EOK="OK"
 		ESF=""
 		printf ${MAIN_COLOR}"\n|=========================[ STATUS ]=========================|"${MAIN_COLOR}
-		print_in_traces "traces/pipes_trace.txt"
+		print_in_traces "traces/status_trace.txt"
 		main_test_call "mandatory/status/status.txt" "exec_function" "traces/status_trace.txt"
 		if [ ${TESTER_MODE} == "bonus" ]; then
 			main_test_call "bonus/status/status.txt" "exec_function" "traces/status_trace.txt"
