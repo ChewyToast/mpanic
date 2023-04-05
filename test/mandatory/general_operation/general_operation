@@ -1,9 +1,5 @@
 unset SHLVL;./minishell;echo $SHLVL
 export SHLVL=''; ./minishell; echo $SLVL
-unset HOME ; echo ~
-export PATH='::::::'; ./minishell
-export PATH='::::::'; ls
-export PATH='/usr/bin'; whoami
-env -i ./minishell;export;echo $PATH
-env | grep PWD; cd (algo existente); env | grep PWD; unset PWD; cd ..; env | grep PWD
 (OLDPWD se crea/actualiza al cambiar de directorio, cogiendo el valor de PWD, si PWD no existe, OLDPWD se borra tambien)
+env -i ./minishell;echo $PATH$USER
+env -i ./minishell;echo $PATH$USER$NONEXIST
