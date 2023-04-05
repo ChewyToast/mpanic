@@ -1,6 +1,7 @@
 echo
 echo ñ
 echo hi
+/bin/echo hi
 echo $PATH
 echo $NONEXIST
 echoecho

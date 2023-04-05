@@ -1,3 +1,5 @@
+echo | /bin/cat
+echo hi | /bin/cat
 cat /etc/shells | head -c 10
 cat -e /etc/shells | head -c 10
 cat -e /etc/shells | cat -e | head -c 10

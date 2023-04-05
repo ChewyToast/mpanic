@@ -1,3 +1,16 @@
+
+export 1A=value
+
+export /A=value
+
+export A/=value
+
+export 'A=value'
+
+export ' A=value'
+
+export 'A =value'
+
 export TEST=test;export | grep TEST@export TEST=test
 
 export TEST=test TESTT=test2;export | grep TEST@export TEST=test TESTT=test2
@@ -12,15 +25,6 @@ export TEST=value;export TEST+=" added value";export | grep TEST@export TEST+=" 
 
 export TEST=value;export | grep TEST@export existing variable
 
-export 1A=value
+export correct=correct wrong%=wrong;export | grep correct;export | grep wrong@export correct=correct wrong%=wrong
 
-export /A=value
-
-export A/=value
-
-export 'A=value'
-
-export ' A=value'
-
-export 'A =value'
-
+export wrong%=wrong correct=correct;export | grep correct;export | grep wrong@export wrong%=wrong correct=correct
