@@ -37,6 +37,8 @@ bash mpanic
 </p>
 
 
+
+
 ## Make your own test
 
 This tester has developed kind of meta-lenguaje to meke easy to add new test to the blocks that already exist (parser, echo, export... ) or to your own block
@@ -63,7 +65,9 @@ In some test you will neeed to prepare some files to check the correct behaivour
 
 For thsi situation we haved developed the # statement. Each line tha you write before # will be executed in the terminal but without compare nothig. Just like yo do that in the terminal. 
 
-For example this secuence will create a testfolder file without rights and then will execute all this tests. At the end is good practice to delete the file in the same way. We also recomend to redirects all the fd of the comnmand (&> /dev/null) after # statement to avoid random messages
+For example this secuence will create a testfolder file without rights and then will execute all this tests. At the end is good practice to delete the file in the same way. We also recomend to redirects all the fd of the comnmand (&> /dev/null) after # statement to avoid random messages.
+
+This lines, the # statements will executed quiet. You will see nothing about this lines in the testing.
 
 ```bash
 # chmod 000 testfolder &> /dev/null
@@ -73,11 +77,32 @@ echo hi 2> testfolder
 echo hi 2>> testfolder
 # rm testfolder
 ```
+### Batch testing
 
+Is there some situations than you can not resolve easily, for example if you execute this secuence, the echo will print nothing. This is because each line is executed in new minishell & bash. So the second minishell & bash have no variable called A.
 
+```bash
+export A="mpanic"
+echo $A
+```
 
+To solve this sititions you can do batch testing and send a secuence of commands to the same instance of minishell & bash. You only have to put the commands in arow separated by ';'
 
+In this secuence the result will be mpanic in stdout.
 
+```bash
+export A="mpanic"; echo $A
+```
+### Comments
 
+The tester will be print last command of the ';' separated secuence to recognice the test. But in some situations this last line is not representative of the test. For example
 
+```bash
+echo hi > testfolder; rm testfolder
+```
 
+To solve this you can add the text you want to show the tester adding at the end an '@' followe by the line yoy want.
+
+```bash
+echo hi > testfolder; rm testfolder @This is the line the tester will print to identify this test
+```
