@@ -21,7 +21,7 @@ The mpanic tester has been developed to help you throught the process of testing
 <br/>
 
 # Potential Issues
-One thing to keep in mind is that if you have any standard file descriptors (0 and/or 1) redirected to a non-terminal file, the exit command should not be printed. You can check whether a file descriptor is a terminal or not using the isatty() function.
+One thing to keep in mind is that if you have the standard input file descriptors redirected to a non-terminal file, the exit command should not be printed. You can check whether a file descriptor is a terminal or not using the isatty() function.
 
 Here's an example of how you can use isatty() to check whether standard output is being redirected:
 
