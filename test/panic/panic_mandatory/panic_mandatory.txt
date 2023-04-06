@@ -1,9 +1,9 @@
 mkdir testdirtest;cd testdirtest;bash;cd .. && rm -rf testdirtest && exit;pwd;cd .;pwd@rm -rf actual dir and cd .
 exit --
 echo all &> testfile;no_cmd all &>> testfile;cat testfile;rm testfile@echo all &> file
-#mkdir testdir &> /dev/null
-cd testdir;pwd;cd -;pwd@cd -
-#rm -rf testdir &> /dev/null
+cd-;@cd - (at start the minishell, OLDPWD should not exist)
+mkdir testdir;cd testdir;pwd;cd ..;pwd;rm -rf testdir; cd -@cd - (deleted old path dir)
+cd;pwd;cd -;pwd;@cd -
 #export TEMPVAR=$HOME;unset HOME
 echo ~@echo ~ (without $HOME in env)
 #export HOME=$TEMPVAR;unset TEMPVAR
