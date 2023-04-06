@@ -1,6 +1,9 @@
 echo hola | ( cat -n && cat -e) | cat -n
 echo hola | ( catn -n && cat -e) | cat -n
 echo hola | ( echo adios | cat -e) | cat -n
+((echo a) | (echo b) | (echo c | (echo d)))
+echo a | (echo b || echo c && echo d) || echo e | echo f
+echo a | (grep a) | cat | (wc -l)
 (echo a) | (cat -e)
 (echo a) | (cat -e | cat -e)
 echo a | (cat -e | cat -e | cat -e)
