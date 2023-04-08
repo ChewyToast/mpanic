@@ -149,23 +149,6 @@
 		esac
 	}
 
-	function	stop_tester()
-	{
-		while true; do
-			read -p "It looks like u getting all red.. do u want to stop the tester? [yes/no]: " answer
-			case $answer in
-				[Yy][Ee][Ss]) 
-					echo "Continuando con el tester..."
-					break ;;
-				[Nn][Oo]) 
-					echo "Saliendo del tester."
-					exit ;;
-				*) 
-					echo "Respuesta inválida. Por favor, escriba 'yes' o 'no'." ;;
-			esac
-		done
-	}
-
 	function	add_summary()
 	{
 		printf -v SUMARY "%s\n  %-30s  ${GREEN}%3d${MAIN_COLOR}    ${RED}%3d${MAIN_COLOR}    ${RED}%3d${MAIN_COLOR}    %3d" "${SUMARY}" "[${1}]" ${2} ${3} ${4} $((${2}+${3}+${4}))
@@ -196,7 +179,7 @@
 		BASH_ERROUTP_CUT=$(head -n 1 .tmp/bash_error_outp.txt)
 		if [ -n "$BASH_ERROUTP_CUT" ]; then
 			BASH_ERROUTP_CUT="${BASH_ERROUTP_CUT:14}"
-			if [ ${#BASH_ERROUTP_CUT} -ge 9 ]; then
+			if [ ${#BASH_ERROUTP_CUT} -ge 9 ] && [[ "$BASH_ERROUTP_CUT" == *"syntax error"* ]]; then
 				BASH_ERROUTP_CUT="${BASH_ERROUTP_CUT%?????????}"
 			fi
 		fi
