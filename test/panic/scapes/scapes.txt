@@ -4,7 +4,6 @@ e\\cho hi
 eC\\ho hi
 e\\Cho hi
 echo \\ hi
-echo hi \\ 
 echo hi \\ \\| echo hi
 echo hi \\ \\&\\& echo hi
 echo \\$USER
