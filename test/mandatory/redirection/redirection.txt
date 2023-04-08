@@ -15,28 +15,32 @@ echo >> file hi;echo >> file hi;cat file;rm file@echo >> file2 hi
 > file echo hi;cat file;rm file@> file echo hi
 >> file echo hi;>> file echo hi;cat file;rm file@>> file echo hi
 
-echo hi > file2 > file hi;cat file;cat file2;rm file file2@echo hi > file2 > file hi
-echo hi >> file2 > file hi;echo hi >> file2 > file hi;cat file;cat file2;rm file file2@echo hi >> file2 > file hi
-echo hi > file2 >> file hi;echo hi > file2 >> file hi;cat file;cat file2;rm file file2@echo hi > file2 >> file hi
-echo hi > file2 > file hi;echo hi > file2 > file hi;cat file;cat file2;rm file file2@echo hi > file2 > file hi
-echo hi >> file2 >> file hi;echo hi >> file2 >> file hi;cat file;cat file2;rm file file2@echo hi >> file2 >> file hi
+echo hi > file2 > file hi;ls;cat file;rm file file2@echo hi > file2 > file hi
+echo hi >> file2 > file hi;echo hi >> file2 > file hi;ls;cat file;rm file file2@echo hi >> file2 > file hi
+echo hi > file2 >> file hi;echo hi > file2 >> file hi;ls;cat file;rm file file2@echo hi > file2 >> file hi
+echo hi > file2 > file hi;echo hi > file2 > file hi;ls;cat file;rm file file2@echo hi > file2 > file hi
+echo hi >> file2 >> file hi;echo hi >> file2 >> file hi;ls;cat file;rm file file2@echo hi >> file2 >> file hi
+echo hi>file2>file hi;ls;cat file;rm file file2@echo hi>file2>file hi
+echo hi>>file2>>file hi;ls;cat file;rm file file2@echo hi>>file2>>file hi
 
-echo hi > file3 > file2 > file hi;echo hi > file3 > file2 > file hi;cat file;cat file2;cat file3;rm file file2 file3@echo hi > file3 > file2 > file hi
-echo hi > file3 >> file2 > file hi;echo hi > file3 >> file2 > file hi;cat file;cat file2;cat file3;rm file file2 file3 @echo hi > file3 >> file2 > file hi
-echo hi > file3 > file2 >> file hi;cat file;cat file2;cat file3;rm file file2 file3 @echo hi > file3 > file2 >> file hi
-echo hi >> file3 > file2 > file hi;cat file;cat file2;cat file3;rm file file2 file3 @echo hi >> file3 > file2 > file hi
-echo hi >> file3 > file2 >> file hi;cat file;cat file2;cat file3;rm file file2 file3 @echo hi >> file3 > file2 >> file hi
-echo hi >> file3 >> file2 > file hi;cat file;cat file2;cat file3;rm file file2 file3 @echo hi >> file3 >> file2 > file hi
+echo hi > file3 > file2 > file hi;echo hii > file3 > file2 > file hii;ls;cat file;rm file file2 file3@echo hi > file3 > file2 > file hi
+echo hi > file3 >> file2 > file hi;echo hii > file3 >> file2 > file hii;ls;cat file;rm file file2 file3@echo hi > file3 >> file2 > file hi
+echo hi > file3 > file2 >> file hi;echo hii > file3 > file2 >> file hii;ls;cat file;rm file file2 file3@echo hi > file3 > file2 >> file hi
+echo hi >> file3 > file2 > file hi;echo hii >> file3 > file2 > file hii;ls;cat file;rm file file2 file3@echo hi >> file3 > file2 > file hi
+echo hi >> file3 > file2 >> file hi;echo hii >> file3 > file2 >> file hii;ls;cat file;rm file file2 file3@echo hi >> file3 > file2 >> file hi
+echo hi >> file3 >> file2 > file hi;echo hii >> file3 >> file2 > file hii;ls;cat file;rm file file2 file3@echo hi >> file3 >> file2 > file hi
+echo hi>file3>file2>file hi;ls;cat file;rm file file2 file3@echo hi>file3>file2>file hi
 
-> file3 echo hi > file2 > file hi;> file3 echo hi > file2 > file hi;cat file;cat file2;cat file3;rm file file2 file3@> file3 echo hi > file2 > file hi
-> file3 echo hi > file2 >> file hi;> file3 echo hi > file2 >> file hi;cat file;cat file2;cat file3;rm file file2 file3@> file3 echo hi > file2 >> file hi
->> file3 echo hi > file2 > file hi;>> file3 echo hi > file2 > file hi;cat file;cat file2;cat file3;rm file file2 file3@>> file3 echo hi > file2 > file hi
-> file3 echo hi >> file2 > file hi;> file3 echo hi >> file2 > file hi;cat file;cat file2;cat file3;rm file file2 file3@> file3 echo hi >> file2 > file hi
+> file3 echo hi > file2 > file hi;> file3 echo hi > file2 > file hi;ls;cat file;rm file file2 file3@> file3 echo hi > file2 > file hi
+> file3 echo hi > file2 >> file hi;> file3 echo hi > file2 >> file hi;ls;cat file;rm file file2 file3@> file3 echo hi > file2 >> file hi
+>> file3 echo hi > file2 > file hi;>> file3 echo hi > file2 > file hi;ls;cat file;rm file file2 file3@>> file3 echo hi > file2 > file hi
+> file3 echo hi >> file2 > file hi;> file3 echo hi >> file2 > file hi;ls;cat file;rm file file2 file3@> file3 echo hi >> file2 > file hi
+>file3 echo hi>file2>file hi;> file3 echo hi > file2 > file hi;ls;cat file;rm file file2 file3@>file3 echo hi>file2>file hi
 
-echo hi >filea>fileb>filec hi;echo hi >filea>fileb>filec hi;cat filea;cat fileb;cat filec;rm filea fileb filec@echo hi >filea>fileb>filec hi
-echo hi >filea>>fileb>filec hi;echo hi >filea>>fileb>filec hi;cat filea;cat fileb;cat filec;rm filea fileb filec@echo hi >filea>>fileb>filec hi
-echo hi >filea>fileb>>filec hi;echo hi >filea>fileb>>filec hi;cat filea;cat fileb;cat filec;rm filea fileb filec@echo hi >filea>fileb>>filec hi
-echo hi >file1>file2>file3 hi;cat file1;cat file2;cat file3;rm file1 file2 file3@echo hi >file1>file2>file3 hi
+echo hi >filea>fileb>filec hi;echo hi >filea>fileb>filec hi;ls;cat filec;rm filea fileb filec@echo hi >filea>fileb>filec hi
+echo hi >filea>>fileb>filec hi;echo hi >filea>>fileb>filec hi;ls;cat filec;rm filea fileb filec@echo hi >filea>>fileb>filec hi
+echo hi >filea>fileb>>filec hi;echo hi >filea>fileb>>filec hi;ls;cat filec;rm filea fileb filec@echo hi >filea>fileb>>filec hi
+echo hi >>filea>fileb>filec hi;echo hi >>filea>fileb>filec hi;ls;cat filec;rm filea fileb filec@echo hi >>filea>fileb>filec hi
 
 echo hi > "doble"quote;cat doblequote;rm doblequote@echo hi > "doble"quote
 echo hi >"doble"quote;cat doblequote;rm doblequote@echo hi >"doble"quote
@@ -52,9 +56,8 @@ echo hi >>'with spaces';echo hi >>'with spaces';cat 'with spaces';rm 'with space
 echo hi > "mixed"'file 'name;cat "mixedfile name";rm "mixedfile name"@echo hi > "mixed"'file 'name
 echo hi >> "mixed"'file 'name;echo hi >> "mixed"'file 'name;cat "mixedfile name";rm "mixedfile name"@echo hi >> "mixed"'file 'name
 
-echo hi 4> file; rm file @echo hi 4> file
-echo hi 5< file; rm file @echo hi 5> file
 echo hi 0< file; rm file @echo hi 0> file
+bash 4> outpfile;echo hola >&4;cat outpfile; rm outpfile @4> file
 
 # mkdir testfolder &> /dev/null
 echo hi > testfolder
@@ -82,19 +85,13 @@ echo >> file2 hi;cat file2;@echo >> file2 hi (no permision)
 # chmod 666 file &> /dev/null && chmod 666 file2 &> /dev/null && chmod 666 file3 &> /dev/null
 # rm file file2 file3 &> /dev/null
 
-echo hi > file2 > file hi;cat file;cat file2;rm file file2@echo hi > file2 > file hi
-echo hi >> file2 > file hi;cat file;cat file2;rm file file2@echo hi >> file2 > file hi
-echo hi > file2 >> file hi;cat file;cat file2;rm file file2@echo hi > file2 >> file hi
-echo hi > file2 > file hi;cat file;cat file2;rm file file2@echo hi > file2 > file hi
-echo hi >> file2 >> file hi;cat file;cat file2;rm file file2@echo hi >> file2 >> file hi
-
 # echo hi, I am the file > file
 # echo hi, I am the file2 > file2
 # echo hi, I am the file3 > file3
 # chmod 000 file3 &> /dev/null
 
 cat < file@cat < file
-< file cat < file2@cat < file
+< file cat < file2@< file cat < file2
 cat < nonexist@cat < nonexist
 cat < $USER@cat < $USER
 cat < file3@cat < file3 (no permision)
@@ -111,10 +108,3 @@ echo hi < non_exist > wrong;ls;rm wrong@echo hi < non_exist > wrong
 > correct echo hi < non_exist;ls;rm correct@> correct echo hi < non_exist
 
 #rm correct
-
-echo hi b> file;cat file;rm file@echo hi b> file
-echo hi 0> file;cat file;rm file@echo hi 0> file
-echo hi hola1> file;cat file;rm file@echo hi hola1> file
-echo hi 0> file;cat file;rm file@echo hi 0> file
-echo hola | 1> file;rm file@echo hola | 1> file
-cat hi 0> file;cat file;rm file@cat hi 0> file
