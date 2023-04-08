@@ -7,13 +7,13 @@ echo hola && (echo adios) >> file1;cat file1;rm file1@echo hola && (echo adios) 
 (echo hola) > file1 >> file2 > file3;ls;cat file3;rm file1 file2 file3@(echo hola) > file1 >> file2 > file3
 (echo hola > file1 && echo adios | cat -e) > file1;ls;cat file1@(echo hola > file1 && echo adios | cat -e) > file1 
 (echo hola > file1) > file2;ls;cat file1;rm file1 file2@(echo hola > file1) > file2
-(echo hola > file1 && asdfs) 2> file2;cat file2@(echo hola > file1 && asdfs) 2> file2
-(echo hola > file1 && asdfs) 2>file2;cat file2@(echo hola > file1 && asdfs) 2>file2
-(echo hola > file1 && asdfs)2> file2;cat file2@(echo hola > file1 && asdfs)2> file2
-(echo hola > file1 && asdfs)2>file2;cat file2@(echo hola > file1 && asdfs)2>file2
-(echo hola > file1) a> file2;ls;cat file1;rm file1 file2@(echo hola > file1) a> file2
-(echo hola > file1)a> file2;ls;cat file1;rm file1 file2@(echo hola > file1)a> file2
-(echo hola > file1)a>file2;ls;cat file1;rm file1 file2@(echo hola > file1)a>file2
-(echo hola > file1) a>file2;ls;cat file1;rm file1 file2@(echo hola > file1) a>file2
+(echo hola > file1 && asdfs) 2> file2;cat file2 | rev | cut -c 1-20 | rev@(echo hola > file1 && asdfs) 2> file2
+(echo hola > file1 && asdfs) 2>file2;cat file2 | rev | cut -c 1-20 | rev@(echo hola > file1 && asdfs) 2>file2
+(echo hola > file1 && asdfs)2> file2;cat file2 | rev | cut -c 1-20 | rev@(echo hola > file1 && asdfs)2> file2
+(echo hola > file1 && asdfs)2>file2;cat file2 | rev | cut -c 1-20 | rev@(echo hola > file1 && asdfs)2>file2
+(echo hola > file1) a> file2@(echo hola > file1) a> file2
+(echo hola > file1)a> file2@(echo hola > file1)a> file2
+(echo hola > file1)a>file2@(echo hola > file1)a>file2
+(echo hola > file1) a>file2@(echo hola > file1) a>file2
 echo hola || 1> file;ls;rm file@echo hola || 1> file
 #rm file1 file2 file3

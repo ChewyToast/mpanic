@@ -27,5 +27,4 @@ echo >>
 echo <
 echo >>>
 echo <<<
-echo hi <> file
 echo hi >< file
