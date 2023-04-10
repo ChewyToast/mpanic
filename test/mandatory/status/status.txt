@@ -1,17 +1,42 @@
-# cat &> /dev/null < noexiste
-echo $? @status code after || cat < noexiste || 
+" ";echo $?
+" "
 
-# echoddd &> /dev/null
-echo $? @status code after || invalid command || 
+echo $?
 
-# touch noperm
-# chmod 000 noperm
-# echo hola 2> /dev/null > noperm 
-echo $? @status code after || echo hola > noperm || 
-# rm noperm &> /dev/null
+cat < noexiste;echo $?
+cat < noexiste
 
-# sleep 1 | ls | cat -n &> /dev/null
-echo $? @status code after || sleep 1 | ls | cat -n || 
+# touch noperm &> /dev/null; chmod 000 noperm&> /dev/null
 
-# sleep 1 | dddd &> /dev/null
-echo $? @status code after || sleep 1 | dddd || 
+echo hola > noperm ; echo $?
+echo hola > noperm
+echo hola < noperm ; echo $?
+echo hola < noperm
+
+# chmod 666 nopem &> /dev/null; rm noperm &> /dev/null
+
+sleep 1 | ls | cat -n;echo $?
+sleep 1 | ls | cat -n
+sleep 1 | dddd;echo $?
+sleep 1 | dddd
+
+nonexistcmd; echo $?
+nonexistcmd
+
+nonexistcmd | echo hi; echo $?
+nonexistcmd | echo hi
+
+echo hi | nonexistcmd; echo $?
+echo hi | nonexistcmd
+
+echo hi < nofile | nonexistcmd; echo $?
+echo hi < nofile | nonexistcmd
+
+echo hi < nofile | echo hii; echo $?
+echo hi < nofile | echo hii
+
+/Users/nonexist/directory;echo $?
+/Users/nonexist/directory
+
+cat /Users/nonexist/directory;echo $?
+cat /Users/nonexist/directory

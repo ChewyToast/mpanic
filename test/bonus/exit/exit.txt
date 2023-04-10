@@ -1,0 +1,17 @@
+(exit)
+(exit "")
+(exit " ")
+(exit a)
+(exit 123123)
+(exit 123 123)
+(exit 123 aaa)
+(exit aaa 123)
+(exit | cat)
+(echo hi && exit)
+(exit && echo hi)
+(cmdnotfound || exit)
+(exit || echo hi)
+(echo hola) && exit
+(echo hola) && exit
+(echo hola && (exit))
+((exit) && echo hola)
