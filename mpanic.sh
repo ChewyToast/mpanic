@@ -145,7 +145,7 @@
 		case $ret in
 			0) printf "[${RED}K0${MAIN_COLOR}]\n" ;;
 			1) printf "[${GREEN}OK${MAIN_COLOR}]\n" ;;
-			*) printf "[${RED}KO${MAIN_COLOR}]\n" ;;
+			*) printf "[${RED}SF${MAIN_COLOR}]\n" ;;
 		esac
 	}
 
@@ -196,7 +196,7 @@
 			SF_COUNT=$((SF_COUNT+1))
 			ret=3
 			EOK="KO"
-			ESF="${ESK} ${i}"
+			ESF="${ESF} ${i}"
 			SF_TMP=$(cat .tmp/exec_other_outp.txt | sed -e "1d")
 			trace_printer "${1}" "${i}" "$(cat ${2})" "${ES2}" "${BASH_STDOUTP}" "${BASH_ERROUTP_CUT}" "${ES1}" "${MINI_STDOUTP}" "${MINI_ERROUTP}" "${SF_TMP}" "${BASH_ERROUTP}";
 		else
