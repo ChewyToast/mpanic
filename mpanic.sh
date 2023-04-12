@@ -145,7 +145,7 @@
 		case $ret in
 			0) printf "[${RED}K0${MAIN_COLOR}]\n" ;;
 			1) printf "[${GREEN}OK${MAIN_COLOR}]\n" ;;
-			*) printf "[${RED}SF${MAIN_COLOR}]\n" ;;
+			*) printf "[${YELLOW}SF${MAIN_COLOR}]\n" ;;
 		esac
 	}
 
