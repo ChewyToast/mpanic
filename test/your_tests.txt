@@ -1,17 +1,1 @@
 #echo ' there goes your tests!'
-
-#export SHLVL=20
-echo $SHLVL 'entry value 20'
-#export SHLVL=50
-echo $SHLVL 'entry value 50'
-#export SHLVL=99
-echo $SHLVL 'entry value 99'
-#export SHLVL=-20
-echo $SHLVL 'entry value -20'
-#export SHLVL=800
-echo $SHLVL 'entry value 800'
-#export SHLVL=1000
-echo $SHLVL 'entry value 1000'
-#export SHLVL=5000000
-echo $SHLVL 'entry value 5000000'
-

@@ -28,7 +28,9 @@
 		echo -e "\tpipe\t\tExecute the pipe tests"
 		echo -e "\tredirection\tExecute the redirection tests"
 		echo -e "\tstatus\t\tExecute the exit status tests"
+		echo -e "\tshlvl\t\tExecute the shlvl tests"
 		echo -e "\tpanicm\t\tExecute the panic mandatory tests"
+		echo -e "\tpanics\t\tExecute the panic scapes tests"
 		echo -e "\tyour\t\tExecute the exit status tests"
 		echo -e "\n${YELLOW} Examples:${MAIN_COLOR}"
 		echo -e "\tmpanic.sh --help\tShow this help message"
@@ -438,7 +440,7 @@
 		fi
 		EOK="OK"
 		ESF=""
-		printf ${MAIN_COLOR}"\n|==========================[ PIPES ]=========================|"${MAIN_COLOR}
+		printf ${MAIN_COLOR}"\n|=========================[ PIPES ]==========================|"${MAIN_COLOR}
 		print_in_traces "traces/pipes_trace.txt"
 		main_test_call "mandatory/pipe/pipe.txt" "exec_function" "traces/pipes_trace.txt"
 		if [ ${TESTER_MODE} == "bonus" ]; then
@@ -489,6 +491,24 @@
 		add_summary "status" "${OK_COUNT}" "${KO_COUNT}" "${SF_COUNT}"
 		print_end_tests "${EOK}" "${ESF}" "traces/status_trace.txt" "status"
 		TTSTATUS="1";
+	}
+
+	function shlvl_test_call()
+	{
+		if [ "$TTSHL" != "" ]; then
+			return ;
+		fi
+		OK_COUNT=0
+		KO_COUNT=0
+		SF_COUNT=0
+		EOK="OK"
+		ESF=""
+		printf ${MAIN_COLOR}"\n|=======================[ SHLVL TESTS ]======================|"${MAIN_COLOR}
+		print_in_traces "traces/shlvl_trace.txt"
+		main_test_call "mandatory/shlvl/shlvl.txt" "exec_function" "traces/shlvl_trace.txt"
+		print_end_tests "${EOK}" "${ESF}" "traces/shlvl_trace.txt" "shlvl"
+		add_summary "shlvl" "${OK_COUNT}" "${KO_COUNT}" "${SF_COUNT}"
+		TTSHL="1";
 	}
 
 	function your_test_call()
@@ -571,7 +591,7 @@
 		case "$arg" in
 			"-h"|"--help") print_helper ;;
 			"-i"|"--ignore") IGNORE="1" ;;
-			"echo"|"export"|"exit"|"parser"|"pipe"|"redirection"|"status"|"env"|"directory"|"your"|"panicm"|"panics") ;;
+			"echo"|"export"|"exit"|"parser"|"pipe"|"redirection"|"status"|"env"|"directory"|"shlvl"|"your"|"panicm"|"panics") ;;
 			"-b"|"--bonus") TESTER_MODE="bonus" ;;
 			*) printf "\n Invalid argument:"${MAIN_COLOR}" $arg\n" 
 				print_helper
@@ -688,6 +708,8 @@
 		TTREDIRECT=""
 	# Status done
 		TTSTATUS=""
+	# SHLVL done
+		TTSHL=""
 	# Panic mandatori done
 		TTPM=""
 	# Panic scapes done
@@ -709,6 +731,7 @@
 				"pipe") TTPIPE="1";;
 				"redirection") TTREDIRECT="1";;
 				"status") TTSTATUS="1";;
+				"shlvl") TTSHL;;
 				"panicm") TTPM="1";;
 				"panics") TTPS="1";;
 				"your") TTYOUR="1";;
@@ -723,6 +746,7 @@
 			pipe_test_call;
 			redirection_test_call;
 			status_test_call;
+			shlvl_test_call;
 			panic_mandatory_test_call;
 			# panic_scapes_test_call;
 			your_test_call;
@@ -737,6 +761,7 @@
 			pipe_test_call;
 			redirection_test_call;
 			status_test_call;
+			shlvl_test_call;
 			panic_mandatory_test_call;
 			# panic_scapes_test_call;
 			your_test_call;
@@ -753,6 +778,7 @@
 					"pipe") pipe_test_call;;
 					"redirection") redirection_test_call;;
 					"status") status_test_call;;
+					"shlvl") status_test_call;;
 					"panicm") panic_mandatory_test_call;;
 					"panics") panic_scapes_test_call;;
 					"your") your_test_call;;
@@ -768,6 +794,7 @@
 			pipe_test_call;
 			redirection_test_call;
 			status_test_call;
+			shlvl_test_call;
 			panic_mandatory_test_call;
 			# panic_scapes_test_call;
 			your_test_call;
