@@ -11,3 +11,4 @@ echo --n hi
 echo -nn hi
 echo -n -n hi
 echo hi -n
+echo "-n -n -n" -n hi

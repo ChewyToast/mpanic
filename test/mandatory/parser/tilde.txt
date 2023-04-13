@@ -1,9 +1,9 @@
 ~
 echo hi~
 echo ~
+echo ~/path
 echo ~$USER
 echo ~false
 echo \~
 echo ~$USER/sdfsfsfdsfs
-
 unset HOME ; echo ~
