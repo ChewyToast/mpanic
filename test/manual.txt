@@ -1,2 +1,0 @@
-cat | cat | cat | ls
-5< cat;

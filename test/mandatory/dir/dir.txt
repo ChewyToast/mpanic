@@ -7,6 +7,9 @@ cd / non_existent
 cd /.
 cd //
 cd ' / '
+pwd
+pwd argument
+pwd argument1 argument2
 #touch file &> /dev/null
 cd file
 #chmod 000 &> /dev/null

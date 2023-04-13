@@ -1,5 +1,8 @@
 exit
 exit ""
+exit " "
+exit "  "
+exit "	"
 exit 42network
 exit +
 exit ++
@@ -41,4 +44,12 @@ exit 9999999999999999999999
 exit 0000000000000000000000
 exit 0000000000000000000001
 exit 1 2 3
+exit 1 not numeric bro
+exit not numeric bro 2
 exit 42 | cat
+aaa;exit@not found then exit
+aaa;exit 1@not found then exit 1
+#touch file && chmod 000 file
+cat file;exit@permission deny then exit
+cat file;exit 1@permission deny then exit 1
+#chmod 777 file && rm file

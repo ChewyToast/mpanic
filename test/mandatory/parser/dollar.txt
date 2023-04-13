@@ -21,18 +21,18 @@ echo $USER"$PATH"$PWD"USER"$PATH"$PWD"
 echo $USER'$PATH'$PWD'USER'$PATH'$PWD'
 
 #export TMPENVVAR
-$TMPENVVAR
+$TMPENVVAR@VAR: export TMPENVVAR
 
-export TMPENVVAR;$TMPENVVAR
+export TMPENVVAR;$TMPENVVAR@VAR: export TMPENVVAR
 
 #export TMPENVVAR=echo
-$TMPENVVAR
+$TMPENVVAR@VAR: export TMPENVVAR=echo
 
 #export TMPENVVAR="         echo"
-$TMPENVVAR
+$TMPENVVAR@VAR: export TMPENVVAR="  echo"
 
 #export TMPENVVAR="         EcHO      hi"
-$TMPENVVAR
+$TMPENVVAR@VAR: export TMPENVVAR="    EcHO   hi"
 
 #export A='foo   ' B='bar   ' C='baz   '
 

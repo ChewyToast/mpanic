@@ -145,25 +145,8 @@
 		case $ret in
 			0) printf "[${RED}K0${MAIN_COLOR}]\n" ;;
 			1) printf "[${GREEN}OK${MAIN_COLOR}]\n" ;;
-			*) printf "[${RED}KO${MAIN_COLOR}]\n" ;;
+			*) printf "[${YELLOW}SF${MAIN_COLOR}]\n" ;;
 		esac
-	}
-
-	function	stop_tester()
-	{
-		while true; do
-			read -p "It looks like u getting all red.. do u want to stop the tester? [yes/no]: " answer
-			case $answer in
-				[Yy][Ee][Ss]) 
-					echo "Continuando con el tester..."
-					break ;;
-				[Nn][Oo]) 
-					echo "Saliendo del tester."
-					exit ;;
-				*) 
-					echo "Respuesta inválida. Por favor, escriba 'yes' o 'no'." ;;
-			esac
-		done
 	}
 
 	function	add_summary()
@@ -196,7 +179,7 @@
 		BASH_ERROUTP_CUT=$(head -n 1 .tmp/bash_error_outp.txt)
 		if [ -n "$BASH_ERROUTP_CUT" ]; then
 			BASH_ERROUTP_CUT="${BASH_ERROUTP_CUT:14}"
-			if [ ${#BASH_ERROUTP_CUT} -ge 9 ]; then
+			if [ ${#BASH_ERROUTP_CUT} -ge 9 ] && [[ "$BASH_ERROUTP_CUT" == *"syntax error"* ]]; then
 				BASH_ERROUTP_CUT="${BASH_ERROUTP_CUT%?????????}"
 			fi
 		fi
@@ -213,7 +196,7 @@
 			SF_COUNT=$((SF_COUNT+1))
 			ret=3
 			EOK="KO"
-			ESF="${ESK} ${i}"
+			ESF="${ESF} ${i}"
 			SF_TMP=$(cat .tmp/exec_other_outp.txt | sed -e "1d")
 			trace_printer "${1}" "${i}" "$(cat ${2})" "${ES2}" "${BASH_STDOUTP}" "${BASH_ERROUTP_CUT}" "${ES1}" "${MINI_STDOUTP}" "${MINI_ERROUTP}" "${SF_TMP}" "${BASH_ERROUTP}";
 		else

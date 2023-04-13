@@ -1,13 +1,15 @@
 mkdir testdirtest;cd testdirtest;bash;cd .. && rm -rf testdirtest && exit;pwd;cd .;pwd@rm -rf actual dir and cd .
 exit --
-echo all &> testfile;no_cmd all &>> testfile;cat testfile;rm testfile@echo all &> file
-#mkdir testdir &> /dev/null
-cd testdir;pwd;cd -;pwd@cd -
-#rm -rf testdir &> /dev/null
+echo all &> testfile < non_exist_file;rm testfile@echo all &> file
+cd-;@cd - (at start the minishell, OLDPWD should not exist)
+mkdir testdir;cd testdir;pwd;cd ..;pwd;rm -rf testdir; cd -@cd - (deleted old path dir)
+cd;pwd;cd -;pwd;@cd -
 #export TEMPVAR=$HOME;unset HOME
 echo ~@echo ~ (without $HOME in env)
 #export HOME=$TEMPVAR;unset TEMPVAR
 #mkdir testdirtest &> /dev/null
-env | grep PWD; cd testdirtest; env | grep PWD; unset PWD; cd ..; env | grep PWD
-env | grep PWD; cd testdirtest; env | grep PWD; export PWD=nosensedir; cd ..; env | grep PWD
+env | grep PWD; cd testdirtest;env | grep PWD; unset PWD; cd ..; env | grep PWD@playing with PWD an OLD
+env | grep PWD; cd testdirtest;env | grep PWD; export PWD=nosensedir; cd ..; env | grep PWD@playing with PWD an OLD
 #rm -rf testdirtest &> /dev/null
+echo hi <> file;ls;rm file@echo <> file
+echo this is the file > file;echo this is not the file > file2;cat < file 3< file2
