@@ -25,10 +25,19 @@ One thing to keep in mind is that if you have the standard input file descriptor
 
 Here's an example of how you can use isatty() to check whether standard output is being redirected:
 
-<p align="center">
-	<br>
-	<img src="https://github.com/ChewyToast/mpanic/blob/main/.img/isatty.png?raw=true" style="width:65%"/>
-</p>
+```bash
+
+line = readline("minishell $");
+if (!line)
+{
+    if (isatty(STDIN_FILENO))
+	write(2, "exit\n", 6);
+    exit (exit_code);
+}
+```
+
+ { >>> WARNIG <<<< } IF YOUR MINISHELL does not have this implementation, THE TESTER WILL FAIL COMPLETLY.
+
 
 <br/>
 
@@ -54,17 +63,17 @@ bash mpanic.sh
 
 # Make your own test
 
-This tester has developed kind of meta-lenguaje to meke easy to add new test to the blocks that already exist (parser, echo, export... ) or to your own block
+This tester has developed kind of meta-lenguaje to make easy to add new test to the blocks that already exist (parser, echo, export... ) or to your own block.
 
-Testing some commands is not easy because you need to prepare some files or variables, or you need to delete some files after the test. Mpanic is ready to manage all this situations due his own lenguaje.
+Testing some commands is not easy because you need to prepare some files or variables, or you need to delete some files after the test. MPANIC is ready to manage all this situations due his own lenguaje.
 
-Mainly, each line that yoy write in the .txt of the tests will be executed in minishell and in bash. Then the stdout, the error status and the errout will be compared and must be the same to get an OK.
+Mainly, each line that you write in the .txt of the tests files will be executed in minishell and in bash. Then the stdout, the error status and the errout will be compared and must be the same to get an OK.
 
 <br/>
 
 ## Basic testing
 
-We will execute this sequence of lines in both the minishell and bash and compare the results.
+We will execute this sequence of lines in minishell and bash and compare the results.
 
 ```bash
 echo hola
@@ -77,13 +86,13 @@ cat file1
 
 ## Preparing testing
 
-In some test you will neeed to prepare some files to check the correct behaivour of theur menishell. For example you will nedd to create a file without permissions to chec that a redirect fails y yoy don'n have rights.
+In some test you will neeed to prepare some files to check the correct behaviour of your minishell. For example you will nedd to create a file without permissions to check that a redirect fails if you don't have rights.
 
-For thsi situation we haved developed the # statement. Each line tha you write before # will be executed in the terminal but without compare nothig. Just like yo do that in the terminal. 
+For this situation we haved developed the '#' statement. Each line you write before '#' will be executed in the terminal but without compare nothig. Just like yo do that in the terminal. 
 
-For example this secuence will create a testfile file without rights and then will execute all this tests. At the end is good practice to delete the file in the same way. We also recomend to redirects all the fd of the comnmand (&> /dev/null) after # statement to avoid random messages.
+For example this secuence will create a testfile file without rights and then will execute all this tests. At the end is good practice to delete the file in the same way. We also recomend to redirects all the fd of the comnmand (&> /dev/null) after '#' statement to avoid random messages.
 
-This lines, the # statements will executed quiet. You will see nothing about this lines in the testing.
+In this lines, the '#' statements will executed quietly. You will see nothing about this lines in the testing.
 
 ```bash
 # chmod 000 testfile &> /dev/null
@@ -98,7 +107,7 @@ echo hi 2>> testfile
 
 ## Batch testing
 
-Is there some situations than you can not resolve easily, for example if you execute this secuence, the echo will print nothing. This is because each line is executed in new minishell & bash. So the second minishell & bash have no variable called A.
+Is there some situations you can not resolve easily, for example if you execute this secuence, the echo will print nothing. This is because each line is executed in new minishell & bash. So the second minishell & bash have no variable called A.
 
 ```bash
 export A="mpanic"
