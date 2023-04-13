@@ -1,5 +1,0 @@
-unset SHLVL;./minishell;echo $SHLVL
-export SHLVL=''; ./minishell; echo $SLVL
-(OLDPWD se crea/actualiza al cambiar de directorio, cogiendo el valor de PWD, si PWD no existe, OLDPWD se borra tambien)
-env -i ./minishell;echo $PATH$USER
-env -i ./minishell;echo $PATH$USER$NONEXIST
