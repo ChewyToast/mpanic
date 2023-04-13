@@ -13,3 +13,6 @@ env | grep PWD; cd testdirtest;env | grep PWD; export PWD=nosensedir; cd ..; env
 #rm -rf testdirtest &> /dev/null
 echo hi <> file;ls;rm file@echo <> file
 echo this is the file > file;echo this is not the file > file2;cat < file 3< file2
+#touch echo && chmod 777 echo
+./echo@file with permission named echo
+#rm echo

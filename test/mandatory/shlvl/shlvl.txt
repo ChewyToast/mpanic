@@ -13,3 +13,8 @@ echo $SHLVL 'entry value 800'
 echo $SHLVL 'entry value 1000'
 #export SHLVL=5000000
 echo $SHLVL 'entry value 5000000'
+
+#unset SHLVL
+echo $SHLVL 'unset SHLVL before ./minishell'
+#export SHLVL=''
+echo $SLVL 'export SHLVL='' before ./minishell'
