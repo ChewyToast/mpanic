@@ -35,6 +35,12 @@ $TMPENVVAR@VAR: export TMPENVVAR="  echo"
 #export TMPENVVAR="         EcHO      hi"
 $TMPENVVAR@VAR: export TMPENVVAR="    EcHO   hi"
 
+#export TMPENVVAR="-n"
+echo $TMPENVVAR hi@VAR: export TMPENVVAR="-n"
+
+#export TMPENVVAR="-n -n"
+echo $TMPENVVAR hi@VAR: export TMPENVVAR="-n -n"
+
 #export A='foo   ' B='bar   ' C='baz   '
 
 echo $A"$B"$C"A"$B"$C"
