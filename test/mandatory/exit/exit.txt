@@ -44,9 +44,11 @@ exit 9999999999999999999999
 exit 0000000000000000000000
 exit 0000000000000000000001
 exit 1 2 3
+exit 1 2 3;echo should not exit
 exit 1 not numeric bro
 exit not numeric bro 2
 exit 42 | cat
+Exit 1;echo is not a buildin!
 aaa;exit@not found then exit
 aaa;exit 1@not found then exit 1
 #touch file && chmod 000 file

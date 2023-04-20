@@ -12,3 +12,17 @@ echo -nn hi
 echo -n -n hi
 echo hi -n
 echo "-n -n -n" -n hi
+
+#echo echo wtf u execute? > ~/echo 2> /dev/null; chmod 777 ~/echo;export EXPATH="$PATH" PATH="/Users/$USER:$PATH"
+echo this is the buildin gj@check if launch execve
+#rm -rf ~/echo
+#echo "#include <stdio.h>" > ~/echo.c 2> /dev/null
+#echo "int main() {" >> ~/echo.c 2> /dev/null
+#echo 'printf("Thats the file bro gj\n");return 0;}' >> ~/echo.c 2> /dev/null
+#gcc ~/echo.c -o echo; chmod 777 ~/echo;export EXPATH="$PATH" PATH="/Users/$USER:$PATH"
+eCho what u execute bro?;cat ~/echo@check if builtin is not correct
+echo what u execute bro?@EXECVE THE ECHO?
+#rm -rf ~/echo ~/echo.c; export PATH="$EXPATH"
+unset PATH;EcHo how u launch this without PATH??@not builtin without PATH
+
+
