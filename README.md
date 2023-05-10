@@ -7,7 +7,8 @@
 </p>
 
 <p align="center">
-	<img src="https://github.com/ChewyToast/mpanic/blob/main/.img/mpanic.png?raw=true" />
+	<img src="https://github.com/ChewyToast/mpanic/blob/main/.img/mpanic_v2.png?raw=true" />
+	
 	
 </p>
 <br/>
