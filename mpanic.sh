@@ -778,7 +778,7 @@
 					"pipe") pipe_test_call;;
 					"redirection") redirection_test_call;;
 					"status") status_test_call;;
-					"shlvl") status_test_call;;
+					"shlvl") shlvl_test_call;;
 					"panicm") panic_mandatory_test_call;;
 					"panics") panic_scapes_test_call;;
 					"your") your_test_call;;
