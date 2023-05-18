@@ -141,7 +141,7 @@
 		local padding=$(( 47 - ${#msg} ))
 
 		if [ $padding -gt 0 ]; then
-			printf "%0.s " $(seq 1 $padding)
+			printf "%0.s " $(seq 1 $padding 2> /dev/null)
 		fi
 
 		case $ret in
@@ -170,15 +170,15 @@
 		{ ./minishell; } < ${2} 1> .tmp/exec_outp.txt 2> .tmp/exec_error_outp.txt
 		ES1=$?
 		./cleaner ".tmp/exec_outp.txt"
-		MINI_STDOUTP=$(cat -e .tmp/exec_outp_clean.txt)
-		MINI_ERROUTP_ALL=$(cat -e .tmp/exec_error_outp.txt)
-		MINI_ERROUTP=$(cat -e .tmp/exec_error_outp.txt)
+		MINI_STDOUTP=$(cat -e .tmp/exec_outp_clean.txt 2> /dev/null)
+		MINI_ERROUTP_ALL=$(cat -e .tmp/exec_error_outp.txt 2> /dev/null)
+		MINI_ERROUTP=$(cat -e .tmp/exec_error_outp.txt 2> /dev/null)
 	
 		{ bash; } < ${2} 1> .tmp/bash_outp.txt 2> .tmp/bash_error_outp.txt
 		ES2=$?
-		BASH_STDOUTP=$(cat -e .tmp/bash_outp.txt)
-		BASH_ERROUTP=$(cat -e .tmp/bash_error_outp.txt)
-		BASH_ERROUTP_CUT=$(head -n 1 .tmp/bash_error_outp.txt)
+		BASH_STDOUTP=$(cat -e .tmp/bash_outp.txt 2> /dev/null)
+		BASH_ERROUTP=$(cat -e .tmp/bash_error_outp.txt 2> /dev/null)
+		BASH_ERROUTP_CUT=$(head -n 1 .tmp/bash_error_outp.txt 2> /dev/null)
 		if [ -n "$BASH_ERROUTP_CUT" ]; then
 			BASH_ERROUTP_CUT="${BASH_ERROUTP_CUT:14}"
 			if [ ${#BASH_ERROUTP_CUT} -ge 9 ] && [[ "$BASH_ERROUTP_CUT" == *"syntax error"* ]]; then
@@ -199,11 +199,11 @@
 			ret=3
 			EOK="KO"
 			ESF="${ESF} ${i}"
-			SF_TMP=$(cat .tmp/exec_other_outp.txt | sed -e "1d")
+			SF_TMP=$(cat .tmp/exec_other_outp.txt | sed -e "1d" 2> /dev/null)
 			trace_printer "${1}" "${i}" "$(cat ${2})" "${ES2}" "${BASH_STDOUTP}" "${BASH_ERROUTP_CUT}" "${ES1}" "${MINI_STDOUTP}" "${MINI_ERROUTP}" "${SF_TMP}" "${BASH_ERROUTP}";
 		else
 			if [[ "${std_condition}" == "true" && "${es_condition}" == "true" && "${err_condition}" == "true" ]]; then
-				trace_printer "traces/correct_log.txt" "${i}" "$(cat ${2})" "${ES2}" "${BASH_STDOUTP}" "${BASH_ERROUTP_CUT}" "${ES1}" "${MINI_STDOUTP}" "${MINI_ERROUTP}" "${SF_TMP}" "${BASH_ERROUTP}";
+				trace_printer "traces/correct_log.txt" "${i}" "$(cat ${2} 2> /dev/null)" "${ES2}" "${BASH_STDOUTP}" "${BASH_ERROUTP_CUT}" "${ES1}" "${MINI_STDOUTP}" "${MINI_ERROUTP}" "${SF_TMP}" "${BASH_ERROUTP}";
 				TOTAL_OK_COUNT=$((TOTAL_OK_COUNT+1))
 				OK_COUNT=$((OK_COUNT+1))
 				ret=1
@@ -212,7 +212,7 @@
 				KO_COUNT=$((KO_COUNT+1))
 				ret=0
 				EOK="KO"
-				trace_printer "${1}" "${i}" "$(cat ${2})" "${ES2}" "${BASH_STDOUTP}" "${BASH_ERROUTP_CUT}" "${ES1}" "${MINI_STDOUTP}" "${MINI_ERROUTP}" "${SF_TMP}" "${BASH_ERROUTP}";
+				trace_printer "${1}" "${i}" "$(cat ${2} 2> /dev/null)" "${ES2}" "${BASH_STDOUTP}" "${BASH_ERROUTP_CUT}" "${ES1}" "${MINI_STDOUTP}" "${MINI_ERROUTP}" "${SF_TMP}" "${BASH_ERROUTP}";
 			fi
 		fi
 
@@ -778,7 +778,7 @@
 					"pipe") pipe_test_call;;
 					"redirection") redirection_test_call;;
 					"status") status_test_call;;
-					"shlvl") status_test_call;;
+					"shlvl") shlvl_test_call;;
 					"panicm") panic_mandatory_test_call;;
 					"panics") panic_scapes_test_call;;
 					"your") your_test_call;;

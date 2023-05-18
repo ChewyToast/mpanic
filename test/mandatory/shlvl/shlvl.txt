@@ -1,20 +1,20 @@
 
-#export SHLVL=20
+#export SHLVL=20 &> /dev/null
 echo $SHLVL 'entry value 20'
-#export SHLVL=50
+#export SHLVL=50 &> /dev/null
 echo $SHLVL 'entry value 50'
-#export SHLVL=99
+#export SHLVL=99 &> /dev/null
 echo $SHLVL 'entry value 99'
-#export SHLVL=-20
+#export SHLVL=-20 &> /dev/null
 echo $SHLVL 'entry value -20'
-#export SHLVL=800
+#export SHLVL=800 &> /dev/null
 echo $SHLVL 'entry value 800'
-#export SHLVL=1000
+#export SHLVL=1000 &> /dev/null
 echo $SHLVL 'entry value 1000'
-#export SHLVL=5000000
+#export SHLVL=5000000 &> /dev/null
 echo $SHLVL 'entry value 5000000'
 
-#unset SHLVL
+#unset SHLVL &> /dev/null
 echo $SHLVL 'unset SHLVL before ./minishell'
-#export SHLVL=''
+#export SHLVL='' &> /dev/null
 echo $SLVL 'export SHLVL='' before ./minishell'
