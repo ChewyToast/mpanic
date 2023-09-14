@@ -20,6 +20,11 @@ The mpanic tester has been developed to help you throught the process of testing
 - You dont need to modify your minishell to work with -C flag. Mpanic is able to catch your minishell exit and test against bash.
 - We have develop kind of pseoudo-code to give you the ability to add your own test without going deep in the code, just modifying the txt files of the test.
 
+
+<!--<p align="center">
+   <img src="https://github.com/ChewyToast/mpanic/blob/main/.img/test_example.gif" width="720"/> 
+</p> -->
+
 <br/>
 
 # Potential Issues
