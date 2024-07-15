@@ -577,7 +577,7 @@
 
 	if [[ "$(ls -la)" != *".timmer"* ]]; then
 		touch .timmer
-		printf ${MAIN_COLOR}"\n\tWellocme to minishell panic 👹 !\n\n"${MAIN_COLOR};
+		printf ${MAIN_COLOR}"\n\tWelcome to minishell panic 👹 !\n\n"${MAIN_COLOR};
 		printf " It looks like its ur first time using this tester,\n";
 		printf " so let me explain u how it works:\n";
 		print_helper;
